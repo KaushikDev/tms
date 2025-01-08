@@ -37,22 +37,47 @@ const ViewTickets = () => {
   };
 
   const displayAllTickets = state.tickets.map((ticket, index) => (
-    <div key={index} className="card flex-row items-center justify-center">
+    <div
+      key={index}
+      className="card flex flex-col gap-4 p-4 mb-4 bg-white shadow-md rounded-lg border border-gray-200 hover:shadow-lg"
+    >
       {!(
         state.ticketToUpdate.inProgress &&
         ticket.id === state.ticketToUpdate.oldValue.id
       ) ? (
         <>
-          <div>
-            <h2>Title : {ticket.title}</h2>
-            <h3>Description : {ticket.description}</h3>
-            <p>Assigned to : {ticket.assignedTo}</p>
+          <div className="space-y-2">
+            <h2 className="text-lg font-semibold text-gray-800">
+              <span className="text-gray-500 font-medium">Title:</span>{" "}
+              {ticket.title}
+            </h2>
+            <h3 className="text-base text-gray-600 leading-relaxed">
+              <span className="text-gray-500 font-medium">Description:</span>{" "}
+              {ticket.description}
+            </h3>
+            <p className="text-sm text-gray-500">
+              <span className="text-gray-400 font-medium">Assigned to:</span>{" "}
+              {ticket.assignedTo}
+            </p>
           </div>
-          <button onClick={() => handleDeleteTicket(ticket.id)}>Delete</button>
-          <button onClick={() => handleTicketUpdate(ticket)}>Update</button>
+
+          <div className="flex justify-end gap-2">
+            <button
+              onClick={() => handleDeleteTicket(ticket.id)}
+              className="px-4 py-2 text-sm text-white bg-red-500 rounded-md hover:bg-red-600"
+            >
+              Delete
+            </button>
+            <button
+              onClick={() => handleTicketUpdate(ticket)}
+              className="px-4 py-2 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600"
+            >
+              Update
+            </button>
+          </div>
         </>
       ) : (
-        <form onSubmit={handleEditTicket} className="gap-2">
+        <form onSubmit={handleEditTicket} className="flex flex-col gap-4">
           <div>
             <label
               htmlFor="ticketTitle"
@@ -107,42 +132,51 @@ const ViewTickets = () => {
               <option value="Koyal Bharadwaj">Koyal Bharadwaj</option>
             </select>
           </div>
-          <button type="submit">Save</button>
-          <button
-            onClick={() =>
-              dispatch({
-                type: ticketAction.TICKET_TO_UPDATE,
-                payload: {
-                  inProgress: false,
-                  oldValue: {
-                    id: "",
-                    title: "",
-                    description: "",
-                    assignedTo: "",
+          <div className="flex justify-end gap-2">
+            <button
+              type="submit"
+              className="px-4 py-2 text-sm text-white bg-green-500 rounded-md hover:bg-green-600"
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                dispatch({
+                  type: ticketAction.TICKET_TO_UPDATE,
+                  payload: {
+                    inProgress: false,
+                    oldValue: {
+                      id: "",
+                      title: "",
+                      description: "",
+                      assignedTo: "",
+                    },
+                    newValue: {
+                      id: "",
+                      title: "",
+                      description: "",
+                      assignedTo: "",
+                    },
                   },
-                  newValue: {
-                    id: "",
-                    title: "",
-                    description: "",
-                    assignedTo: "",
-                  },
-                },
-              })
-            }
-          >
-            Cancel
-          </button>
+                })
+              }
+              className="px-4 py-2 text-sm text-white bg-gray-500 rounded-md hover:bg-gray-600"
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       )}
     </div>
   ));
 
   return (
-    <div className="container">
+    <div className="container mx-auto p-4 bg-gray-50 rounded-lg shadow-md max-h-[500px] overflow-y-auto">
       {state.tickets.length ? (
-        <div className="p-2 m-2 border">{displayAllTickets}</div>
+        <div className="space-y-4">{displayAllTickets}</div>
       ) : (
-        <h3>No Tickets Added!</h3>
+        <h3 className="text-center text-gray-500">No Tickets Added!</h3>
       )}
     </div>
   );
