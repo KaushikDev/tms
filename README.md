@@ -6,3 +6,15 @@ Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+ 
+## Issues/Bugs/Enhancements/Ideas
+
+* Error Handling - MVP
+* Kanban?
+* Letter capitalisation utility fn
+* Code optimisation
+* Code refactoring
+* Header controls and UI - MVP
+* Footer controls and UI - MVP
+* Move static text to constants
