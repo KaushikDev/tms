@@ -15,6 +15,11 @@ Currently, two official plugins are available:
 * Letter capitalisation utility fn
 * Code optimisation
 * Code refactoring
-* Header controls and UI - MVP
-* Footer controls and UI - MVP
+* [Todo]Header controls and UI - MVP
+* [Todo]Footer controls and UI - MVP
 * Move static text to constants
+* [Done]Recently Deleted - MVP
+* Deletion Confirmation
+* Authentication && Authorization
+* Status ??
+* Recent activity log

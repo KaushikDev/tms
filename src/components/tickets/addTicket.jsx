@@ -19,8 +19,6 @@ const AddTicket = () => {
         payload: { show: true, message: "Ticket is saved!" },
       });
     }
-
-    console.log(state.tickets);
   };
 
   const handleCurrentTicketTitle = (e) => {

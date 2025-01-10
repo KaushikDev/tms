@@ -1,11 +1,13 @@
 import "./App.css";
 import Toast from "./components/general/toast";
 import AddTicket from "./components/tickets/addTicket";
+import RecentlyDeleted from "./components/tickets/recentlyDeleted";
 import ViewTickets from "./components/tickets/viewTickets";
 import { useTicketsContext } from "./hooks/useTicketsContext";
 
 function App() {
   const { state } = useTicketsContext();
+
   return (
     <div className="w-screen flex flex-col min-h-screen">
       <header className="w-full text-center py-4 bg-blue-600 text-white">
@@ -16,7 +18,10 @@ function App() {
           <AddTicket />
         </section>
         <section className="p-4 bg-white">
-          <ViewTickets />
+          <ViewTickets allTickets={state.tickets}/>
+        </section>
+        <section className="p-4 bg-white">
+          <RecentlyDeleted deletedTickets={state.recentlyDeleted}/>
         </section>
       </main>
       <footer className="w-full text-center py-4 bg-black text-white">

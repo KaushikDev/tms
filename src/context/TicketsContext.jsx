@@ -17,6 +17,7 @@ const TicketsProvider = ({ children }) => {
       show: false,
       message: "",
     },
+    recentlyDeleted: [],
   });
 
   return (

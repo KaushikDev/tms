@@ -8,4 +8,5 @@ export const ticketAction = {
   TICKET_TO_UPDATE: "ticket_to_update",
   TICKET_TO_UPDATE_CHANGES: "ticket_to_update_changes",
   RAISE_TOAST: "toggle_toast_message",
+  ADD_TO_DELETE_LIST: "add_to_delete_list",
 };

@@ -83,6 +83,13 @@ export const ticketsReducer = (state, action) => {
         tickets: filteredArr,
       };
 
+    case ticketAction.ADD_TO_DELETE_LIST:
+
+      return {
+        ...state,
+        recentlyDeleted: [...state.recentlyDeleted, {...action.payload}],
+      };
+
     case ticketAction.RAISE_TOAST:
       return {
         ...state,

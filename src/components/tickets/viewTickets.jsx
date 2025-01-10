@@ -1,18 +1,30 @@
+
 import { useTicketsContext } from "../../hooks/useTicketsContext";
 import { ticketAction } from "../../store/actions/actionTypes";
 import { ASSIGNEES, LABELS } from "../../utilities/constants";
 
-const ViewTickets = () => {
+// eslint-disable-next-line react/prop-types
+const ViewTickets = ({allTickets}) => {
   const { state, dispatch } = useTicketsContext();
 
-  const handleDeleteTicket = (ticketID) => {
+
+
+
+  const handleDeleteTicket = (ticket) => {
+    (async () => {
+      await dispatch({
+        type: ticketAction.DELETE_THIS_TICKET,
+        payload: ticket.id,
+      });
+      await dispatch({
+        type: ticketAction.RAISE_TOAST,
+        payload: { show: true, message: "Ticket is deleted!" },
+      });
+    })();
+    console.log(allTickets);
     dispatch({
-      type: ticketAction.DELETE_THIS_TICKET,
-      payload: ticketID,
-    });
-    dispatch({
-      type: ticketAction.RAISE_TOAST,
-      payload: { show: true, message: "Ticket is deleted!" },
+      type: ticketAction.ADD_TO_DELETE_LIST,
+      payload: ticket,
     });
   };
 
@@ -57,21 +69,20 @@ const ViewTickets = () => {
         <div className="flex justify-between items-center p-4 ">
           <div className="space-y-2">
             <h2 className="text-lg font-semibold text-gray-800">
-            <span className="text-gray-400 font-small">[{ticket.createdOn}]</span> {ticket.title} 
+              <span className="text-gray-400 font-small">
+                [{ticket.createdOn}]
+              </span>{" "}
+              {ticket.title}
             </h2>
             <h3 className="text-base text-gray-600 leading-relaxed">
-
               {ticket.description}
             </h3>
-            <p className="text-sm text-gray-500">
-        
-              {ticket.assignedTo}
-            </p>
+            <p className="text-sm text-gray-500">{ticket.assignedTo}</p>
           </div>
 
           <div className="flex justify-end gap-2">
             <button
-              onClick={() => handleDeleteTicket(ticket.id)}
+              onClick={() => handleDeleteTicket(ticket)}
               className="px-4 py-2 text-sm text-white bg-gray-500 rounded-md hover:bg-red-600"
             >
               {LABELS.DELETE_THIS_TICKET}
