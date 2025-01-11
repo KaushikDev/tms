@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useTicketsContext } from "../../hooks/useTicketsContext";
+import { useTicketsContext } from "../hooks/useTicketsContext";
 
 const RecentlyDeleted = ({ deletedTickets }) => {
   const { state } = useTicketsContext();
@@ -21,6 +21,7 @@ const RecentlyDeleted = ({ deletedTickets }) => {
                 <p className="text-gray-700"><strong>Title:</strong> {ticket.title}</p>
                 <p className="text-gray-700"><strong>Description:</strong> {ticket.description}</p>
                 <p className="text-gray-700"><strong>Created On:</strong> {ticket.createdOn}</p>
+                <p className="text-gray-700"><strong>Deleted On:</strong> {ticket.deletedOn}</p>
               </div>
             ))}
           </div>

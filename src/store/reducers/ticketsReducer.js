@@ -30,7 +30,7 @@ export const ticketsReducer = (state, action) => {
           {
             ...state.currentTicket,
             id: uuidv4(),
-            createdOn: currentDateAndTime,
+            createdOn: currentDateAndTime(),
           },
         ],
         currentTicket: { title: "", description: "", assignedTo: "" },
@@ -84,10 +84,12 @@ export const ticketsReducer = (state, action) => {
       };
 
     case ticketAction.ADD_TO_DELETE_LIST:
-
       return {
         ...state,
-        recentlyDeleted: [...state.recentlyDeleted, {...action.payload}],
+        recentlyDeleted: [
+          ...state.recentlyDeleted,
+          { ...action.payload, deletedOn: currentDateAndTime() },
+        ],
       };
 
     case ticketAction.RAISE_TOAST:

@@ -1,8 +1,12 @@
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
+import Header from "./components/general/header";
+import Footer from "./components/general/footer";
 import Toast from "./components/general/toast";
-import AddTicket from "./components/tickets/addTicket";
-import RecentlyDeleted from "./components/tickets/recentlyDeleted";
-import ViewTickets from "./components/tickets/viewTickets";
+import Home from "./pages/home";
+import CreateTicket from "./pages/createTicket";
+import RecentlyDeleted from "./pages/recentlyDeleted";
+import ViewTickets from "./pages/viewAllTickets";
 import { useTicketsContext } from "./hooks/useTicketsContext";
 
 function App() {
@@ -10,26 +14,32 @@ function App() {
 
   return (
     <div className="w-screen flex flex-col min-h-screen">
-      <header className="w-full text-center py-4 bg-blue-600 text-white">
-        <h1 className="text-2xl font-bold">Ticket Management System</h1>
-      </header>
+      <Header />
       <main className="flex-grow">
-        <section className="p-4 bg-white">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/add-ticket" element={<CreateTicket />} />
+          <Route
+            path="/view-all-tickets"
+            element={<ViewTickets allTickets={state.tickets} />}
+          />
+          <Route
+            path="/recently-deleted"
+            element={<RecentlyDeleted deletedTickets={state.recentlyDeleted} />}
+          />
+        </Routes>
+        {/* <section className="p-4 bg-white">
           <AddTicket />
         </section>
         <section className="p-4 bg-white">
-          <ViewTickets allTickets={state.tickets}/>
+          <ViewTickets allTickets={state.tickets} />
         </section>
         <section className="p-4 bg-white">
-          <RecentlyDeleted deletedTickets={state.recentlyDeleted}/>
-        </section>
+          <RecentlyDeleted deletedTickets={state.recentlyDeleted} />
+        </section> */}
       </main>
-      <footer className="w-full text-center py-4 bg-black text-white">
-        <h1 className="text-2xl font-bold">
-          2025. KaushikDev. All rights reserved.
-        </h1>
-      </footer>
-      {state.toast.show && <Toast message={state.toast.message}/>}
+      <Footer />
+      {state.toast.show && <Toast message={state.toast.message} />}
     </div>
   );
 }

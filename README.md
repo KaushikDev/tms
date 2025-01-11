@@ -10,16 +10,19 @@ Currently, two official plugins are available:
  
 ## Issues/Bugs/Enhancements/Ideas
 
-* Error Handling - MVP
+* [Todo]Error Handling - MVP
 * Kanban?
-* Letter capitalisation utility fn
+* [Todo]Letter capitalisation utility fn
 * Code optimisation
 * Code refactoring
-* [Todo]Header controls and UI - MVP
-* [Todo]Footer controls and UI - MVP
+* [Todo]Home Page(Basic) - MVP
+* [Done]Header controls and UI - MVP
+* [Done]Footer controls and UI - MVP
 * Move static text to constants
 * [Done]Recently Deleted - MVP
 * Deletion Confirmation
 * Authentication && Authorization
 * Status ??
 * Recent activity log
+* Lazy loading on view all tickets or pagination?
+* Filters on Every Ticket List
