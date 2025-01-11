@@ -13,7 +13,7 @@ Currently, two official plugins are available:
 * [Todo]Error Handling - MVP
 * Kanban?
 * [Todo]Letter capitalisation utility fn
-* Code optimisation
+* Code optimisation - Analyse with ChatGPT
 * Code refactoring
 * [Todo]Home Page(Basic) - MVP
 * [Done]Header controls and UI - MVP
@@ -21,7 +21,8 @@ Currently, two official plugins are available:
 * Move static text to constants
 * [Done]Recently Deleted - MVP
 * Deletion Confirmation
-* Authentication && Authorization
+* Authentication && Authorization via AppWrite?
+* DB via AppWrite?
 * Status ??
 * Recent activity log
 * Lazy loading on view all tickets or pagination?
