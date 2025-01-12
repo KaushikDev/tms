@@ -5,6 +5,7 @@ import Home from "./pages/home";
 import CreateTicket from "./pages/createTicket";
 import RecentlyDeleted from "./pages/recentlyDeleted";
 import ViewTickets from "./pages/viewAllTickets";
+import NotFound from "./pages/notFound";
 import { useTicketsContext } from "./hooks/useTicketsContext";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           path="/recently-deleted"
           element={<RecentlyDeleted deletedTickets={state.recentlyDeleted} />}
         />
+         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
