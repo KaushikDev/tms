@@ -17,7 +17,7 @@ const Footer = () => (
     &copy;
     <img
       className="h-5 sm:mx-0"
-      src="src/assets/KaushikDev.svg"
+      src="/src/assets/KaushikDev.svg"
       alt="KaushikDev Logo"
     />
   </Link>
