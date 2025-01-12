@@ -5,36 +5,47 @@ const RecentlyDeleted = ({ deletedTickets }) => {
   const { state } = useTicketsContext();
 
   return (
-    <div className="container mx-auto p-4 bg-white-50 rounded-lg shadow-md max-h-[500px] overflow-y-auto">
+    <div className="container mx-auto p-4 bg-white-50 min-h-[90%] max-h-[90%]">
       {state.recentlyDeleted.length ? (
         <>
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+          <h2 className="text-center  text-xl font-semibold text-gray-800 mb-4">
             Recently Deleted Tickets
           </h2>
-          <div className="space-y-4">
+          <div className="p-2 max-h-full  overflow-y-auto">
             {deletedTickets.map((ticket, index) => (
               <div
                 key={index}
-                className="card flex flex-col gap-4 p-4 mb-4 bg-gray-100 shadow-md rounded-lg border border-gray-200 hover:shadow-lg"
+                className="card flex flex-col gap-4 p-4 mb-4 bg-gray-100 hover:shadow-md rounded-lg border border-gray-200"
               >
-                <p className="text-gray-700"><strong>ID:</strong> {ticket.id}</p>
-                <p className="text-gray-700"><strong>Title:</strong> {ticket.title}</p>
-                <p className="text-gray-700"><strong>Description:</strong> {ticket.description}</p>
-                <p className="text-gray-700"><strong>Created On:</strong> {ticket.createdOn}</p>
-                <p className="text-gray-700"><strong>Deleted On:</strong> {ticket.deletedOn}</p>
+                <h2 className="text-lg font-semibold text-gray-800">
+                  <span className="text-gray-400 font-small">
+                    [{ticket.id}]
+                  </span>{" "}
+                </h2>
+
+                <p className="text-gray-700">
+                  <strong>Title:</strong> {ticket.title}
+                </p>
+                <p className="text-gray-700">
+                  <strong>Description:</strong> {ticket.description}
+                </p>
+                <p className="text-gray-700">
+                  <strong>Created On:</strong> {ticket.createdOn}
+                </p>
+                <p className="text-gray-700">
+                  <strong>Deleted On:</strong> {ticket.deletedOn}
+                </p>
               </div>
             ))}
           </div>
         </>
       ) : (
-        <h3 className="text-lg font-medium text-gray-500 text-center">
+        <h2 className="text-center  text-xl font-semibold text-gray-800 mb-4">
           No Recently Deleted Tickets!
-        </h3>
+        </h2>
       )}
     </div>
   );
 };
 
 export default RecentlyDeleted;
-
-

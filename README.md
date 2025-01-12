@@ -11,16 +11,18 @@ Currently, two official plugins are available:
 ## Issues/Bugs/Enhancements/Ideas
 
 * [Todo]Error Handling - MVP
+* [Todo]Responsive Design - MVP
 * Kanban?
 * [Todo]Letter capitalisation utility fn
 * Code optimisation - Analyse with ChatGPT
 * Code refactoring
-* [Todo]Home Page(Basic) - MVP
+* [Done]Home Page(Basic) - MVP
 * [Done]Header controls and UI - MVP
 * [Done]Footer controls and UI - MVP
 * Move static text to constants
 * [Done]Recently Deleted - MVP
 * Deletion Confirmation
+* Restore Deleted Ticket??
 * Authentication && Authorization via AppWrite?
 * DB via AppWrite?
 * Status ??

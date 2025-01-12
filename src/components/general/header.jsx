@@ -9,27 +9,27 @@ const Header = () => (
   <header className="w-full text-center p-4 bg-blue-600 text-white flex flex-row items-center justify-between">
     <Link
       to="/"
-      className="hover:text-gray-100 text-gray-100 transition hover:underline"
+      className="hover:text-gray-100 text-gray-100 transition"
     >
-      <LuTicketsPlane className="text-2xl" />
+      <LuTicketsPlane className="sm:text-4xl text-2xl" />
     </Link>
-    <nav className="mt-0 text-center">
+    <nav className="flex flex-col items-center  mt-0 text-center">
       <ul className="inline-flex space-x-6">
         <Link
           to="/add-ticket"
-          className="hidden sm:inline-block hover:text-gray-100 text-gray-100 transition hover:underline"
+          className="hidden sm:inline-block hover:text-gray-100 text-gray-100 transition hover:underline hover:underline-offset-4"
         >
           Create Ticket
         </Link>
         <Link
           to="/view-all-tickets"
-          className="hidden sm:inline-block hover:text-gray-100 text-gray-100 transition hover:underline"
+          className="hidden sm:inline-block hover:text-gray-100 text-gray-100 transitio hover:underline hover:underline-offset-4"
         >
           View Tickets
         </Link>
         <Link
           to="/recently-deleted"
-          className="hidden sm:inline-block hover:text-gray-100 text-gray-100 transition hover:underline"
+          className="hidden sm:inline-block hover:text-gray-100 text-gray-100 transition hover:underline hover:underline-offset-4"
         >
           Recently Deleted
         </Link>
@@ -41,19 +41,19 @@ const Header = () => (
         </Link> */}
         <Link
           to="/add-ticket"
-          className="sm:hidden inline-block hover:text-gray-100 text-gray-100 transition hover:underline"
+          className="text-xl sm:hidden inline-block   hover:text-gray-100 text-gray-300 transition"
         >
           <IoIosAddCircle />
         </Link>
         <Link
           to="/view-all-tickets"
-          className="sm:hidden inline-block sm:hidden inline-block  hover:text-gray-100 text-gray-100 transition hover:underline"
+          className="text-xl sm:hidden inline-block sm:hidden inline-block  hover:text-gray-100 text-gray-300 transition hover:underline"
         >
           <FaList />
         </Link>
         <Link
           to="/recently-deleted"
-          className="sm:hidden inline-block hover:text-gray-100 text-gray-100 transition hover:underline"
+          className="text-xl sm:hidden inline-block   hover:text-gray-100 text-gray-300 transition hover:underline"
         >
           <MdDeleteForever />
         </Link>

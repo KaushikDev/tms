@@ -13,9 +13,9 @@ function App() {
   const { state } = useTicketsContext();
 
   return (
-    <div className="w-screen flex flex-col min-h-screen">
+    <div className="w-screen flex flex-col h-screen">
       <Header />
-      <main className="flex-grow">
+      <main className="flex flex-col flex-grow container max-w-full max-h-full items-center justify-center rounded-lg overflow-y-auto">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/add-ticket" element={<CreateTicket />} />
@@ -28,15 +28,6 @@ function App() {
             element={<RecentlyDeleted deletedTickets={state.recentlyDeleted} />}
           />
         </Routes>
-        {/* <section className="p-4 bg-white">
-          <AddTicket />
-        </section>
-        <section className="p-4 bg-white">
-          <ViewTickets allTickets={state.tickets} />
-        </section>
-        <section className="p-4 bg-white">
-          <RecentlyDeleted deletedTickets={state.recentlyDeleted} />
-        </section> */}
       </main>
       <Footer />
       {state.toast.show && <Toast message={state.toast.message} />}

@@ -56,43 +56,50 @@ const ViewAllTickets = ({ allTickets }) => {
   const displayAllTickets = state.tickets.map((ticket, index) => (
     <div
       key={index}
-      className="card flex flex-col gap-4 p-4 mb-4 bg-gray-100 shadow-md rounded-lg border border-gray-200 hover:shadow-lg"
+      className="card flex flex-col gap-4 px-4 mb-4 bg-gray-100 hover:shadow-md rounded-lg border border-gray-200"
     >
       {!(
         state.ticketToUpdate.inProgress &&
         ticket.id === state.ticketToUpdate.oldValue.id
       ) ? (
-        <div className="flex justify-between items-center p-4 ">
-          <div className="space-y-2">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 gap-4">
+          <div className="space-y-1">
             <h2 className="text-lg font-semibold text-gray-800">
               <span className="text-gray-400 font-small">
-                [{ticket.createdOn}]
+                [{ticket.id}]
               </span>{" "}
-              {ticket.title}
             </h2>
-            <h3 className="text-base text-gray-600 leading-relaxed">
-              {ticket.description}
-            </h3>
-            <p className="text-sm text-gray-500">{ticket.assignedTo}</p>
+            <p className="text-gray-700">
+              <strong>Title:</strong> {ticket.title}
+            </p>
+            <p className="text-gray-700">
+              <strong>Description:</strong> {ticket.description}
+            </p>
+            <p className="text-gray-700">
+              <strong>Assigned To:</strong> {ticket.assignedTo}
+            </p>
+            <p className="text-gray-700">
+              <strong>Created On:</strong> {ticket.createdOn}
+            </p>
           </div>
 
           <div className="flex justify-end gap-2">
             <button
               onClick={() => handleDeleteTicket(ticket)}
-              className="px-4 py-2 text-sm text-white bg-gray-500 rounded-md hover:bg-red-600"
+              className="uppercase px-4 py-2 text-sm text-white bg-gray-500 rounded-md hover:bg-red-600"
             >
               {LABELS.DELETE_THIS_TICKET}
             </button>
             <button
               onClick={() => handleTicketUpdate(ticket)}
-              className="px-4 py-2 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600"
+              className="uppercase px-4 py-2 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600"
             >
               {LABELS.UPDATE_THIS_TICKET}
             </button>
           </div>
         </div>
       ) : (
-        <form onSubmit={handleEditTicket} className="flex flex-col gap-4">
+        <form onSubmit={handleEditTicket} className="flex flex-col gap-4 p-4">
           <div>
             <label
               htmlFor="ticketTitle"
@@ -148,10 +155,10 @@ const ViewAllTickets = ({ allTickets }) => {
               ))}
             </select>
           </div>
-          <div className="flex justify-end gap-2">
+          <div className="flex justify-end gap-2 p-4">
             <button
               type="submit"
-              className="px-4 py-2 text-sm text-white bg-green-500 rounded-md hover:bg-green-600"
+              className="uppercase px-4 py-2 text-sm text-white bg-green-500 rounded-md hover:bg-green-600"
             >
               {LABELS.ADD_THIS_TICKET}
             </button>
@@ -177,7 +184,7 @@ const ViewAllTickets = ({ allTickets }) => {
                   },
                 })
               }
-              className="px-4 py-2 text-sm text-white bg-gray-500 rounded-md hover:bg-gray-600"
+              className="uppercase px-4 py-2 text-sm text-white bg-gray-500 rounded-md hover:bg-gray-600"
             >
               {LABELS.CANCEL_CHANGES}
             </button>
@@ -188,16 +195,20 @@ const ViewAllTickets = ({ allTickets }) => {
   ));
 
   return (
-    <div className="container mx-auto p-4 bg-white-50 rounded-lg shadow-md max-h-[500px] overflow-y-auto">
+    <div className="flex flex-col container mx-auto p-4 min-h-[90%] max-h-[90%]">
       {state.tickets.length ? (
         <>
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+          <h2 className="text-center text-xl font-semibold text-gray-800 mb-4">
             {LABELS.ALL_TICKETS}
           </h2>
-          <div className="space-y-4">{displayAllTickets}</div>
+          <div className="p-2 max-h-full overflow-y-auto">
+            {displayAllTickets}
+          </div>
         </>
       ) : (
-        <h3 className="text-center text-gray-500">No Tickets Added!</h3>
+        <h2 className="stretch text-center  text-xl font-semibold text-gray-800 mb-4">
+          No Tickets Added!
+        </h2>
       )}
     </div>
   );
