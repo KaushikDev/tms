@@ -11,7 +11,7 @@ Currently, two official plugins are available:
 ## Issues/Bugs/Enhancements/Ideas
 
 * [Todo]Error Handling - MVP
-* [Todo]Responsive Design - MVP
+* [Done]Responsive Design - MVP
 * Kanban?
 * [Todo]Letter capitalisation utility fn
 * Code optimisation - Analyse with ChatGPT
@@ -29,3 +29,4 @@ Currently, two official plugins are available:
 * Recent activity log
 * Lazy loading on view all tickets or pagination?
 * Filters on Every Ticket List
+* Limits on text fields
