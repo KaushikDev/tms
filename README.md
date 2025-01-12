@@ -10,17 +10,17 @@ Currently, two official plugins are available:
  
 ## Issues/Bugs/Enhancements/Ideas
 
-* [Todo]Error Handling - MVP
-* [Done]Responsive Design - MVP
+* [TODO]Error Handling - MVP
+* [DONE]Responsive Design - MVP
 * Kanban?
-* [Todo]Letter capitalisation utility fn
+* [DONE]Letter capitalisation utility fn
 * Code optimisation - Analyse with ChatGPT
 * Code refactoring
-* [Done]Home Page(Basic) - MVP
-* [Done]Header controls and UI - MVP
-* [Done]Footer controls and UI - MVP
+* [DONE]Home Page(Basic) - MVP
+* [DONE]Header controls and UI - MVP
+* [DONE]Footer controls and UI - MVP
 * Move static text to constants
-* [Done]Recently Deleted - MVP
+* [DONE]Recently Deleted - MVP
 * Deletion Confirmation
 * Restore Deleted Ticket??
 * Authentication && Authorization via AppWrite?
@@ -30,3 +30,6 @@ Currently, two official plugins are available:
 * Lazy loading on view all tickets or pagination?
 * Filters on Every Ticket List
 * Limits on text fields
+* Route after creating ticket
+* Blank page or 404 issue resolve
+* [DONE]404 page

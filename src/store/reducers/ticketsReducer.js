@@ -1,19 +1,19 @@
 import { ticketAction } from "../actions/actionTypes";
 import { v4 as uuidv4 } from "uuid";
-import { currentDateAndTime } from "../../utilities/utils";
+import { currentDateAndTime, formatTextInput } from "../../utilities/utils";
 
 export const ticketsReducer = (state, action) => {
   switch (action.type) {
     case ticketAction.CURRENT_TICKET_TITLE:
       return {
         ...state,
-        currentTicket: { ...state.currentTicket, title: action.payload },
+        currentTicket: { ...state.currentTicket, title: formatTextInput(action.payload) },
       };
 
     case ticketAction.CURRENT_TICKET_DESCRIPTION:
       return {
         ...state,
-        currentTicket: { ...state.currentTicket, description: action.payload },
+        currentTicket: { ...state.currentTicket, description: formatTextInput(action.payload) },
       };
 
     case ticketAction.CURRENT_TICKET_ASSIGNED_TO:
@@ -52,7 +52,7 @@ export const ticketsReducer = (state, action) => {
           ...state.ticketToUpdate,
           newValue: {
             ...state.ticketToUpdate.newValue,
-            [action.payload.field]: action.payload.value,
+            [action.payload.field]: action.payload.field !== "assignedTo"? formatTextInput(action.payload.value) : action.payload.value,
           },
         },
       };
