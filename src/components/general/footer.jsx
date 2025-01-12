@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { AiFillLinkedin } from "react-icons/ai";
 import { MdEmail } from "react-icons/md";
 import { FaGithub } from "react-icons/fa";
+import logo from "../../assets/KaushikDev.svg";
+
 
 const Footer = () => (
   <footer className="w-full bg-gray-900 text-white py-8">
@@ -17,7 +19,7 @@ const Footer = () => (
     &copy;
     <img
       className="h-5 sm:mx-0"
-      src="/src/assets/KaushikDev.svg"
+      src={logo}
       alt="KaushikDev Logo"
     />
   </Link>
