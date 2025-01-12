@@ -1,21 +1,36 @@
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import AddTicket from "./components/tickets/addTicket";
-import ViewTickets from "./components/tickets/viewTickets";
+import Header from "./components/general/header";
+import Footer from "./components/general/footer";
+import Toast from "./components/general/toast";
+import Home from "./pages/home";
+import CreateTicket from "./pages/createTicket";
+import RecentlyDeleted from "./pages/recentlyDeleted";
+import ViewTickets from "./pages/viewAllTickets";
+import { useTicketsContext } from "./hooks/useTicketsContext";
 
 function App() {
+  const { state } = useTicketsContext();
+
   return (
-    <div className="container max-w-screen-2xl mx-auto p-6 bg-gray-100 min-h-screen">
-      <header className="text-center py-4 mb-6 bg-blue-600 text-white rounded shadow">
-        <h1 className="text-2xl font-bold">Ticket Management System</h1>
-      </header>
-      <main className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <section className="p-4 bg-white rounded-lg shadow">
-          <AddTicket />
-        </section>
-        <section className="p-4 bg-white rounded-lg shadow">
-          <ViewTickets />
-        </section>
+    <div className="w-screen flex flex-col h-screen">
+      <Header />
+      <main className="flex flex-col flex-grow container max-w-full max-h-full items-center justify-center rounded-lg overflow-y-auto">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/add-ticket" element={<CreateTicket />} />
+          <Route
+            path="/view-all-tickets"
+            element={<ViewTickets allTickets={state.tickets} />}
+          />
+          <Route
+            path="/recently-deleted"
+            element={<RecentlyDeleted deletedTickets={state.recentlyDeleted} />}
+          />
+        </Routes>
       </main>
+      <Footer />
+      {state.toast.show && <Toast message={state.toast.message} />}
     </div>
   );
 }

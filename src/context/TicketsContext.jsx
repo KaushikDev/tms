@@ -5,15 +5,19 @@ export const TicketsContext = createContext();
 
 // eslint-disable-next-line react/prop-types
 const TicketsProvider = ({ children }) => {
-  
   const [state, dispatch] = useReducer(ticketsReducer, {
     tickets: [],
-    currentTicket: {title: "", description: "", assignedTo: "", },
+    currentTicket: { title: "", description: "", assignedTo: "" },
     ticketToUpdate: {
       inProgress: false,
-      oldValue: {title: "", description: "", assignedTo: "", },
-      newValue: {title: "", description: "", assignedTo: "", },
+      oldValue: { title: "", description: "", assignedTo: "" },
+      newValue: { title: "", description: "", assignedTo: "" },
     },
+    toast: {
+      show: false,
+      message: "",
+    },
+    recentlyDeleted: [],
   });
 
   return (

@@ -1,7 +1,8 @@
-import { ticketAction } from "../../store/actions/actionTypes";
-import { useTicketsContext } from "../../hooks/useTicketsContext";
+import { ticketAction } from "./../store/actions/actionTypes";
+import { useTicketsContext } from "./../hooks/useTicketsContext";
+import { ASSIGNEES, LABELS } from "./../utilities/constants";
 
-const AddTicket = () => {
+const CreateTicket = () => {
   const { state, dispatch } = useTicketsContext();
 
   const handleAddTicket = (e) => {
@@ -13,8 +14,11 @@ const AddTicket = () => {
       dispatch({
         type: ticketAction.ADD_NEW_TICKET,
       });
+      dispatch({
+        type: ticketAction.RAISE_TOAST,
+        payload: { show: true, message: "Ticket is saved!" },
+      });
     }
-    console.log(state.tickets);
   };
 
   const handleCurrentTicketTitle = (e) => {
@@ -41,7 +45,7 @@ const AddTicket = () => {
   return (
     <div className="container mx-auto mt-8 p-6 bg-white shadow-md rounded-md">
       <h2 className="text-xl font-semibold text-gray-800 mb-4">
-        Add New Ticket
+        {LABELS.CREATE_NEW_TICKET}
       </h2>
       <form onSubmit={handleAddTicket} className="flex flex-col gap-6">
         <div>
@@ -49,13 +53,13 @@ const AddTicket = () => {
             htmlFor="ticketTitle"
             className="block text-sm font-medium text-gray-700 mb-1"
           >
-            Ticket Title
+            {LABELS.TITLE}
           </label>
           <input
             id="ticketTitle"
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={state.currentTicket.title}
-            placeholder="Enter ticket title"
+            placeholder={LABELS.TITLE_PLACEHOLDER}
             onChange={handleCurrentTicketTitle}
           />
         </div>
@@ -65,13 +69,13 @@ const AddTicket = () => {
             htmlFor="ticketDescription"
             className="block text-sm font-medium text-gray-700 mb-1"
           >
-            Ticket Description
+            {LABELS.DESCRIPTION}
           </label>
           <textarea
             id="ticketDescription"
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
             value={state.currentTicket.description}
-            placeholder="Enter ticket description"
+            placeholder={LABELS.DESCRIPTION_PLACEHOLDER}
             onChange={handleCurrentTicketDescription}
           />
         </div>
@@ -81,7 +85,7 @@ const AddTicket = () => {
             htmlFor="ticketAssignedTo"
             className="block text-sm font-medium text-gray-700 mb-1"
           >
-            Assigned To
+            {LABELS.ASSIGNED_TO}
           </label>
           <select
             id="ticketAssignedTo"
@@ -90,24 +94,27 @@ const AddTicket = () => {
             onChange={handleCurrentTicketAssignedTo}
           >
             <option value="" disabled>
-              Not yet assigned
+              {LABELS.TO_BE_ASSIGNED}
             </option>
-            <option value="Piyush Kaushik">Piyush Kaushik</option>
-            <option value="Radhika Sharma">Radhika Sharma</option>
-            <option value="Rohit Shukla">Rohit Shukla</option>
-            <option value="Koyal Bharadwaj">Koyal Bharadwaj</option>
+            {ASSIGNEES.map((item, index) => (
+              <option key={index} value={item}>
+                {item}
+              </option>
+            ))}
           </select>
         </div>
 
         <button
           type="submit"
-          className="w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="uppercase w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-md hover:shadow-xl"
         >
-          Save Ticket
+          {LABELS.ADD_THIS_TICKET}
         </button>
       </form>
+
+
     </div>
   );
 };
 
-export default AddTicket;
+export default CreateTicket;

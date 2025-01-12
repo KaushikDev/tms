@@ -1,5 +1,6 @@
 import { ticketAction } from "../actions/actionTypes";
 import { v4 as uuidv4 } from "uuid";
+import { currentDateAndTime } from "../../utilities/utils";
 
 export const ticketsReducer = (state, action) => {
   switch (action.type) {
@@ -24,11 +25,27 @@ export const ticketsReducer = (state, action) => {
     case ticketAction.ADD_NEW_TICKET:
       return {
         ...state,
-        tickets: [...state.tickets, { ...state.currentTicket, id: uuidv4() }],
+        tickets: [
+          ...state.tickets,
+          {
+            ...state.currentTicket,
+            id: uuidv4(),
+            createdOn: currentDateAndTime(),
+          },
+        ],
         currentTicket: { title: "", description: "", assignedTo: "" },
       };
 
     case ticketAction.TICKET_TO_UPDATE:
+      return {
+        ...state,
+        ticketToUpdate: {
+          ...state.ticketToUpdate,
+          ...action.payload,
+        },
+      };
+
+    case ticketAction.TICKET_TO_UPDATE_CHANGES:
       return {
         ...state,
         ticketToUpdate: {
@@ -51,8 +68,8 @@ export const ticketsReducer = (state, action) => {
         tickets: [...updatedTickets, state.ticketToUpdate.newValue],
         ticketToUpdate: {
           inProgress: false,
-          oldValue: { title: "", description: "", assignedTo: "" },
-          newValue: { title: "", description: "", assignedTo: "" },
+          oldValue: { id: "", title: "", description: "", assignedTo: "" },
+          newValue: { id: "", title: "", description: "", assignedTo: "" },
         },
       };
 
@@ -64,6 +81,21 @@ export const ticketsReducer = (state, action) => {
       return {
         ...state,
         tickets: filteredArr,
+      };
+
+    case ticketAction.ADD_TO_DELETE_LIST:
+      return {
+        ...state,
+        recentlyDeleted: [
+          ...state.recentlyDeleted,
+          { ...action.payload, deletedOn: currentDateAndTime() },
+        ],
+      };
+
+    case ticketAction.RAISE_TOAST:
+      return {
+        ...state,
+        toast: action.payload,
       };
 
     default:
