@@ -7,13 +7,19 @@ export const ticketsReducer = (state, action) => {
     case ticketAction.CURRENT_TICKET_TITLE:
       return {
         ...state,
-        currentTicket: { ...state.currentTicket, title: formatTextInput(action.payload) },
+        currentTicket: {
+          ...state.currentTicket,
+          title: formatTextInput(action.payload),
+        },
       };
 
     case ticketAction.CURRENT_TICKET_DESCRIPTION:
       return {
         ...state,
-        currentTicket: { ...state.currentTicket, description: formatTextInput(action.payload) },
+        currentTicket: {
+          ...state.currentTicket,
+          description: formatTextInput(action.payload),
+        },
       };
 
     case ticketAction.CURRENT_TICKET_ASSIGNED_TO:
@@ -52,7 +58,10 @@ export const ticketsReducer = (state, action) => {
           ...state.ticketToUpdate,
           newValue: {
             ...state.ticketToUpdate.newValue,
-            [action.payload.field]: action.payload.field !== "assignedTo"? formatTextInput(action.payload.value) : action.payload.value,
+            [action.payload.field]:
+              action.payload.field !== "assignedTo"
+                ? formatTextInput(action.payload.value)
+                : action.payload.value,
           },
         },
       };
@@ -98,6 +107,21 @@ export const ticketsReducer = (state, action) => {
         toast: action.payload,
       };
 
+    case ticketAction.SET_ERROR_TITLE:
+      return {
+        ...state,
+        error: { ...state.error, title: action.payload },
+      };
+    case ticketAction.SET_ERROR_DESCRIPTION:
+      return {
+        ...state,
+        error: { ...state.error, description: action.payload },
+      };
+
+     case ticketAction.RESET_ERROR: 
+     return {
+      ...state, error: {title: "", description: ""}
+     } 
     default:
       return state;
   }

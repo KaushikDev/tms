@@ -18,6 +18,10 @@ const TicketsProvider = ({ children }) => {
       message: "",
     },
     recentlyDeleted: [],
+    error: {
+      title: "",
+      description: "",
+    },
   });
 
   return (

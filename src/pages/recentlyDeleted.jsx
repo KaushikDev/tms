@@ -1,7 +1,8 @@
-/* eslint-disable react/prop-types */
+
 import { useTicketsContext } from "../hooks/useTicketsContext";
 
-const RecentlyDeleted = ({ deletedTickets }) => {
+
+const RecentlyDeleted = () => {
   const { state } = useTicketsContext();
 
   return (
@@ -12,7 +13,7 @@ const RecentlyDeleted = ({ deletedTickets }) => {
             Recently Deleted Tickets
           </h2>
           <div className="p-2 max-h-full  overflow-y-auto">
-            {deletedTickets.map((ticket, index) => (
+            {state.recentlyDeleted.map((ticket, index) => (
               <div
                 key={index}
                 className="card flex flex-col gap-4 p-4 mb-4 bg-gray-100 hover:shadow-md rounded-lg border border-gray-200"
@@ -36,7 +37,7 @@ const RecentlyDeleted = ({ deletedTickets }) => {
                   <strong>Deleted On:</strong> {ticket.deletedOn}
                 </p>
               </div>
-            ))}
+            )).reverse()}
           </div>
         </>
       ) : (

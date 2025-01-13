@@ -18,7 +18,7 @@ const Toast = ({ message }) => {
   }, [dispatch]);
 
   return (
-    <div className="fixed bottom-24 right-1/2 transform translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg opacity-90 z-50">
+    <div className="fixed top-24 right-1/2 transform translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg opacity-90 z-50">
       {message}
     </div>
   );
