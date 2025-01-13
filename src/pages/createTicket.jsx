@@ -1,15 +1,54 @@
 import { ticketAction } from "./../store/actions/actionTypes";
 import { useTicketsContext } from "./../hooks/useTicketsContext";
 import { ASSIGNEES, LABELS } from "./../utilities/constants";
+import { useNavigate } from "react-router-dom";
 
 const CreateTicket = () => {
   const { state, dispatch } = useTicketsContext();
+  const navigate = useNavigate();
 
   const handleAddTicket = (e) => {
     e.preventDefault();
-    if (
+
+    if (!state.currentTicket.title && !state.currentTicket.description) {
+      dispatch({
+        type: ticketAction.SET_ERROR_TITLE,
+        payload: "Title cannot be empty!",
+      });
+      dispatch({
+        type: ticketAction.SET_ERROR_DESCRIPTION,
+        payload: "Description cannot be empty!",
+      });
+      dispatch({
+        type: ticketAction.RAISE_TOAST,
+        payload: {
+          show: true,
+          message: "Title & Description cannot be empty!",
+        },
+      });
+    } else if (!state.currentTicket.title) {
+      dispatch({
+        type: ticketAction.SET_ERROR_TITLE,
+        payload: "Title cannot be empty!",
+      });
+      dispatch({
+        type: ticketAction.RAISE_TOAST,
+        payload: { show: true, message: "Title cannot be empty!" },
+      });
+    } else if (!state.currentTicket.description) {
+      dispatch({
+        type: ticketAction.SET_ERROR_DESCRIPTION,
+        payload: "Description cannot be empty!",
+      });
+      dispatch({
+        type: ticketAction.RAISE_TOAST,
+        payload: { show: true, message: "Description cannot be empty!" },
+      });
+    } else if (
       state.currentTicket.title.trim() &&
-      state.currentTicket.description.trim()
+      state.currentTicket.description.trim() &&
+      !state.error.title &&
+      !state.error.description
     ) {
       dispatch({
         type: ticketAction.ADD_NEW_TICKET,
@@ -18,10 +57,15 @@ const CreateTicket = () => {
         type: ticketAction.RAISE_TOAST,
         payload: { show: true, message: "Ticket is saved!" },
       });
+      dispatch({ type: ticketAction.RESET_ERROR });
+      navigate("/view-all-tickets");
     }
   };
 
   const handleCurrentTicketTitle = (e) => {
+    e.target.value
+      ? dispatch({ type: ticketAction.SET_ERROR_TITLE, payload: "" })
+      : null;
     dispatch({
       type: ticketAction.CURRENT_TICKET_TITLE,
       payload: e.target.value,
@@ -29,6 +73,9 @@ const CreateTicket = () => {
   };
 
   const handleCurrentTicketDescription = (e) => {
+    e.target.value
+      ? dispatch({ type: ticketAction.SET_ERROR_DESCRIPTION, payload: "" })
+      : null;
     dispatch({
       type: ticketAction.CURRENT_TICKET_DESCRIPTION,
       payload: e.target.value,
@@ -57,7 +104,9 @@ const CreateTicket = () => {
           </label>
           <input
             id="ticketTitle"
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={`w-full p-3 border ${
+              state.error.title ? "border-red-500" : "border-gray-300"
+            } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
             value={state.currentTicket.title}
             placeholder={LABELS.TITLE_PLACEHOLDER}
             onChange={handleCurrentTicketTitle}
@@ -73,7 +122,9 @@ const CreateTicket = () => {
           </label>
           <textarea
             id="ticketDescription"
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+            className={`w-full p-3 border ${
+              state.error.description ? "border-red-500" : "border-gray-300"
+            } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none`}
             value={state.currentTicket.description}
             placeholder={LABELS.DESCRIPTION_PLACEHOLDER}
             onChange={handleCurrentTicketDescription}
@@ -111,8 +162,6 @@ const CreateTicket = () => {
           {LABELS.ADD_THIS_TICKET}
         </button>
       </form>
-
-
     </div>
   );
 };

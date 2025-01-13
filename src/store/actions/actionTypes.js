@@ -9,4 +9,7 @@ export const ticketAction = {
   TICKET_TO_UPDATE_CHANGES: "ticket_to_update_changes",
   RAISE_TOAST: "toggle_toast_message",
   ADD_TO_DELETE_LIST: "add_to_delete_list",
+  SET_ERROR_TITLE: "set_error_title",
+  SET_ERROR_DESCRIPTION: "set_error_description",
+  RESET_ERROR: "reset_error",
 };

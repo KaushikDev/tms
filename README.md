@@ -10,7 +10,7 @@ Currently, two official plugins are available:
  
 ## Issues/Bugs/Enhancements/Ideas
 
-* [TODO]Error Handling - MVP
+* [DONE]Error Handling - MVP
 * [DONE]Responsive Design - MVP
 * Kanban?
 * [DONE]Letter capitalisation utility fn
@@ -30,6 +30,8 @@ Currently, two official plugins are available:
 * Lazy loading on view all tickets or pagination?
 * Filters on Every Ticket List
 * Limits on text fields
-* Route after creating ticket
+* [DONE]Route after creating ticket
 * Blank page or 404 issue resolve
 * [DONE]404 page
+* Highlight first item in the list for a couple of seconds.
+* Toast component is called multiple times, check for other components.
