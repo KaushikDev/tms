@@ -4,13 +4,16 @@ import "./index.css";
 import App from "./App.jsx";
 import TicketsProvider from "./context/TicketsContext";
 import { BrowserRouter as Router } from "react-router-dom";
+import { AuthProvider } from "./context/authContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <TicketsProvider>
-      <Router>
-        <App />
-      </Router>
-    </TicketsProvider>
+    <AuthProvider>
+      <TicketsProvider>
+        <Router>
+          <App />
+        </Router>
+      </TicketsProvider>
+    </AuthProvider>
   </StrictMode>
 );

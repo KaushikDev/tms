@@ -1,0 +1,61 @@
+import { LABELS } from "../../utilities/constants";
+import { Link } from "react-router-dom";
+import { IoLogOut } from "react-icons/io5";
+import { ROUTES } from "../../utilities/routes";
+import { FaList } from "react-icons/fa";
+import { IoIosAddCircle } from "react-icons/io";
+import { MdDeleteForever } from "react-icons/md";
+import { FaHome } from "react-icons/fa";
+
+// eslint-disable-next-line react/prop-types
+const Menu = ({ isMobile, action }) => {
+  const MENU_ITEMS = [
+    { name: LABELS.HOME, path: ROUTES.HOME, icon: <FaHome /> },
+    { name: LABELS.CREATE, path: ROUTES.CREATE, icon: <IoIosAddCircle /> },
+    { name: LABELS.VIEW, path: ROUTES.VIEW, icon: <FaList /> },
+    { name: LABELS.DELETED, path: ROUTES.DELETED, icon: <MdDeleteForever /> },
+  ];
+
+  const menu = MENU_ITEMS.map((item, index) =>
+    !isMobile ? (
+      <Link
+        key={index}
+        to={item.path}
+        className="hidden sm:inline-block hover:text-gray-100 text-gray-100 transition hover:underline hover:underline-offset-4"
+      >
+        {item.name}
+      </Link>
+    ) : (
+      <Link
+        key={index}
+        to={item.path}
+        className="text-xl sm:hidden inline-block p-1 text-gray-100 hover:text-gray-100 hover:border  hover:border-gray-100 hover:rounded-sm hover:p-1  transition"
+      >
+        {item.icon}
+      </Link>
+    )
+  );
+
+  return (
+    <>
+      {menu}
+      {!isMobile ? (
+        <button
+          onClick={action}
+          className="hidden p-2 sm:inline-block hover:bg-gray-900 hover:text-gray-100 bg-gray-100 text-gray-900 transition"
+        >
+          {LABELS.LOGOUT}
+        </button>
+      ) : (
+        <button
+          onClick={action}
+          className="text-xl p-2 sm:hidden inline-block hover:bg-gray-900 hover:text-gray-100 bg-gray-100 text-gray-900 transition"
+        >
+          <IoLogOut />
+        </button>
+      )}
+    </>
+  );
+};
+
+export default Menu;
