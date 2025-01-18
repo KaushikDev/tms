@@ -38,3 +38,4 @@ Live application : [TicketManagementSystem](https://tms.kaushikdev.com)
 * [DONE]Highlight selected menu item
 * [DONE]Fix UI
 * [DONE] Environent Variables
+* Home Page out of protected route and create new Dashboard page w/ total tickets and recent activities.
