@@ -19,11 +19,11 @@ Currently, two official plugins are available:
 * [DONE]Home Page(Basic) - MVP
 * [DONE]Header controls and UI - MVP
 * [DONE]Footer controls and UI - MVP
-* Move static text to constants
+* [DONE]Move static text to constants
 * [DONE]Recently Deleted - MVP
 * Deletion Confirmation
 * Restore Deleted Ticket??
-* Authentication && Authorization via AppWrite?
+* [DONE]Authentication && Authorization via AppWrite?
 * DB via AppWrite?
 * Status ??
 * Recent activity log
@@ -35,3 +35,7 @@ Currently, two official plugins are available:
 * [DONE]404 page
 * Highlight first item in the list for a couple of seconds.
 * Toast component is called multiple times, check for other components.
+* Error handling for login and registration forms
+* [DONE]Save logged-in state
+* [DONE]If logged in, should redirect to home("/") if url is changed to "/login" or "/register"
+* [DONE]Highlight selected menu item

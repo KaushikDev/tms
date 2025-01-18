@@ -1,5 +1,5 @@
 import { LABELS } from "../../utilities/constants";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { IoLogOut } from "react-icons/io5";
 import { ROUTES } from "../../utilities/routes";
 import { FaList } from "react-icons/fa";
@@ -9,6 +9,8 @@ import { FaHome } from "react-icons/fa";
 
 // eslint-disable-next-line react/prop-types
 const Menu = ({ isMobile, action }) => {
+  const location = useLocation();
+  
   const MENU_ITEMS = [
     { name: LABELS.HOME, path: ROUTES.HOME, icon: <FaHome /> },
     { name: LABELS.CREATE, path: ROUTES.CREATE, icon: <IoIosAddCircle /> },
@@ -21,7 +23,7 @@ const Menu = ({ isMobile, action }) => {
       <Link
         key={index}
         to={item.path}
-        className="hidden sm:inline-block hover:text-gray-100 text-gray-100 transition hover:underline hover:underline-offset-4"
+        className={`hidden sm:inline-block hover:text-gray-100 text-gray-100 transition ${location.pathname === item.path ? "underline underline-offset-4 ": null} hover:underline hover:underline-offset-4`}
       >
         {item.name}
       </Link>
@@ -29,7 +31,7 @@ const Menu = ({ isMobile, action }) => {
       <Link
         key={index}
         to={item.path}
-        className="text-xl sm:hidden inline-block p-1 text-gray-100 hover:text-gray-100 hover:border  hover:border-gray-100 hover:rounded-sm hover:p-1  transition"
+        className={`text-xl sm:hidden inline-block p-1 text-gray-100 hover:text-gray-100 ${location.pathname === item.path ? "border border-gray-100 rounded-md": null} hover:border  hover:border-gray-100 hover:rounded-md hover:p-1  transition`}
       >
         {item.icon}
       </Link>

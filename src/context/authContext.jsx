@@ -1,12 +1,19 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { account, ID } from "../lib/appwrite";
-
 
 const AuthContext = createContext();
 
 // eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
   const [loggedInUser, setLoggedInUser] = useState(null);
+
+
+  useEffect(()=>{
+    const currentSession = account.get();
+    if(currentSession.status){
+      setLoggedInUser(currentSession);
+    }
+  }, [])
 
   const register = async (name, email, password) => {
     await account.create(ID.unique(), email, password, name);

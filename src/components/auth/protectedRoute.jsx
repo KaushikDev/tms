@@ -10,7 +10,7 @@ const ProtectedRoute = ({ children }) => {
 
   useEffect(() => {
     loggedInUser ? children : navigate(ROUTES.LOGIN);
-  }, [loggedInUser]);
+  }, [children, loggedInUser, navigate]);
 
   return <div>{children}</div>;
 };

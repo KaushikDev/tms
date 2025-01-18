@@ -48,7 +48,7 @@ export const LABELS = {
   NOT_REGISTERED_YET: "Didn't signup yet? Create an account now.",
   HAVE_AN_ACCOUNT: "Already got an account? Login now.",
 
-  PAGE_NOT_FOUND: " Oops! The page you&apos;re looking for doesn&apos;t exist.",
+  PAGE_NOT_FOUND: " Oops! The page you're looking for doesn't exist.",
   GO_BACK_HOME: "Go back to Home",
 
   LINKEDIN: "LinkedIn",
