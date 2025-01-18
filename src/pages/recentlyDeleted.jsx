@@ -45,31 +45,35 @@ const RecentlyDeleted = () => {
                   key={index}
                   className="card flex flex-col gap-4 p-4 mb-4 bg-gray-100 hover:shadow-md rounded-lg border border-gray-200"
                 >
-                  <h2 className="text-lg font-semibold text-gray-800">
-                    <span className="text-gray-400 font-small">
-                      [{ticket.id}]
-                    </span>{" "}
-                  </h2>
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 gap-4">
+                    <div className="space-y-1">
+                      <h2 className="text-lg font-semibold text-gray-800">
+                        <span className="text-gray-400 font-small">
+                          [{ticket.id}]
+                        </span>{" "}
+                      </h2>
 
-                  <p className="text-gray-700">
-                    <strong>Title:</strong> {ticket.title}
-                  </p>
-                  <p className="text-gray-700">
-                    <strong>Description:</strong> {ticket.description}
-                  </p>
-                  <p className="text-gray-700">
-                    <strong>Created On:</strong> {ticket.createdOn}
-                  </p>
-                  <p className="text-gray-700">
-                    <strong>Deleted On:</strong> {ticket.deletedOn}
-                  </p>
-                  <div className="flex justify-end gap-2">
-                    <button
-                      onClick={() => handleRestoreTicket(ticket)}
-                      className="uppercase px-4 py-2 text-sm text-white bg-gray-500 rounded-md hover:bg-red-600"
-                    >
-                      {LABELS.RESTORE_THIS_TICKET}
-                    </button>
+                      <p className="text-gray-700">
+                        <strong>Title:</strong> {ticket.title}
+                      </p>
+                      <p className="text-gray-700">
+                        <strong>Description:</strong> {ticket.description}
+                      </p>
+                      <p className="text-gray-700">
+                        <strong>Created On:</strong> {ticket.createdOn}
+                      </p>
+                      <p className="text-gray-700">
+                        <strong>Deleted On:</strong> {ticket.deletedOn}
+                      </p>
+                    </div>
+                    <div className="flex justify-end gap-2">
+                      <button
+                        onClick={() => handleRestoreTicket(ticket)}
+                        className="uppercase px-4 py-2 text-sm text-white bg-gray-500 rounded-md hover:bg-red-600"
+                      >
+                        {LABELS.RESTORE_THIS_TICKET}
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))

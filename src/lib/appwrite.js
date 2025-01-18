@@ -4,7 +4,7 @@ export const client = new Client();
 
 client
     .setEndpoint('https://cloud.appwrite.io/v1')
-    .setProject('6788cb94002adcfc9d0a'); // Replace with your project ID
+    .setProject(`${import.meta.env.VITE_API_KEY}`); // Replace with your project ID
 
 export const account = new Account(client);
 export const databases = new Databases(client);
