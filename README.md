@@ -1,6 +1,12 @@
-# React + Vite
+# Ticket Management System.
+## Hi, this is Piyush Kaushik a.k.a kaushikDev. Glad to walk you through this app :D
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This application is made in React with specific showcase for context and reducer api's for CRUD operations. For Auth, I've used, appwrite and for styling, Tailwind was the first choice.
+
+Live application : [TicketManagementSystem](https://tms.kaushikdev.com)
+
+This application uses a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
 
 Currently, two official plugins are available:
 
@@ -21,8 +27,8 @@ Currently, two official plugins are available:
 * [DONE]Footer controls and UI - MVP
 * [DONE]Move static text to constants
 * [DONE]Recently Deleted - MVP
-* Deletion Confirmation
-* Restore Deleted Ticket??
+* [TODO]Deletion Confirmation
+* [DONE]Restore Deleted Ticket??
 * [DONE]Authentication && Authorization via AppWrite?
 * DB via AppWrite?
 * Status ??
@@ -39,3 +45,5 @@ Currently, two official plugins are available:
 * [DONE]Save logged-in state
 * [DONE]If logged in, should redirect to home("/") if url is changed to "/login" or "/register"
 * [DONE]Highlight selected menu item
+* [TODO]Fix UI
+* [TODO] Environent Variables

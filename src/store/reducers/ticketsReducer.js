@@ -29,18 +29,24 @@ export const ticketsReducer = (state, action) => {
       };
 
     case ticketAction.ADD_NEW_TICKET:
-      return {
-        ...state,
-        tickets: [
-          ...state.tickets,
-          {
-            ...state.currentTicket,
-            id: uuidv4(),
-            createdOn: currentDateAndTime(),
-          },
-        ],
-        currentTicket: { title: "", description: "", assignedTo: "" },
-      };
+      if (!action.payload) {
+        return {
+          ...state,
+          tickets: [
+            ...state.tickets,
+            {
+              ...state.currentTicket,
+              id: uuidv4(),
+              createdOn: currentDateAndTime(),
+            },
+          ],
+          currentTicket: { title: "", description: "", assignedTo: "" },
+        };
+      } else
+        return {
+          ...state,
+          tickets: [...state.tickets, { ...action.payload }],
+        };
 
     case ticketAction.TICKET_TO_UPDATE:
       return {
@@ -92,14 +98,24 @@ export const ticketsReducer = (state, action) => {
         tickets: filteredArr,
       };
 
-    case ticketAction.ADD_TO_DELETE_LIST:
+    case ticketAction.REMOVE_FROM_DELETED_LIST:
+      // eslint-disable-next-line no-case-declarations
+      const updatedDeletedList = [...state.recentlyDeleted].filter(
+        (item) => item.id !== action.payload
+      );
       return {
         ...state,
-        recentlyDeleted: [
-          ...state.recentlyDeleted,
-          { ...action.payload, deletedOn: currentDateAndTime() },
-        ],
+        recentlyDeleted: updatedDeletedList,
       };
+
+      case ticketAction.ADD_TO_DELETE_LIST:
+        return {
+          ...state,
+          recentlyDeleted: [
+            ...state.recentlyDeleted,
+            { ...action.payload, deletedOn: currentDateAndTime() },
+          ],
+        };  
 
     case ticketAction.RAISE_TOAST:
       return {
@@ -118,10 +134,11 @@ export const ticketsReducer = (state, action) => {
         error: { ...state.error, description: action.payload },
       };
 
-     case ticketAction.RESET_ERROR: 
-     return {
-      ...state, error: {title: "", description: ""}
-     } 
+    case ticketAction.RESET_ERROR:
+      return {
+        ...state,
+        error: { title: "", description: "" },
+      };
     default:
       return state;
   }

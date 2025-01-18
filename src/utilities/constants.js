@@ -25,6 +25,7 @@ export const LABELS = {
 
   ADD_THIS_TICKET: "Save",
   DELETE_THIS_TICKET: "Delete",
+  RESTORE_THIS_TICKET: "Restore",
 
   UPDATE_THIS_TICKET: "Update",
   CANCEL_CHANGES: "Cancel",

@@ -5,6 +5,7 @@ export const ticketAction = {
   ADD_NEW_TICKET: "add_new_ticket",
   UPDATE_THIS_TICKET: "update_this_ticket",
   DELETE_THIS_TICKET: "delete_this_ticket",
+  REMOVE_FROM_DELETED_LIST: "remove_from_deleted_list",
   TICKET_TO_UPDATE: "ticket_to_update",
   TICKET_TO_UPDATE_CHANGES: "ticket_to_update_changes",
   RAISE_TOAST: "toggle_toast_message",
