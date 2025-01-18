@@ -6,6 +6,7 @@ import { ASSIGNEES, LABELS } from "./../utilities/constants";
 const ViewAllTickets = () => {
   const { state, dispatch } = useTicketsContext();
   const navigate = useNavigate();
+  
   const handleDeleteTicket = (ticket) => {
     (async () => {
       await dispatch({

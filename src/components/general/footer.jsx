@@ -3,6 +3,7 @@ import { AiFillLinkedin } from "react-icons/ai";
 import { MdEmail } from "react-icons/md";
 import { FaGithub } from "react-icons/fa";
 import logo from "../../assets/KaushikDev.svg";
+import { LABELS } from "../../utilities/constants";
 
 
 const Footer = () => (
@@ -60,20 +61,20 @@ const Footer = () => (
             target="_blank"
             to="https://github.com/KaushikDev"
           >
-            Github
+            {LABELS.GITHUB}
           </Link>
           <Link
             className=" text-gray-100 transition"
             target="_blank"
             to="https://www.linkedin.com/in/piyush-kaushik-039169321/"
           >
-            LinkedIn
+            {LABELS.LINKEDIN}
           </Link>
           <Link
             className=" text-gray-100 transition"
             to="mailto:piyush.kaushik02@gmail.com?subject=TicketManagementSystem&body=Hi%20Piyush%20(kaushikDev),"
           >
-            Email
+            {LABELS.EMAIL}
           </Link>
         </div>
       </div>

@@ -11,7 +11,7 @@ const Layout = () => {
   return (
     <div className="w-screen flex flex-col h-screen">
       <Header /> 
-      <main className="flex flex-col flex-grow container max-w-full max-h-full items-center justify-center rounded-lg overflow-y-auto">
+      <main className="flex flex-col flex-grow container max-w-full max-h-full items-center justify-center">
         <Outlet /> {/* The current route content will be rendered here */}
       </main>
       <Footer /> 

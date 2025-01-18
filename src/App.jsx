@@ -6,16 +6,50 @@ import CreateTicket from "./pages/createTicket";
 import RecentlyDeleted from "./pages/recentlyDeleted";
 import ViewTickets from "./pages/viewAllTickets";
 import NotFound from "./pages/notFound";
+import Login from "./pages/login";
+import Register from "./pages/register";
+import ProtectedRoute from "./components/auth/protectedRoute";
+import { ROUTES } from "./utilities/routes";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/add-ticket" element={<CreateTicket />} />
-        <Route path="/view-all-tickets" element={<ViewTickets />} />
-        <Route path="/recently-deleted" element={<RecentlyDeleted />} />
-        <Route path="*" element={<NotFound />} />
+      <Route path={ROUTES.LAYOUT} element={<Layout />}>
+        <Route path={ROUTES.LOGIN} element={<Login />} />
+        <Route path={ROUTES.REGISTER} element={<Register />} />
+        <Route
+          path={ROUTES.HOME}
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={ROUTES.CREATE}
+          element={
+            <ProtectedRoute>
+              <CreateTicket />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={ROUTES.VIEW}
+          element={
+            <ProtectedRoute>
+              <ViewTickets />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={ROUTES.DELETED}
+          element={
+            <ProtectedRoute>
+              <RecentlyDeleted />
+            </ProtectedRoute>
+          }
+        />
+        <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
       </Route>
     </Routes>
   );
