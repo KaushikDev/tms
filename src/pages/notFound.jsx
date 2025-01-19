@@ -11,7 +11,7 @@ const NotFound = () => {
        {LABELS.PAGE_NOT_FOUND}
       </p>
       <Link
-        to={ROUTES.HOME}
+        to={ROUTES.DASHBOARD}
         className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
       >
        {LABELS.GO_BACK_HOME}

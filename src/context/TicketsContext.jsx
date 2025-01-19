@@ -22,6 +22,9 @@ const TicketsProvider = ({ children }) => {
       title: "",
       description: "",
     },
+    import: {
+      status: false,
+    }
   });
 
   return (

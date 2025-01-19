@@ -12,7 +12,11 @@ const ProtectedRoute = ({ children }) => {
     loggedInUser ? children : navigate(ROUTES.LOGIN);
   }, [children, loggedInUser, navigate]);
 
-  return <div className="m-0 flex flex-col flex-grow w-screen items-center justify-center overflow-y-auto">{children}</div>;
+  return (
+    <div className="m-0 flex flex-col flex-1 w-screen">
+      {children}
+    </div>
+  );
 };
 
 export default ProtectedRoute;

@@ -90,11 +90,13 @@ const CreateTicket = () => {
   };
 
   return (
-    <div className="container mx-auto mt-8 p-6 bg-white shadow-md rounded-md">
-      <h2 className="text-xl font-semibold text-gray-800 mb-4">
-        {LABELS.CREATE_NEW_TICKET}
-      </h2>
-      <form onSubmit={handleAddTicket} className="flex flex-col gap-6">
+    <div className="h-full flex flex-col items-center justify-between p-4 bg-white-50 ">
+      <div>
+        {" "}
+        <h2 className="text-4xl font-bold mb-4">{LABELS.CREATE_NEW_TICKET}</h2>
+      </div>
+
+      <form onSubmit={handleAddTicket} className="w-full flex flex-1 justify-center flex-col gap-6">
         <div>
           <label
             htmlFor="ticketTitle"

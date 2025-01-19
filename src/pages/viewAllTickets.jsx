@@ -6,7 +6,7 @@ import { ASSIGNEES, LABELS } from "./../utilities/constants";
 const ViewAllTickets = () => {
   const { state, dispatch } = useTicketsContext();
   const navigate = useNavigate();
-  
+
   const handleDeleteTicket = (ticket) => {
     (async () => {
       await dispatch({
@@ -251,20 +251,21 @@ const ViewAllTickets = () => {
     .reverse();
 
   return (
-    <div className="flex flex-col container mx-auto p-4 min-h-[90%] max-h-[90%]">
+    <div className="h-full flex flex-col items-center justify-between p-4 bg-white-50 ">
+   
       {state.tickets.length ? (
         <>
-          <h2 className="text-center text-xl font-semibold text-gray-800 mb-4">
-            {LABELS.ALL_TICKETS}
-          </h2>
-          <div className="p-2 max-h-full overflow-y-auto">
-            {displayAllTickets}
-          </div>
+          <div>
+      {" "}
+      <h2 className="text-4xl font-bold mb-4">{LABELS.ALL_TICKETS}</h2>
+    </div>
+          <div className="w-full flex flex-1 justify-center flex-col gap-6">{displayAllTickets}</div>
         </>
       ) : (
-        <h2 className="stretch text-center  text-xl font-semibold text-gray-800 mb-4">
-          No Tickets Added!
-        </h2>
+        <div>
+      {" "}
+      <h2 className="text-4xl font-bold mb-4">{LABELS.NO_TICKETS_ADDED}</h2>
+    </div>
       )}
     </div>
   );

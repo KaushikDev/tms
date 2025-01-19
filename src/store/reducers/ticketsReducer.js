@@ -1,6 +1,7 @@
 import { ticketAction } from "../actions/actionTypes";
 import { v4 as uuidv4 } from "uuid";
 import { currentDateAndTime, formatTextInput } from "../../utilities/utils";
+import {dummyData} from "../../utilities/dummyData";
 
 export const ticketsReducer = (state, action) => {
   switch (action.type) {
@@ -108,14 +109,14 @@ export const ticketsReducer = (state, action) => {
         recentlyDeleted: updatedDeletedList,
       };
 
-      case ticketAction.ADD_TO_DELETE_LIST:
-        return {
-          ...state,
-          recentlyDeleted: [
-            ...state.recentlyDeleted,
-            { ...action.payload, deletedOn: currentDateAndTime() },
-          ],
-        };  
+    case ticketAction.ADD_TO_DELETE_LIST:
+      return {
+        ...state,
+        recentlyDeleted: [
+          ...state.recentlyDeleted,
+          { ...action.payload, deletedOn: currentDateAndTime() },
+        ],
+      };
 
     case ticketAction.RAISE_TOAST:
       return {
@@ -138,6 +139,13 @@ export const ticketsReducer = (state, action) => {
       return {
         ...state,
         error: { title: "", description: "" },
+      };
+
+    case ticketAction.IMPORT_DUMMY_DATA:
+      return {
+        ...state,
+        ...dummyData,
+        import: { ...state.import, status: true },
       };
     default:
       return state;

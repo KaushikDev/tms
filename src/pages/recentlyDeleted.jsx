@@ -32,13 +32,14 @@ const RecentlyDeleted = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 bg-white-50 min-h-[90%] max-h-[90%]">
+    <div className="h-full flex flex-col items-center justify-between p-4 bg-white-50 ">
       {state.recentlyDeleted.length ? (
         <>
-          <h2 className="text-center  text-xl font-semibold text-gray-800 mb-4">
-            Recently Deleted Tickets
-          </h2>
-          <div className="p-2 max-h-full  overflow-y-auto">
+            <div>
+      {" "}
+      <h2 className="text-4xl font-bold mb-4">{LABELS.RECENTLY_DELETED_TICKETS}</h2>
+    </div>
+          <div className="w-full flex flex-1 justify-center flex-col gap-6">
             {state.recentlyDeleted
               .map((ticket, index) => (
                 <div
@@ -81,9 +82,10 @@ const RecentlyDeleted = () => {
           </div>
         </>
       ) : (
-        <h2 className="text-center  text-xl font-semibold text-gray-800 mb-4">
-          No Recently Deleted Tickets!
-        </h2>
+        <div>
+        {" "}
+        <h2 className="text-4xl font-bold mb-4">{LABELS.NO_DELETED_TICKETS}</h2>
+      </div>
       )}
     </div>
   );

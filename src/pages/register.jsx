@@ -11,12 +11,16 @@ const Register = () => {
 
     useEffect(()=>{
       if(loggedInUser){
-        navigate(ROUTES.HOME)
+        navigate(ROUTES.DASHBOARD)
       }
     }, [loggedInUser, navigate])
 
   return (
-    <>
+    <div className="h-full w-full flex flex-col items-center justify-between p-4 bg-white-50 ">
+    <div>
+      {" "}
+      <h2 className="text-4xl font-bold mb-4">{LABELS.REGISTER}</h2>
+    </div>
       <AuthForm
         isLogin={false}
         action={register}
@@ -26,7 +30,7 @@ const Register = () => {
       <button className="mt-4" onClick={() => navigate(ROUTES.LOGIN)}>
         {LABELS.HAVE_AN_ACCOUNT}
       </button>
-    </>
+    </div>
   );
 };
 

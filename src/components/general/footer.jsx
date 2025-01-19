@@ -7,7 +7,7 @@ import { LABELS } from "../../utilities/constants";
 
 
 const Footer = () => (
-  <footer className="w-full bg-gray-900 text-white py-8">
+  <footer className=" fixed bottom-0 left-0 w-full bg-gray-900 text-white py-4">
     <div className=" mx-auto px-4 grid grid-cols-2 sm:grid-cols-2 gap-8 sm:flex-row">
       {/* Logo and Copyright Column */}
    
@@ -17,14 +17,14 @@ const Footer = () => (
     target="_blank"
     to="https://kaushikdev.com"
   >
-    &copy;
+    &copy; {new Date().getFullYear()}<br></br>
     <img
       className="h-5 sm:mx-0"
       src={logo}
       alt="KaushikDev Logo"
     />
   </Link>
-  <p>{new Date().getFullYear()}. All rights reserved.</p>
+  
 </div>
 
 
