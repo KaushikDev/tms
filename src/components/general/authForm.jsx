@@ -20,7 +20,7 @@ const AuthForm = ({ isLogin, action, label }) => {
   const handleFormSubmission = async (e) => {
     e.preventDefault();
     await action(userDetails.name, userDetails.email, userDetails.password);
-    navigate(ROUTES.HOME);
+    navigate(ROUTES.DASHBOARD);
   };
 
   return (

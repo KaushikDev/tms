@@ -11,7 +11,7 @@ const Login = () => {
 
   useEffect(()=>{
     if(loggedInUser){
-      navigate(ROUTES.HOME)
+      navigate(ROUTES.DASHBOARD)
     }
   }, [loggedInUser, navigate])
 

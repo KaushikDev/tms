@@ -5,14 +5,14 @@ import { ROUTES } from "../../utilities/routes";
 import { FaList } from "react-icons/fa";
 import { IoIosAddCircle } from "react-icons/io";
 import { MdDeleteForever } from "react-icons/md";
-import { FaHome } from "react-icons/fa";
+import { MdDashboard } from "react-icons/md";
 
 // eslint-disable-next-line react/prop-types
 const Menu = ({ isMobile, action }) => {
   const location = useLocation();
   
   const MENU_ITEMS = [
-    { name: LABELS.HOME, path: ROUTES.HOME, icon: <FaHome /> },
+    { name: LABELS.DASHBOARD, path: ROUTES.DASHBOARD, icon: <MdDashboard /> },
     { name: LABELS.CREATE, path: ROUTES.CREATE, icon: <IoIosAddCircle /> },
     { name: LABELS.VIEW, path: ROUTES.VIEW, icon: <FaList /> },
     { name: LABELS.DELETED, path: ROUTES.DELETED, icon: <MdDeleteForever /> },

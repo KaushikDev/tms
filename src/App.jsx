@@ -10,18 +10,20 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import ProtectedRoute from "./components/auth/protectedRoute";
 import { ROUTES } from "./utilities/routes";
+import Dashboard from "./pages/dashboard";
 
 function App() {
   return (
     <Routes>
       <Route path={ROUTES.LAYOUT} element={<Layout />}>
         <Route path={ROUTES.LOGIN} element={<Login />} />
+        <Route path={ROUTES.HOME} element={<Home />} />
         <Route path={ROUTES.REGISTER} element={<Register />} />
         <Route
-          path={ROUTES.HOME}
+          path={ROUTES.DASHBOARD}
           element={
             <ProtectedRoute>
-              <Home />
+              <Dashboard />
             </ProtectedRoute>
           }
         />

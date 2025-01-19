@@ -7,13 +7,15 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [loggedInUser, setLoggedInUser] = useState(null);
 
-
-  useEffect(()=>{
-    const currentSession = account.get();
-    if(currentSession.status){
-      setLoggedInUser(currentSession);
-    }
-  }, [])
+  useEffect(() => {
+    const getCurrentSession = async () => {
+      const currentSession = await account.get();
+      if (currentSession.status) {
+        setLoggedInUser(currentSession);
+      }
+    };
+    getCurrentSession();
+  }, []);
 
   const register = async (name, email, password) => {
     await account.create(ID.unique(), email, password, name);

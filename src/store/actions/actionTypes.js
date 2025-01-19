@@ -13,4 +13,5 @@ export const ticketAction = {
   SET_ERROR_TITLE: "set_error_title",
   SET_ERROR_DESCRIPTION: "set_error_description",
   RESET_ERROR: "reset_error",
+  IMPORT_DUMMY_DATA: "import_dummy_data",
 };

@@ -32,13 +32,13 @@ const RecentlyDeleted = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 bg-white-50 min-h-[90%] max-h-[90%]">
+    <div className="flex flex-col w-full h-full container p-4 my-8">
       {state.recentlyDeleted.length ? (
         <>
           <h2 className="text-center  text-xl font-semibold text-gray-800 mb-4">
             Recently Deleted Tickets
           </h2>
-          <div className="p-2 max-h-full  overflow-y-auto">
+          <div className="p-2 max-h-full">
             {state.recentlyDeleted
               .map((ticket, index) => (
                 <div
