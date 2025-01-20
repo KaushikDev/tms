@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LABELS } from "../utilities/constants";

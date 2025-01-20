@@ -1,11 +1,11 @@
 import { ticketAction } from "./../store/actions/actionTypes";
 import { useTicketsContext } from "./../hooks/useTicketsContext";
 import { ASSIGNEES, LABELS } from "./../utilities/constants";
-import { useNavigate } from "react-router-dom";
+
 
 const CreateTicket = () => {
   const { state, dispatch } = useTicketsContext();
-  const navigate = useNavigate();
+
 
   const handleAddTicket = (e) => {
     e.preventDefault();
@@ -58,7 +58,7 @@ const CreateTicket = () => {
         payload: { show: true, message: "Ticket is saved!" },
       });
       dispatch({ type: ticketAction.RESET_ERROR });
-      navigate("/view-all-tickets");
+     
     }
   };
 
