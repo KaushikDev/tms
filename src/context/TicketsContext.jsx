@@ -21,6 +21,9 @@ const TicketsProvider = ({ children }) => {
     error: {
       title: "",
       description: "",
+      email: "",
+      password: "",
+      signin: "",
     },
     import: {
       status: false,

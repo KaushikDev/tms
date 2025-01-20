@@ -2,9 +2,12 @@ import { useState } from "react";
 import { LABELS } from "./../../utilities/constants";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utilities/routes";
+import { useTicketsContext } from "../../hooks/useTicketsContext";
+import { ticketAction } from "../../store/actions/actionTypes";
 
 // eslint-disable-next-line react/prop-types
-const AuthForm = ({ isLogin, action, label }) => {
+const AuthForm = ({ signInError, isLogin, action, label }) => {
+  const { state, dispatch } = useTicketsContext();
   const [userDetails, setUserDetails] = useState({
     name: "",
     email: "",
@@ -14,13 +17,155 @@ const AuthForm = ({ isLogin, action, label }) => {
   const navigate = useNavigate();
 
   const handleUserDetails = (e) => {
+    if (e.target.value) {
+      if (e.target.name === "name") {
+        dispatch({ type: ticketAction.SET_ERROR_NAME, payload: "" });
+      }
+      if (e.target.name === "email") {
+        dispatch({ type: ticketAction.SET_ERROR_EMAIL, payload: "" });
+      }
+      if (e.target.name === "password") {
+        dispatch({ type: ticketAction.SET_ERROR_PASSWORD, payload: "" });
+      }
+    }
+
     setUserDetails((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleFormSubmission = async (e) => {
     e.preventDefault();
-    await action(userDetails.name, userDetails.email, userDetails.password);
-    navigate(ROUTES.DASHBOARD);
+    if (
+      !isLogin &&
+      !userDetails.name &&
+      !userDetails.email &&
+      !userDetails.password
+    ) {
+      dispatch({
+        type: ticketAction.SET_ERROR_NAME,
+        payload: LABELS.NO_NAME_ERROR,
+      });
+      dispatch({
+        type: ticketAction.SET_ERROR_EMAIL,
+        payload: LABELS.NO_EMAIL_ERROR,
+      });
+      dispatch({
+        type: ticketAction.SET_ERROR_PASSWORD,
+        payload: LABELS.NO_PASSWORD_ERROR,
+      });
+      dispatch({
+        type: ticketAction.RAISE_TOAST,
+        payload: {
+          show: true,
+          message: LABELS.REGISTRATION_COMBINED_ERROR,
+        },
+      });
+    } else if (!isLogin && !userDetails.name && !userDetails.email) {
+      dispatch({
+        type: ticketAction.SET_ERROR_NAME,
+        payload: LABELS.NO_NAME_ERROR,
+      });
+      dispatch({
+        type: ticketAction.SET_ERROR_EMAIL,
+        payload: LABELS.NO_EMAIL_ERROR,
+      });
+      dispatch({
+        type: ticketAction.RAISE_TOAST,
+        payload: { show: true, message: LABELS.NO_NAME_EMAIL_ERROR },
+      });
+    } else if (!isLogin && !userDetails.name && !userDetails.password) {
+      dispatch({
+        type: ticketAction.SET_ERROR_NAME,
+        payload: LABELS.NO_NAME_ERROR,
+      });
+      dispatch({
+        type: ticketAction.SET_ERROR_PASSWORD,
+        payload: LABELS.NO_PASSWORD_ERROR,
+      });
+      dispatch({
+        type: ticketAction.RAISE_TOAST,
+        payload: { show: true, message: LABELS.NO_NAME_PASSWORD_ERROR },
+      });
+    } else if (!userDetails.email && !userDetails.password) {
+      dispatch({
+        type: ticketAction.SET_ERROR_EMAIL,
+        payload: LABELS.NO_EMAIL_ERROR,
+      });
+      dispatch({
+        type: ticketAction.SET_ERROR_PASSWORD,
+        payload: LABELS.NO_PASSWORD_ERROR,
+      });
+      dispatch({
+        type: ticketAction.RAISE_TOAST,
+        payload: { show: true, message: LABELS.LOGIN_COMBINED_ERROR },
+      });
+    } else if (!isLogin && !userDetails.name) {
+      dispatch({
+        type: ticketAction.SET_ERROR_NAME,
+        payload: LABELS.NO_NAME_ERROR,
+      });
+      dispatch({
+        type: ticketAction.RAISE_TOAST,
+        payload: { show: true, message: LABELS.NO_EMAIL_ERROR },
+      });
+    } else if (!userDetails.email) {
+      dispatch({
+        type: ticketAction.SET_ERROR_EMAIL,
+        payload: LABELS.NO_EMAIL_ERROR,
+      });
+      dispatch({
+        type: ticketAction.RAISE_TOAST,
+        payload: { show: true, message: LABELS.NO_EMAIL_ERROR },
+      });
+    } else if (!userDetails.password) {
+      dispatch({
+        type: ticketAction.SET_ERROR_PASSWORD,
+        payload: LABELS.NO_PASSWORD_ERROR,
+      });
+      dispatch({
+        type: ticketAction.RAISE_TOAST,
+        payload: { show: true, message: LABELS.NO_PASSWORD_ERROR },
+      });
+    } else if (
+      !isLogin &&
+      !state.error.name &&
+      !state.error.email &&
+      !state.error.password
+    ) {
+      await action(userDetails.name, userDetails.email, userDetails.password);
+
+      if (signInError) {
+        (async () => {
+          dispatch({
+            type: ticketAction.SET_ERROR_SIGNIN,
+            payload: signInError,
+          });
+          dispatch({
+            type: ticketAction.RAISE_TOAST,
+            payload: { show: true, message: signInError },
+          });
+        })();
+      } else {
+        dispatch({ type: ticketAction.RESET_ERROR });
+        navigate(ROUTES.DASHBOARD);
+      }
+    } else if (isLogin && !state.error.email && !state.error.password) {
+      await action(userDetails.email, userDetails.password);
+      if (signInError) {
+        (async () => {
+          dispatch({
+            type: ticketAction.SET_ERROR_SIGNIN,
+            payload: signInError,
+          });
+          dispatch({
+            type: ticketAction.RAISE_TOAST,
+            payload: { show: true, message: signInError },
+          });
+        })();
+      } else {
+        dispatch({ type: ticketAction.RESET_ERROR });
+        navigate(ROUTES.DASHBOARD);
+      }
+    }
   };
 
   return (
@@ -39,14 +184,13 @@ const AuthForm = ({ isLogin, action, label }) => {
           <input
             id="name"
             className={`w-full p-3 border ${
-              // eslint-disable-next-line no-constant-condition
-              false ? "border-red-500" : "border-gray-300"
+              state.error.name ? "border-red-500" : "border-gray-300"
             } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
             type="text"
             name="name"
             placeholder={LABELS.NAME_PLACEHOLDER}
             value={userDetails.name}
-            onChange={(e) => handleUserDetails(e)}
+            onChange={handleUserDetails}
           />
         </div>
       ) : null}
@@ -59,15 +203,14 @@ const AuthForm = ({ isLogin, action, label }) => {
         </label>
         <input
           className={`w-full p-3 border ${
-            // eslint-disable-next-line no-constant-condition
-            false ? "border-red-500" : "border-gray-300"
+            state.error.email ? "border-red-500" : "border-gray-300"
           } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
           id="email"
           type="email"
           name="email"
           placeholder={LABELS.EMAIL_PLACEHOLDER}
           value={userDetails.email}
-          onChange={(e) => handleUserDetails(e)}
+          onChange={handleUserDetails}
         />
       </div>
 
@@ -81,15 +224,14 @@ const AuthForm = ({ isLogin, action, label }) => {
         </label>
         <input
           className={`w-full p-3 border ${
-            // eslint-disable-next-line no-constant-condition
-            false ? "border-red-500" : "border-gray-300"
+            state.error.password ? "border-red-500" : "border-gray-300"
           } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
           id="password"
           type="password"
           name="password"
           placeholder={LABELS.PASSWORD_PLACEHOLDER}
           value={userDetails.password}
-          onChange={(e) => handleUserDetails(e)}
+          onChange={handleUserDetails}
         />
       </div>
 

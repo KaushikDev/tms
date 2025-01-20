@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useTicketsContext } from "./../hooks/useTicketsContext";
 import { ticketAction } from "./../store/actions/actionTypes";
 import { ASSIGNEES, LABELS } from "./../utilities/constants";
-
+import { ROUTES } from "../utilities/routes";
 const ViewAllTickets = () => {
   const { state, dispatch } = useTicketsContext();
   const navigate = useNavigate();
@@ -15,14 +15,14 @@ const ViewAllTickets = () => {
       });
       await dispatch({
         type: ticketAction.RAISE_TOAST,
-        payload: { show: true, message: "Ticket is deleted!" },
+        payload: { show: true, message: LABELS.TICKET_DELETED },
       });
     })();
     dispatch({
       type: ticketAction.ADD_TO_DELETE_LIST,
       payload: ticket,
     });
-    navigate("/recently-deleted");
+    navigate(ROUTES.DELETED);
   };
 
   const handleEditTicket = (e) => {
@@ -33,36 +33,36 @@ const ViewAllTickets = () => {
     ) {
       dispatch({
         type: ticketAction.SET_ERROR_TITLE,
-        payload: "Title cannot be empty!",
+        payload: LABELS.NO_TITLE_ERROR,
       });
       dispatch({
         type: ticketAction.SET_ERROR_DESCRIPTION,
-        payload: "Description cannot be empty!",
+        payload: LABELS.NO_DESCRIPTION_ERROR,
       });
       dispatch({
         type: ticketAction.RAISE_TOAST,
         payload: {
           show: true,
-          message: "Title & Description cannot be empty!",
+          message: LABELS.CREATE_TICKET_COMBINED_ERROR,
         },
       });
     } else if (!state.ticketToUpdate.newValue.title) {
       dispatch({
         type: ticketAction.SET_ERROR_TITLE,
-        payload: "Title cannot be empty!",
+        payload: LABELS.NO_TITLE_ERROR,
       });
       dispatch({
         type: ticketAction.RAISE_TOAST,
-        payload: { show: true, message: "Title cannot be empty!" },
+        payload: { show: true, message: LABELS.NO_TITLE_ERROR, },
       });
     } else if (!state.ticketToUpdate.newValue.description) {
       dispatch({
         type: ticketAction.SET_ERROR_DESCRIPTION,
-        payload: "Description cannot be empty!",
+        payload: LABELS.NO_DESCRIPTION_ERROR,
       });
       dispatch({
         type: ticketAction.RAISE_TOAST,
-        payload: { show: true, message: "Description cannot be empty!" },
+        payload: { show: true, message: LABELS.NO_DESCRIPTION_ERROR, },
       });
     } else if (
       state.ticketToUpdate.newValue.title.trim() &&
@@ -75,7 +75,7 @@ const ViewAllTickets = () => {
       });
       dispatch({
         type: ticketAction.RAISE_TOAST,
-        payload: { show: true, message: "Ticket is updated!" },
+        payload: { show: true, message: LABELS.TICKET_UPDATED },
       });
       dispatch({ type: ticketAction.RESET_ERROR });
     }
@@ -252,20 +252,21 @@ const ViewAllTickets = () => {
 
   return (
     <div className="h-full flex flex-col items-center justify-between p-4 bg-white-50 ">
-   
       {state.tickets.length ? (
         <>
           <div>
-      {" "}
-      <h2 className="text-4xl font-bold mb-4">{LABELS.ALL_TICKETS}</h2>
-    </div>
-          <div className="w-full flex flex-1 justify-center flex-col gap-6">{displayAllTickets}</div>
+            {" "}
+            <h2 className="text-4xl font-bold mb-4">{LABELS.ALL_TICKETS}</h2>
+          </div>
+          <div className="w-full flex flex-1 justify-center flex-col gap-6">
+            {displayAllTickets}
+          </div>
         </>
       ) : (
         <div>
-      {" "}
-      <h2 className="text-4xl font-bold mb-4">{LABELS.NO_TICKETS_ADDED}</h2>
-    </div>
+          {" "}
+          <h2 className="text-4xl font-bold mb-4">{LABELS.NO_TICKETS_ADDED}</h2>
+        </div>
       )}
     </div>
   );

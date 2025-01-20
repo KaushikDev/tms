@@ -26,7 +26,7 @@ const RecentlyDeleted = () => {
     })();
     await dispatch({
       type: ticketAction.RAISE_TOAST,
-      payload: { show: true, message: "Ticket is restored!" },
+      payload: { show: true, message: LABELS.TICKET_RESTORED },
     });
 
   };

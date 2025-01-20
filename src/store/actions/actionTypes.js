@@ -12,6 +12,10 @@ export const ticketAction = {
   ADD_TO_DELETE_LIST: "add_to_delete_list",
   SET_ERROR_TITLE: "set_error_title",
   SET_ERROR_DESCRIPTION: "set_error_description",
+  SET_ERROR_NAME: "set_error_name",
+  SET_ERROR_EMAIL: "set_error_email",
+  SET_ERROR_PASSWORD: "set_error_password",
+  SET_ERROR_SIGNIN: "set_error_signin",
   RESET_ERROR: "reset_error",
   IMPORT_DUMMY_DATA: "import_dummy_data",
 };
