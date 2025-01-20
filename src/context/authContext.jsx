@@ -6,6 +6,7 @@ const AuthContext = createContext();
 // eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
   const [loggedInUser, setLoggedInUser] = useState(null);
+  const [signInError, setSignInError] = useState("");
 
   useEffect(() => {
     const getCurrentSession = async () => {
@@ -18,12 +19,14 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const register = async (name, email, password) => {
-    await account.create(ID.unique(), email, password, name);
-    await login(name, email, password);
+    await account
+      .create(ID.unique(), email, password, name)
+      .catch((err) => setSignInError(err.message));
+    await login(name, email, password).catch((err) => setSignInError(err.message));
   };
 
-  const login = async (name, email, password) => {
-    await account.createEmailPasswordSession(email, password);
+  const login = async (email, password) => {
+    await account.createEmailPasswordSession(email, password).catch(err =>  setSignInError(err.message));
     setLoggedInUser(await account.get());
   };
 
@@ -31,9 +34,9 @@ export const AuthProvider = ({ children }) => {
     await account.deleteSession("current");
     setLoggedInUser(null);
   };
-
+  console.log(signInError);
   return (
-    <AuthContext.Provider value={{ loggedInUser, register, login, logout }}>
+    <AuthContext.Provider value={{ signInError, loggedInUser, register, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

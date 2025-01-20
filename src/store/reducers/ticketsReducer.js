@@ -1,7 +1,7 @@
 import { ticketAction } from "../actions/actionTypes";
 import { v4 as uuidv4 } from "uuid";
 import { currentDateAndTime, formatTextInput } from "../../utilities/utils";
-import {dummyData} from "../../utilities/dummyData";
+import { dummyData } from "../../utilities/dummyData";
 
 export const ticketsReducer = (state, action) => {
   switch (action.type) {
@@ -134,11 +134,37 @@ export const ticketsReducer = (state, action) => {
         ...state,
         error: { ...state.error, description: action.payload },
       };
-
+    case ticketAction.SET_ERROR_NAME:
+      return {
+        ...state,
+        error: { ...state.error, name: action.payload },
+      };
+    case ticketAction.SET_ERROR_EMAIL:
+      return {
+        ...state,
+        error: { ...state.error, email: action.payload },
+      };
+    case ticketAction.SET_ERROR_PASSWORD:
+      return {
+        ...state,
+        error: { ...state.error, password: action.payload },
+      };
+    case ticketAction.SET_ERROR_SIGNIN:
+      return {
+        ...state,
+        error: { ...state.error, password: action.payload },
+      };
     case ticketAction.RESET_ERROR:
       return {
         ...state,
-        error: { title: "", description: "" },
+        error: {
+          title: "",
+          description: "",
+          name: "",
+          email: "",
+          password: "",
+          signin: ""
+        },
       };
 
     case ticketAction.IMPORT_DUMMY_DATA:

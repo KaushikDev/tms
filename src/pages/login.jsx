@@ -6,7 +6,7 @@ import AuthForm from "./../components/general/authForm";
 import { ROUTES } from "../utilities/routes";
 
 const Login = () => {
-  const { login, loggedInUser } = useAuth();
+  const { signInError, login, loggedInUser } = useAuth();
   const navigate = useNavigate();
 
   useEffect(()=>{
@@ -21,7 +21,7 @@ const Login = () => {
       {" "}
       <h2 className="text-4xl font-bold mb-4">{LABELS.LOGIN}</h2>
     </div>
-      <AuthForm isLogin action={login} label={LABELS.LOGIN} />
+      <AuthForm isLogin action={login} label={LABELS.LOGIN} signInError={signInError}/>
       <button className="mt-4" onClick={() => navigate(ROUTES.REGISTER)}>
         {LABELS.NOT_REGISTERED_YET}
       </button>

@@ -13,36 +13,36 @@ const CreateTicket = () => {
     if (!state.currentTicket.title && !state.currentTicket.description) {
       dispatch({
         type: ticketAction.SET_ERROR_TITLE,
-        payload: "Title cannot be empty!",
+        payload: LABELS.NO_TITLE_ERROR,
       });
       dispatch({
         type: ticketAction.SET_ERROR_DESCRIPTION,
-        payload: "Description cannot be empty!",
+        payload: LABELS.NO_DESCRIPTION_ERROR,
       });
       dispatch({
         type: ticketAction.RAISE_TOAST,
         payload: {
           show: true,
-          message: "Title & Description cannot be empty!",
+          message: LABELS.CREATE_TICKET_COMBINED_ERROR
         },
       });
     } else if (!state.currentTicket.title) {
       dispatch({
         type: ticketAction.SET_ERROR_TITLE,
-        payload: "Title cannot be empty!",
+        payload: LABELS.NO_TITLE_ERROR,
       });
       dispatch({
         type: ticketAction.RAISE_TOAST,
-        payload: { show: true, message: "Title cannot be empty!" },
+        payload: { show: true, message: LABELS.NO_TITLE_ERROR, },
       });
     } else if (!state.currentTicket.description) {
       dispatch({
         type: ticketAction.SET_ERROR_DESCRIPTION,
-        payload: "Description cannot be empty!",
+        payload: LABELS.NO_DESCRIPTION_ERROR,
       });
       dispatch({
         type: ticketAction.RAISE_TOAST,
-        payload: { show: true, message: "Description cannot be empty!" },
+        payload: { show: true, message: LABELS.NO_DESCRIPTION_ERROR, },
       });
     } else if (
       state.currentTicket.title.trim() &&
@@ -55,7 +55,7 @@ const CreateTicket = () => {
       });
       dispatch({
         type: ticketAction.RAISE_TOAST,
-        payload: { show: true, message: "Ticket is saved!" },
+        payload: { show: true, message: LABELS.TICKET_SAVED },
       });
       dispatch({ type: ticketAction.RESET_ERROR });
      

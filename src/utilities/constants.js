@@ -38,6 +38,10 @@ export const LABELS = {
 
   CREATE_NEW_TICKET: "Create new ticket",
   ALL_TICKETS: "Tickets list",
+  TICKET_SAVED : "Ticket is saved!",
+  TICKET_UPDATED : "Ticket is updated!",
+  TICKET_DELETED : "Ticket is deleted!",
+  TICKET_RESTORED :  "Ticket is restored!",
   NO_TICKETS_ADDED: "No tickets added yet !",
   RECENTLY_DELETED_TICKETS : "Recently deleted tickets",
   NO_DELETED_TICKETS : "No tickets deleted yet !",
@@ -67,6 +71,18 @@ export const LABELS = {
 
   NO_DATA_FOR_GRAPH : "No data to show graph. Add tickets or import dummy data!",
   ACTIVE_VS_DELETED : "Active vs Deleted tickets",
+
+  NO_TITLE_ERROR : "Title cannot be empty!",
+  NO_DESCRIPTION_ERROR: "Description cannot be empty!",
+  CREATE_TICKET_COMBINED_ERROR: "Title & Description cannot be empty!",
+  NO_NAME_ERROR : "Name cannot be empty!",
+  NO_EMAIL_ERROR : "Email cannot be empty!",
+  NO_PASSWORD_ERROR : "Password cannot be empty!",
+  NO_NAME_EMAIL_ERROR: "Name & Email cannot be empty!",
+  NO_NAME_PASSWORD_ERROR: "Name & Password cannot be empty!",
+  LOGIN_COMBINED_ERROR: "Email & Password cannot be empty!",
+  REGISTRATION_COMBINED_ERROR : "Name, Email & Password cannot be empty!",
+  SIGNIN_ERROR: ""
 };
 
 
