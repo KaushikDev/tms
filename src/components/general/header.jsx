@@ -5,6 +5,11 @@ import { LABELS } from "../../utilities/constants";
 import { useAuth } from "../../context/authContext";
 import { ROUTES } from "../../utilities/routes";
 import Menu from "./menu";
+import { MdLogin } from "react-icons/md";
+
+import { IoHome } from "react-icons/io5";
+import { FaUserPlus } from "react-icons/fa";
+
 
 const Header = () => {
   const { loggedInUser, logout } = useAuth();
@@ -57,6 +62,36 @@ const Header = () => {
               } hover:underline hover:underline-offset-4`}
             >
               {LABELS.LOGIN}
+            </Link>
+            <Link
+              to={ROUTES.HOME}
+              className={`text-xl sm:hidden inline-block p-1 text-gray-100 hover:text-gray-100 ${
+                location.pathname === ROUTES.HOME
+                  ? "border border-gray-100 rounded-md"
+                  : null
+              } hover:border  hover:border-gray-100 hover:rounded-md hover:p-1  transition`}
+            >
+              <IoHome />
+            </Link>
+            <Link
+              to={ROUTES.REGISTER}
+              className={`text-xl sm:hidden inline-block p-1 text-gray-100 hover:text-gray-100 ${
+                location.pathname === ROUTES.REGISTER
+                  ? "border border-gray-100 rounded-md"
+                  : null
+              } hover:border  hover:border-gray-100 hover:rounded-md hover:p-1  transition`}
+            >
+              <FaUserPlus />
+            </Link>
+            <Link
+              to={ROUTES.LOGIN}
+              className={`text-xl sm:hidden inline-block p-1 text-gray-100 hover:text-gray-100 ${
+                location.pathname === ROUTES.LOGIN
+                  ? "border border-gray-100 rounded-md"
+                  : null
+              } hover:border  hover:border-gray-100 hover:rounded-md hover:p-1  transition`}
+            >
+              <MdLogin />
             </Link>
           </ul>
         )}

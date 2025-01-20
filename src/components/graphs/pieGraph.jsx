@@ -11,7 +11,7 @@ const PieGraph = ({ pieGraphData }) => {
       <h1 className="text-xl font-bold mb-4">
         {LABELS.ACTIVE_VS_DELETED}
       </h1>
-     {pieGraphData.length ? <PieChart width={400} height={400}>
+     {pieGraphData[0].value && pieGraphData[1].value ? <PieChart width={200} height={200}>
         <Pie
           data={pieGraphData}
           dataKey="value"

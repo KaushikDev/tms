@@ -9,7 +9,7 @@ import { useTicketsContext } from "./hooks/useTicketsContext";
 const Layout = () => {
       const { state } = useTicketsContext();
   return (
-    <div className="w-screen flex flex-col max-w-full h-screen">
+    <div className="flex flex-col max-w-full h-screen">
       <Header /> 
       <main className="my-16 container w-full flex-1 flex">
         <Outlet /> {/* The current route content will be rendered here */}
