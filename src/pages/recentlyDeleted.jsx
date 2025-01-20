@@ -1,11 +1,11 @@
 import { useTicketsContext } from "../hooks/useTicketsContext";
 import { LABELS } from "../utilities/constants";
 import { ticketAction } from "../store/actions/actionTypes";
-import { useNavigate } from "react-router-dom";
+
 
 const RecentlyDeleted = () => {
   const { state, dispatch } = useTicketsContext();
-  const navigate = useNavigate();
+
 
   const handleRestoreTicket = async (ticket) => {
     (async () => {
@@ -28,7 +28,7 @@ const RecentlyDeleted = () => {
       type: ticketAction.RAISE_TOAST,
       payload: { show: true, message: "Ticket is restored!" },
     });
-    navigate("/view-all-tickets");
+
   };
 
   return (

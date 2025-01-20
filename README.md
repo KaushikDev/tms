@@ -9,7 +9,7 @@ Live application : [TicketManagementSystem](https://tms.kaushikdev.com)
 
 * [DONE]Error Handling - MVP
 * [DONE]Responsive Design - MVP
-* Kanban?
+* ~~Kanban?~~
 * [DONE]Letter capitalisation utility fn
 * Code optimisation - Analyse with ChatGPT
 * Code refactoring
@@ -27,10 +27,10 @@ Live application : [TicketManagementSystem](https://tms.kaushikdev.com)
 * Lazy loading on view all tickets or pagination?
 * Filters on Every Ticket List
 * Limits on text fields
-* [DONE]Route after creating ticket
+* ~~Route after creating ticket~~
 * Blank page or 404 issue resolve
 * [DONE]404 page
-* Highlight first item in the list for a couple of seconds.
+* ~~Highlight first item in the list for a couple of seconds.~~
 * Toast component is called multiple times, check for other components.
 * Error handling for login and registration forms
 * [DONE]Save logged-in state
@@ -39,4 +39,4 @@ Live application : [TicketManagementSystem](https://tms.kaushikdev.com)
 * [DONE]Fix UI
 * [DONE] Environent Variables
 * [DONE]Home Page out of protected route 
-* create new Dashboard page .
+* [DONE]create new Dashboard page .

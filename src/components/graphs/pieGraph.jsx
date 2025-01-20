@@ -8,7 +8,7 @@ const PieGraph = ({ pieGraphData }) => {
  
   return (
     <>
-      <h1 className="text-xl font-bold mb-4">
+      <h1 className="text-xl font-bold mb-4 w-full max-w-md mx-auto">
         {LABELS.ACTIVE_VS_DELETED}
       </h1>
      {pieGraphData[0].value && pieGraphData[1].value ? <PieChart width={200} height={200}>
