@@ -6,22 +6,28 @@ import AuthForm from "./../components/general/authForm";
 import { ROUTES } from "../utilities/routes";
 
 const Login = () => {
-  const { signInError, login, loggedInUser } = useAuth();
+  const { signInError, login, googleLogin, loggedInUser } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(()=>{
-    if(loggedInUser){
-      navigate(ROUTES.DASHBOARD)
+  useEffect(() => {
+    if (loggedInUser) {
+      navigate(ROUTES.DASHBOARD);
     }
-  }, [loggedInUser, navigate])
+  }, [loggedInUser, navigate]);
 
   return (
     <div className="h-full w-full flex flex-col items-center justify-between p-4 bg-white-50 ">
-    <div>
-      {" "}
-      <h2 className="text-4xl font-bold mb-4">{LABELS.LOGIN}</h2>
-    </div>
-      <AuthForm isLogin action={login} label={LABELS.LOGIN} signInError={signInError}/>
+      <div>
+        {" "}
+        <h2 className="text-4xl font-bold mb-4">{LABELS.LOGIN}</h2>
+      </div>
+      <AuthForm
+        isLogin
+        loginRegular={login}
+        loginGoogle={googleLogin}
+        label={LABELS.LOGIN}
+        signInError={signInError}
+      />
       <button className="mt-4" onClick={() => navigate(ROUTES.REGISTER)}>
         {LABELS.NOT_REGISTERED_YET}
       </button>

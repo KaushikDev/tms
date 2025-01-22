@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { LABELS } from "./../../utilities/constants";
 import { useNavigate } from "react-router-dom";
@@ -5,8 +6,13 @@ import { ROUTES } from "../../utilities/routes";
 import { useTicketsContext } from "../../hooks/useTicketsContext";
 import { ticketAction } from "../../store/actions/actionTypes";
 
-// eslint-disable-next-line react/prop-types
-const AuthForm = ({ signInError, isLogin, action, label }) => {
+const AuthForm = ({
+  signInError,
+  isLogin,
+  loginRegular,
+  loginGoogle,
+  label,
+}) => {
   const { state, dispatch } = useTicketsContext();
   const [userDetails, setUserDetails] = useState({
     name: "",
@@ -131,7 +137,11 @@ const AuthForm = ({ signInError, isLogin, action, label }) => {
       !state.error.email &&
       !state.error.password
     ) {
-      await action(userDetails.name, userDetails.email, userDetails.password);
+      await loginRegular(
+        userDetails.name,
+        userDetails.email,
+        userDetails.password
+      );
 
       if (signInError) {
         (async () => {
@@ -149,7 +159,7 @@ const AuthForm = ({ signInError, isLogin, action, label }) => {
         navigate(ROUTES.DASHBOARD);
       }
     } else if (isLogin && !state.error.email && !state.error.password) {
-      await action(userDetails.email, userDetails.password);
+      await loginRegular(userDetails.email, userDetails.password);
       if (signInError) {
         (async () => {
           dispatch({
@@ -166,6 +176,10 @@ const AuthForm = ({ signInError, isLogin, action, label }) => {
         navigate(ROUTES.DASHBOARD);
       }
     }
+  };
+
+  const handleGoogleSignIn = () => {
+    loginGoogle();
   };
 
   return (
@@ -235,13 +249,19 @@ const AuthForm = ({ signInError, isLogin, action, label }) => {
         />
       </div>
 
-      <div>
+      <div className="flex flex-col sm:flex-row gap-4 ">
         <button
           className="uppercase w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-md hover:shadow-xl"
           type="submit"
           onClick={(e) => handleFormSubmission(e)}
         >
           {label}
+        </button>
+        <button
+          className="w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-md hover:shadow-xl"
+          onClick={handleGoogleSignIn}
+        >
+          {LABELS.GOOGLE_SIGNIN}{" "}
         </button>
       </div>
     </form>

@@ -30,13 +30,18 @@ export const AuthProvider = ({ children }) => {
     setLoggedInUser(await account.get());
   };
 
+  const googleLogin = async () => {
+   await account.createOAuth2Session('google', 'https://tms.kaushikdev.com').catch(err =>  setSignInError(err.message));
+   setLoggedInUser(await account.get());
+  }
+
   const logout = async () => {
     await account.deleteSession("current");
     setLoggedInUser(null);
   };
   console.log(signInError);
   return (
-    <AuthContext.Provider value={{ signInError, loggedInUser, register, login, logout }}>
+    <AuthContext.Provider value={{ signInError, loggedInUser, register, login, logout, googleLogin }}>
       {children}
     </AuthContext.Provider>
   );

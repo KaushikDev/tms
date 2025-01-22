@@ -55,7 +55,8 @@ export const LABELS = {
   NAME: "Name",
   NAME_PLACEHOLDER: "Enter your name",
 
-  GET_STARTED: "Get Started",
+  GET_STARTED: "Get Started with username/password",
+  GOOGLE_SIGNIN: "Or SignIn with Google",
   LOGIN: "Login",
   REGISTER: "Register",
   LOGOUT: "Logout",
