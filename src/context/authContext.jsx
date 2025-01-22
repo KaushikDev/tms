@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const googleLogin = async () => {
-   await account.createOAuth2Session('google', 'http://localhost:5173/dashboard');
+   await account.createOAuth2Session('google', 'https://tms.kaushikdev.com').catch(err =>  setSignInError(err.message));
    setLoggedInUser(await account.get());
   }
 

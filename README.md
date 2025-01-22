@@ -32,7 +32,7 @@ Live application : [TicketManagementSystem](https://tms.kaushikdev.com)
 * [DONE]404 page
 * ~~Highlight first item in the list for a couple of seconds.~~
 * Toast component is called multiple times, check for other components.
-* Error handling for login and registration forms
+* [DONE]Error handling for login and registration forms
 * [DONE]Save logged-in state
 * [DONE]If logged in, should redirect to home("/") if url is changed to "/login" or "/register"
 * [DONE]Highlight selected menu item

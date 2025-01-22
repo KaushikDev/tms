@@ -6,7 +6,7 @@ import AuthForm from "./../components/general/authForm";
 import { ROUTES } from "../utilities/routes";
 
 const Register = () => {
-  const {  signInError,register, loggedInUser } = useAuth();
+  const { signInError, register, googleLogin, loggedInUser } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,7 +23,8 @@ const Register = () => {
       </div>
       <AuthForm
         isLogin={false}
-        action={register}
+        loginRegular={register}
+        loginGoogle={googleLogin}
         label={LABELS.REGISTER}
         signInError={signInError}
       />

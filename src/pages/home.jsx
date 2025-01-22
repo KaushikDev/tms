@@ -26,7 +26,7 @@ const Home = () => {
     <div className="container flex flex-col items-center justify-center text-center mx-auto p-4 bg-white-50 ">
       <h1 className="text-4xl font-bold mb-4">{LABELS.MAIN_HEADING_HOME}</h1>
       <p className="text-lg mb-6">{LABELS.SUB_HEADING_HOME}</p>
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-col sm:flex-row gap-4 ">
         <button
           className="w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-md hover:shadow-xl"
           onClick={handleRegularSignIn}
