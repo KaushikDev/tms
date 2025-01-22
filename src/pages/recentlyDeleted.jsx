@@ -2,10 +2,8 @@ import { useTicketsContext } from "../hooks/useTicketsContext";
 import { LABELS } from "../utilities/constants";
 import { ticketAction } from "../store/actions/actionTypes";
 
-
 const RecentlyDeleted = () => {
   const { state, dispatch } = useTicketsContext();
-
 
   const handleRestoreTicket = async (ticket) => {
     (async () => {
@@ -28,17 +26,18 @@ const RecentlyDeleted = () => {
       type: ticketAction.RAISE_TOAST,
       payload: { show: true, message: LABELS.TICKET_RESTORED },
     });
-
   };
 
   return (
     <div className="h-full flex flex-col items-center justify-between p-4 bg-white-50 ">
       {state.recentlyDeleted.length ? (
         <>
-            <div>
-      {" "}
-      <h2 className="text-4xl font-bold mb-4">{LABELS.RECENTLY_DELETED_TICKETS}</h2>
-    </div>
+          <div>
+            {" "}
+            <h2 className="text-4xl font-bold mb-4">
+              {LABELS.RECENTLY_DELETED_TICKETS}
+            </h2>
+          </div>
           <div className="w-full flex flex-1 justify-center flex-col gap-6">
             {state.recentlyDeleted
               .map((ticket, index) => (
@@ -83,9 +82,11 @@ const RecentlyDeleted = () => {
         </>
       ) : (
         <div>
-        {" "}
-        <h2 className="text-4xl font-bold mb-4">{LABELS.NO_DELETED_TICKETS}</h2>
-      </div>
+          {" "}
+          <h2 className="text-4xl font-bold mb-4">
+            {LABELS.NO_DELETED_TICKETS}
+          </h2>
+        </div>
       )}
     </div>
   );

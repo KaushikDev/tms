@@ -40,3 +40,4 @@ Live application : [TicketManagementSystem](https://tms.kaushikdev.com)
 * [DONE] Environent Variables
 * [DONE]Home Page out of protected route 
 * [DONE]create new Dashboard page .
+* [TODO]Loading animation for api calls.
