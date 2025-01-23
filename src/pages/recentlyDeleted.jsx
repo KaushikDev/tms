@@ -1,11 +1,10 @@
 import { useTicketsContext } from "../hooks/useTicketsContext";
 import { LABELS } from "../utilities/constants";
 import { ticketAction } from "../store/actions/actionTypes";
-
+import Button from "../components/elements/button";
 
 const RecentlyDeleted = () => {
   const { state, dispatch } = useTicketsContext();
-
 
   const handleRestoreTicket = async (ticket) => {
     (async () => {
@@ -28,17 +27,18 @@ const RecentlyDeleted = () => {
       type: ticketAction.RAISE_TOAST,
       payload: { show: true, message: LABELS.TICKET_RESTORED },
     });
-
   };
 
   return (
     <div className="h-full flex flex-col items-center justify-between p-4 bg-white-50 ">
       {state.recentlyDeleted.length ? (
         <>
-            <div>
-      {" "}
-      <h2 className="text-4xl font-bold mb-4">{LABELS.RECENTLY_DELETED_TICKETS}</h2>
-    </div>
+          <div>
+            {" "}
+            <h2 className="text-4xl font-bold mb-4">
+              {LABELS.RECENTLY_DELETED_TICKETS}
+            </h2>
+          </div>
           <div className="w-full flex flex-1 justify-center flex-col gap-6">
             {state.recentlyDeleted
               .map((ticket, index) => (
@@ -68,12 +68,14 @@ const RecentlyDeleted = () => {
                       </p>
                     </div>
                     <div className="flex justify-end gap-2">
-                      <button
-                        onClick={() => handleRestoreTicket(ticket)}
-                        className="uppercase px-4 py-2 text-sm text-white bg-gray-500 rounded-md hover:bg-red-600"
-                      >
-                        {LABELS.RESTORE_THIS_TICKET}
-                      </button>
+                      <Button
+                        btnSecondary
+                        id="didnt-login-btn"
+                        type="button"
+                        isDisabled={false}
+                        label={LABELS.RESTORE_THIS_TICKET}
+                        onClickHandler={() => handleRestoreTicket(ticket)}
+                      />
                     </div>
                   </div>
                 </div>
@@ -83,9 +85,11 @@ const RecentlyDeleted = () => {
         </>
       ) : (
         <div>
-        {" "}
-        <h2 className="text-4xl font-bold mb-4">{LABELS.NO_DELETED_TICKETS}</h2>
-      </div>
+          {" "}
+          <h2 className="text-4xl font-bold mb-4">
+            {LABELS.NO_DELETED_TICKETS}
+          </h2>
+        </div>
       )}
     </div>
   );

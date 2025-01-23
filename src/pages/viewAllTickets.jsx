@@ -3,6 +3,10 @@ import { useTicketsContext } from "./../hooks/useTicketsContext";
 import { ticketAction } from "./../store/actions/actionTypes";
 import { ASSIGNEES, LABELS } from "./../utilities/constants";
 import { ROUTES } from "../utilities/routes";
+import Input from "../components/elements/input";
+import Select from "../components/elements/select";
+import Button from "../components/elements/button";
+
 const ViewAllTickets = () => {
   const { state, dispatch } = useTicketsContext();
   const navigate = useNavigate();
@@ -53,7 +57,7 @@ const ViewAllTickets = () => {
       });
       dispatch({
         type: ticketAction.RAISE_TOAST,
-        payload: { show: true, message: LABELS.NO_TITLE_ERROR, },
+        payload: { show: true, message: LABELS.NO_TITLE_ERROR },
       });
     } else if (!state.ticketToUpdate.newValue.description) {
       dispatch({
@@ -62,7 +66,7 @@ const ViewAllTickets = () => {
       });
       dispatch({
         type: ticketAction.RAISE_TOAST,
-        payload: { show: true, message: LABELS.NO_DESCRIPTION_ERROR, },
+        payload: { show: true, message: LABELS.NO_DESCRIPTION_ERROR },
       });
     } else if (
       state.ticketToUpdate.newValue.title.trim() &&
@@ -81,16 +85,16 @@ const ViewAllTickets = () => {
     }
   };
 
-  const handleChangeUpdateTicket = (e, field) => {
-    e.target.value && field === "title"
+  const handleChangeUpdateTicket = (e) => {
+    e.target.value && e.target.name === "title"
       ? dispatch({ type: ticketAction.SET_ERROR_TITLE, payload: "" })
       : null;
-    e.target.value && field === "description"
+    e.target.value && e.target.name === "description"
       ? dispatch({ type: ticketAction.SET_ERROR_DESCRIPTION, payload: "" })
       : null;
     dispatch({
       type: ticketAction.TICKET_TO_UPDATE_CHANGES,
-      payload: { field, value: e.target.value },
+      payload: { field: [e.target.name], value: e.target.value },
     });
   };
 
@@ -101,6 +105,27 @@ const ViewAllTickets = () => {
         inProgress: true,
         oldValue: ticketToBeUpdated,
         newValue: ticketToBeUpdated,
+      },
+    });
+  };
+
+  const handleCancelUpdate = () => {
+    dispatch({
+      type: ticketAction.TICKET_TO_UPDATE,
+      payload: {
+        inProgress: false,
+        oldValue: {
+          id: "",
+          title: "",
+          description: "",
+          assignedTo: "",
+        },
+        newValue: {
+          id: "",
+          title: "",
+          description: "",
+          assignedTo: "",
+        },
       },
     });
   };
@@ -135,114 +160,72 @@ const ViewAllTickets = () => {
             </div>
 
             <div className="flex justify-end gap-2">
-              <button
-                onClick={() => handleDeleteTicket(ticket)}
-                className="uppercase px-4 py-2 text-sm text-white bg-gray-500 rounded-md hover:bg-red-600"
-              >
-                {LABELS.DELETE_THIS_TICKET}
-              </button>
-              <button
-                onClick={() => handleTicketUpdate(ticket)}
-                className="uppercase px-4 py-2 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600"
-              >
-                {LABELS.UPDATE_THIS_TICKET}
-              </button>
+              <Button
+                btnDanger
+                id="deleteTicket"
+                type="button"
+                isDisabled={false}
+                label={LABELS.DELETE_THIS_TICKET}
+                onClickHandler={() => handleDeleteTicket(ticket)}
+              />
+              <Button
+                id="updateTicket"
+                type="button"
+                isDisabled={false}
+                label={LABELS.UPDATE_THIS_TICKET}
+                onClickHandler={() => handleTicketUpdate(ticket)}
+              />
             </div>
           </div>
         ) : (
           <form onSubmit={handleEditTicket} className="flex flex-col gap-4 p-4">
-            <div>
-              <label
-                htmlFor="ticketTitle"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                {LABELS.TITLE}
-              </label>
-              <input
-                id="ticketTitle"
-                className={`w-full p-3 border ${
-                  state.error.title ? "border-red-500" : "border-gray-300"
-                } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                value={state.ticketToUpdate.newValue.title}
-                placeholder={LABELS.TITLE_PLACEHOLDER}
-                onChange={(e) => handleChangeUpdateTicket(e, "title")}
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="ticketDescription"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                {LABELS.DESCRIPTION}
-              </label>
-              <textarea
-                id="ticketDescription"
-                className={`w-full p-3 border ${
-                  state.error.description ? "border-red-500" : "border-gray-300"
-                } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none`}
-                value={state.ticketToUpdate.newValue.description}
-                placeholder={LABELS.DESCRIPTION_PLACEHOLDER}
-                onChange={(e) => handleChangeUpdateTicket(e, "description")}
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="ticketAssignedTo"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                {LABELS.ASSIGNED_TO}
-              </label>
-              <select
-                id="ticketAssignedTo"
-                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={state.ticketToUpdate.newValue.assignedTo}
-                onChange={(e) => handleChangeUpdateTicket(e, "assignedTo")}
-              >
-                <option value="" disabled>
-                  {LABELS.TO_BE_ASSIGNED}
-                </option>
-                {ASSIGNEES.map((item, index) => (
-                  <option key={index} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <Input
+              htmlFor={"ticketTitle"}
+              label={LABELS.TITLE}
+              id={"ticketTitle"}
+              error={state.error.title}
+              type={"text"}
+              name={"title"}
+              placeholder={LABELS.TITLE_PLACEHOLDER}
+              value={state.ticketToUpdate.newValue.title}
+              onChangeHandler={handleChangeUpdateTicket}
+            />
+            <Input
+              htmlFor={"ticketDescription"}
+              label={LABELS.DESCRIPTION}
+              id={"ticketDescription"}
+              error={state.error.description}
+              type={"text"}
+              name={"description"}
+              placeholder={LABELS.DESCRIPTION_PLACEHOLDER}
+              value={state.ticketToUpdate.newValue.description}
+              onChangeHandler={handleChangeUpdateTicket}
+            />
+            <Select
+              htmlFor={"ticketAssignedTo"}
+              label={LABELS.ASSIGNED_TO}
+              id={"ticketAssignedTo"}
+              error={false}
+              name={"assignedTo"}
+              optionsArr={ASSIGNEES}
+              value={state.ticketToUpdate.newValue.assignedTo}
+              onChangeHandler={handleChangeUpdateTicket}
+            />
             <div className="flex justify-end gap-2 p-4">
-              <button
+              <Button
+                id="changeTicket"
                 type="submit"
-                className="uppercase px-4 py-2 text-sm text-white bg-green-500 rounded-md hover:bg-green-600"
-              >
-                {LABELS.ADD_THIS_TICKET}
-              </button>
-              <button
+                isDisabled={false}
+                label={LABELS.ADD_THIS_TICKET}
+              />
+
+              <Button
+                id="cancelUpdateTicket"
                 type="button"
-                onClick={() =>
-                  dispatch({
-                    type: ticketAction.TICKET_TO_UPDATE,
-                    payload: {
-                      inProgress: false,
-                      oldValue: {
-                        id: "",
-                        title: "",
-                        description: "",
-                        assignedTo: "",
-                      },
-                      newValue: {
-                        id: "",
-                        title: "",
-                        description: "",
-                        assignedTo: "",
-                      },
-                    },
-                  })
-                }
-                className="uppercase px-4 py-2 text-sm text-white bg-gray-500 rounded-md hover:bg-gray-600"
-              >
-                {LABELS.CANCEL_CHANGES}
-              </button>
+                isDisabled={false}
+                label={LABELS.CANCEL_CHANGES}
+                onClickHandler={handleCancelUpdate}
+              />
             </div>
           </form>
         )}

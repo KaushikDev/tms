@@ -1,11 +1,12 @@
 import { ticketAction } from "./../store/actions/actionTypes";
 import { useTicketsContext } from "./../hooks/useTicketsContext";
 import { ASSIGNEES, LABELS } from "./../utilities/constants";
-
+import Input from "../components/elements/input";
+import Select from "../components/elements/select";
+import Button from "../components/elements/button";
 
 const CreateTicket = () => {
   const { state, dispatch } = useTicketsContext();
-
 
   const handleAddTicket = (e) => {
     e.preventDefault();
@@ -23,7 +24,7 @@ const CreateTicket = () => {
         type: ticketAction.RAISE_TOAST,
         payload: {
           show: true,
-          message: LABELS.CREATE_TICKET_COMBINED_ERROR
+          message: LABELS.CREATE_TICKET_COMBINED_ERROR,
         },
       });
     } else if (!state.currentTicket.title) {
@@ -33,7 +34,7 @@ const CreateTicket = () => {
       });
       dispatch({
         type: ticketAction.RAISE_TOAST,
-        payload: { show: true, message: LABELS.NO_TITLE_ERROR, },
+        payload: { show: true, message: LABELS.NO_TITLE_ERROR },
       });
     } else if (!state.currentTicket.description) {
       dispatch({
@@ -42,7 +43,7 @@ const CreateTicket = () => {
       });
       dispatch({
         type: ticketAction.RAISE_TOAST,
-        payload: { show: true, message: LABELS.NO_DESCRIPTION_ERROR, },
+        payload: { show: true, message: LABELS.NO_DESCRIPTION_ERROR },
       });
     } else if (
       state.currentTicket.title.trim() &&
@@ -58,7 +59,6 @@ const CreateTicket = () => {
         payload: { show: true, message: LABELS.TICKET_SAVED },
       });
       dispatch({ type: ticketAction.RESET_ERROR });
-     
     }
   };
 
@@ -96,73 +96,48 @@ const CreateTicket = () => {
         <h2 className="text-4xl font-bold mb-4">{LABELS.CREATE_NEW_TICKET}</h2>
       </div>
 
-      <form onSubmit={handleAddTicket} className="w-full flex flex-1 justify-center flex-col gap-6">
-        <div>
-          <label
-            htmlFor="ticketTitle"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            {LABELS.TITLE}
-          </label>
-          <input
-            id="ticketTitle"
-            className={`w-full p-3 border ${
-              state.error.title ? "border-red-500" : "border-gray-300"
-            } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
-            value={state.currentTicket.title}
-            placeholder={LABELS.TITLE_PLACEHOLDER}
-            onChange={handleCurrentTicketTitle}
-          />
-        </div>
-
-        <div>
-          <label
-            htmlFor="ticketDescription"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            {LABELS.DESCRIPTION}
-          </label>
-          <textarea
-            id="ticketDescription"
-            className={`w-full p-3 border ${
-              state.error.description ? "border-red-500" : "border-gray-300"
-            } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none`}
-            value={state.currentTicket.description}
-            placeholder={LABELS.DESCRIPTION_PLACEHOLDER}
-            onChange={handleCurrentTicketDescription}
-          />
-        </div>
-
-        <div>
-          <label
-            htmlFor="ticketAssignedTo"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            {LABELS.ASSIGNED_TO}
-          </label>
-          <select
-            id="ticketAssignedTo"
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={state.currentTicket.assignedTo}
-            onChange={handleCurrentTicketAssignedTo}
-          >
-            <option value="" disabled>
-              {LABELS.TO_BE_ASSIGNED}
-            </option>
-            {ASSIGNEES.map((item, index) => (
-              <option key={index} value={item}>
-                {item}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <button
-          type="submit"
-          className="uppercase w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-md hover:shadow-xl"
-        >
-          {LABELS.ADD_THIS_TICKET}
-        </button>
+      <form
+        onSubmit={handleAddTicket}
+        className="w-full flex flex-1 justify-center flex-col gap-6"
+      >
+        <Input
+          htmlFor={"ticketTitle"}
+          label={LABELS.TITLE}
+          id={"ticketTitle"}
+          error={state.error.title}
+          type={"text"}
+          name={"title"}
+          placeholder={LABELS.TITLE_PLACEHOLDER}
+          value={state.currentTicket.title}
+          onChangeHandler={handleCurrentTicketTitle}
+        />
+        <Input
+          htmlFor={"ticketDescription"}
+          label={LABELS.DESCRIPTION}
+          id={"ticketDescription"}
+          error={state.error.description}
+          type={"text"}
+          name={"description"}
+          placeholder={LABELS.DESCRIPTION_PLACEHOLDER}
+          value={state.currentTicket.description}
+          onChangeHandler={handleCurrentTicketDescription}
+        />
+        <Select
+          htmlFor={"ticketAssignedTo"}
+          label={LABELS.ASSIGNED_TO}
+          id={"ticketAssignedTo"}
+          error={false}
+          name={"assignedTo"}
+          optionsArr={ASSIGNEES}
+          value={state.currentTicket.assignedTo}
+          onChangeHandler={handleCurrentTicketAssignedTo}
+        />
+        <Button
+                id="createTicket"
+                type="submit"
+                isDisabled={false}
+                label={LABELS.ADD_THIS_TICKET}
+              />
       </form>
     </div>
   );

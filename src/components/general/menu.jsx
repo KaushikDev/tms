@@ -6,13 +6,12 @@ import { FaList } from "react-icons/fa";
 import { IoIosAddCircle } from "react-icons/io";
 import { MdDeleteForever } from "react-icons/md";
 import { MdDashboard } from "react-icons/md";
-
-
+import Button from "../elements/button";
 
 // eslint-disable-next-line react/prop-types
 const Menu = ({ isMobile, action }) => {
   const location = useLocation();
-  
+
   const MENU_ITEMS = [
     { name: LABELS.DASHBOARD, path: ROUTES.DASHBOARD, icon: <MdDashboard /> },
     { name: LABELS.CREATE, path: ROUTES.CREATE, icon: <IoIosAddCircle /> },
@@ -25,7 +24,11 @@ const Menu = ({ isMobile, action }) => {
       <Link
         key={index}
         to={item.path}
-        className={`hidden sm:inline-block hover:text-gray-100 text-gray-100 transition ${location.pathname === item.path ? "underline underline-offset-4 ": null} hover:underline hover:underline-offset-4`}
+        className={`hidden sm:inline-block hover:text-gray-100 text-gray-100 transition ${
+          location.pathname === item.path
+            ? "underline underline-offset-4 "
+            : null
+        } hover:underline hover:underline-offset-4`}
       >
         {item.name}
       </Link>
@@ -33,7 +36,11 @@ const Menu = ({ isMobile, action }) => {
       <Link
         key={index}
         to={item.path}
-        className={`text-xl sm:hidden inline-block p-1 text-gray-100 hover:text-gray-100 ${location.pathname === item.path ? "border border-gray-100 rounded-md": null} hover:border  hover:border-gray-100 hover:rounded-md hover:p-1  transition`}
+        className={`text-xl sm:hidden inline-block p-1 text-gray-100 hover:text-gray-100 ${
+          location.pathname === item.path
+            ? "border border-gray-100 rounded-md"
+            : null
+        } hover:border  hover:border-gray-100 hover:rounded-md hover:p-1  transition`}
       >
         {item.icon}
       </Link>
@@ -44,19 +51,24 @@ const Menu = ({ isMobile, action }) => {
     <>
       {menu}
       {!isMobile ? (
-        <button
-          onClick={action}
-          className="hidden p-2 sm:inline-block hover:bg-gray-900 hover:text-gray-100 bg-gray-100 text-gray-900 transition"
-        >
-          {LABELS.LOGOUT}
-        </button>
+        <Button
+          btnSpecial
+          id="logout-btn"
+          type="button"
+          isDisabled={false}
+          label={LABELS.LOGOUT}
+          onClickHandler={action}
+        />
       ) : (
-        <button
-          onClick={action}
-          className="text-xl p-2 sm:hidden inline-block hover:bg-gray-900 hover:text-gray-100 bg-gray-100 text-gray-900 transition"
-        >
-          <IoLogOut />
-        </button>
+        <Button
+          btnSpecial
+          id="logout-btn-icon"
+          type="button"
+          isDisabled={false}
+          label={<IoLogOut />}
+          onClickHandler={action}
+          isMobile
+        />
       )}
     </>
   );

@@ -12,7 +12,7 @@ Live application : [TicketManagementSystem](https://tms.kaushikdev.com)
 * ~~Kanban?~~
 * [DONE]Letter capitalisation utility fn
 * Code optimisation - Analyse with ChatGPT
-* Code refactoring
+* [IN-PROGRESS]Code refactoring
 * [DONE]Home Page(Basic) - MVP
 * [DONE]Header controls and UI - MVP
 * [DONE]Footer controls and UI - MVP
@@ -40,3 +40,4 @@ Live application : [TicketManagementSystem](https://tms.kaushikdev.com)
 * [DONE] Environent Variables
 * [DONE]Home Page out of protected route 
 * [DONE]create new Dashboard page .
+* [TODO]Loading animation for api calls.

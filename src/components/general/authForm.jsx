@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utilities/routes";
 import { useTicketsContext } from "../../hooks/useTicketsContext";
 import { ticketAction } from "../../store/actions/actionTypes";
+import Input from "./../elements/input";
+import Button from "../elements/button";
 
 const AuthForm = ({
   signInError,
@@ -188,81 +190,59 @@ const AuthForm = ({
       onSubmit={(e) => handleFormSubmission(e)}
     >
       {!isLogin ? (
-        <div>
-          <label
-            htmlFor="name"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            {LABELS.NAME}
-          </label>
-          <input
-            id="name"
-            className={`w-full p-3 border ${
-              state.error.name ? "border-red-500" : "border-gray-300"
-            } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
-            type="text"
-            name="name"
-            placeholder={LABELS.NAME_PLACEHOLDER}
-            value={userDetails.name}
-            onChange={handleUserDetails}
-          />
-        </div>
+        <Input
+          htmlFor={"name"}
+          label={LABELS.NAME}
+          id={"name"}
+          error={state.error.name}
+          type={"text"}
+          name={"name"}
+          placeholder={LABELS.NAME_PLACEHOLDER}
+          value={userDetails.name}
+          onChangeHandler={handleUserDetails}
+        />
       ) : null}
-      <div>
-        <label
-          htmlFor="email"
-          className="block text-sm font-medium text-gray-700 mb-1"
-        >
-          {LABELS.EMAIL}
-        </label>
-        <input
-          className={`w-full p-3 border ${
-            state.error.email ? "border-red-500" : "border-gray-300"
-          } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
-          id="email"
-          type="email"
-          name="email"
-          placeholder={LABELS.EMAIL_PLACEHOLDER}
-          value={userDetails.email}
-          onChange={handleUserDetails}
-        />
-      </div>
+      <Input
+        htmlFor={"email"}
+        label={LABELS.EMAIL}
+        id={"email"}
+        error={state.error.email}
+        type={"email"}
+        name={"email"}
+        placeholder={LABELS.EMAIL_PLACEHOLDER}
+        value={userDetails.email}
+        onChangeHandler={handleUserDetails}
+      />
+      <Input
+        htmlFor={"password"}
+        label={LABELS.PASSWORD}
+        id={"password"}
+        error={state.error.password}
+        type={"password"}
+        name={"password"}
+        placeholder={LABELS.PASSWORD_PLACEHOLDER}
+        value={userDetails.password}
+        onChangeHandler={handleUserDetails}
+      />
 
-      <div>
-        <label
-          htmlFor="password"
-          className="block text-sm font-medium text-gray-700 mb-1"
-        >
-          {" "}
-          {LABELS.PASSWORD}
-        </label>
-        <input
-          className={`w-full p-3 border ${
-            state.error.password ? "border-red-500" : "border-gray-300"
-          } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
-          id="password"
-          type="password"
-          name="password"
-          placeholder={LABELS.PASSWORD_PLACEHOLDER}
-          value={userDetails.password}
-          onChange={handleUserDetails}
-        />
-      </div>
-
-      <div className="flex flex-col sm:flex-row gap-4 ">
-        <button
-          className="uppercase w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-md hover:shadow-xl"
+      <div className="flex flex-col justify-center items-center sm:flex-row gap-4 ">
+      
+        <Button
+          btnPrimary
+          id="auth-btn-regular"
           type="submit"
-          onClick={(e) => handleFormSubmission(e)}
-        >
-          {label}
-        </button>
-        <button
-          className="w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-md hover:shadow-xl"
-          onClick={handleGoogleSignIn}
-        >
-          {LABELS.GOOGLE_SIGNIN}{" "}
-        </button>
+          isDisabled={false}
+          label={label}
+          onClickHandler={handleFormSubmission}
+        />
+      
+        <Button
+          id="auth-btn-google"
+          type="button"
+          isDisabled={false}
+          label={LABELS.GOOGLE_SIGNIN}
+          onClickHandler={handleGoogleSignIn}
+        />
       </div>
     </form>
   );
