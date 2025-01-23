@@ -10,7 +10,6 @@ import { MdLogin } from "react-icons/md";
 import { IoHome } from "react-icons/io5";
 import { FaUserPlus } from "react-icons/fa";
 
-
 const Header = () => {
   const { loggedInUser, logout } = useAuth();
   const location = useLocation();
@@ -27,9 +26,7 @@ const Header = () => {
       <nav className="flex flex-col items-center  mt-0 text-center">
         {loggedInUser ? (
           <ul className="inline-flex space-x-6 items-center">
-            <Menu isMobile={false} action={logout} />
-
-            <Menu isMobile={true} action={logout} />
+            <Menu action={logout} />
           </ul>
         ) : (
           <ul className="inline-flex space-x-6 items-center">
