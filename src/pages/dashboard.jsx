@@ -6,6 +6,7 @@ import { useTicketsContext } from "../hooks/useTicketsContext";
 import { ticketAction } from "../store/actions/actionTypes";
 import { useEffect } from "react";
 import PieGraph from "../components/graphs/pieGraph";
+import Button from "../components/elements/button";
 
 const Dashboard = () => {
   const { state, dispatch } = useTicketsContext();
@@ -24,12 +25,10 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-
-      setPieGraphData([
-        { name: "Active Tickets", value: state.tickets.length },
-        { name: "Deleted Tickets", value: state.recentlyDeleted.length },
-      ]);
-    
+    setPieGraphData([
+      { name: "Active Tickets", value: state.tickets.length },
+      { name: "Deleted Tickets", value: state.recentlyDeleted.length },
+    ]);
   }, [state.tickets, state.recentlyDeleted]);
 
   return (
@@ -38,12 +37,14 @@ const Dashboard = () => {
         <h1 className="text-4xl font-bold mb-4">
           {LABELS.MAIN_HEADING_DASHBOARD}{" "}
           {!state.import.status ? (
-            <button
-              className="p-3 bg-blue-500 text-sm text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-md hover:shadow-xl"
-              onClick={handleDataImport}
-            >
-              {LABELS.IMPORT_DUMMY_DATA}
-            </button>
+            <Button
+              btnSecondary
+              id="import-data-btn"
+              type="button"
+              isDisabled={false}
+              label={LABELS.IMPORT_DUMMY_DATA}
+              onClickHandler={handleDataImport}
+            />
           ) : null}
         </h1>
         <p className="text-lg mb-6">{LABELS.SUB_HEADING_DASHBOARD}</p>
@@ -51,37 +52,15 @@ const Dashboard = () => {
       <section className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-6 mb-6">
         <PieGraph pieGraphData={pieGraphData} />
       </section>
-      {/* <section className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-6 mb-6">
-        <div className="flex flex-row items-center justify-center w-full gap-4 p-4 bg-white shadow rounded">
-          <h2 className="text-lg font-medium text-gray-600">Total tickets</h2>
-          <p className="text-3xl font-bold text-green-600">
-            {state.tickets.length}
-          </p>
-        </div>
-        <div className="flex flex-row items-center justify-center w-full gap-4 p-4 bg-white shadow rounded">
-          <h2 className="text-lg font-medium text-gray-600">
-            Total assigned tickets{" "}
-          </h2>
-          <p className="text-3xl font-bold text-green-600">
-            {state.tickets.filter((item) => item.assignedTo !== "").length}
-          </p>
-        </div>
-        <div className="flex flex-row items-center justify-center w-full gap-4 p-4 bg-white shadow rounded">
-          <h2 className="text-lg font-medium text-gray-600">
-            Total deleted tickets{" "}
-          </h2>
-          <p className="text-3xl font-bold text-green-600">
-            {state.recentlyDeleted.length}
-          </p>
-        </div>
-      </section> */}
+
       <div className="flex flex-col gap-4">
-        <button
-          className="w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-md hover:shadow-xl"
-          onClick={handleCTAClick}
-        >
-          {LABELS.CREATE_NEW_TICKET}{" "}
-        </button>
+        <Button
+          id="create-ticket-btn"
+          type="button"
+          isDisabled={false}
+          label={LABELS.CREATE_NEW_TICKET}
+          onClickHandler={handleCTAClick}
+        />
       </div>
     </div>
   );

@@ -161,6 +161,7 @@ const ViewAllTickets = () => {
 
             <div className="flex justify-end gap-2">
               <Button
+                btnDanger
                 id="deleteTicket"
                 type="button"
                 isDisabled={false}

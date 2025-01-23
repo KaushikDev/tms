@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { LABELS } from "../utilities/constants";
 import { ROUTES } from "../utilities/routes";
 import { useAuth } from "../context/authContext";
+import Button from "../components/elements/button";
 
 const Home = () => {
   const { googleLogin, loggedInUser}  = useAuth()
@@ -27,18 +28,22 @@ const Home = () => {
       <h1 className="text-4xl font-bold mb-4">{LABELS.MAIN_HEADING_HOME}</h1>
       <p className="text-lg mb-6">{LABELS.SUB_HEADING_HOME}</p>
       <div className="flex flex-col sm:flex-row gap-4 ">
-        <button
-          className="w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-md hover:shadow-xl"
-          onClick={handleRegularSignIn}
-        >
-          {LABELS.GET_STARTED}{" "}
-        </button>
-        <button
-          className="w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-md hover:shadow-xl"
-          onClick={handleGoogleSignIn}
-        >
-          {LABELS.GOOGLE_SIGNIN}{" "}
-        </button>
+        
+        <Button
+          id="get-started-btn"
+          type="button"
+          isDisabled={false}
+          label={LABELS.GET_STARTED}
+          onClickHandler={handleRegularSignIn}
+        />
+   
+        <Button
+          id="google-signin-btn"
+          type="button"
+          isDisabled={false}
+          label={LABELS.GOOGLE_SIGNIN}
+          onClickHandler={handleGoogleSignIn}
+        />
       </div>
     
     </div>

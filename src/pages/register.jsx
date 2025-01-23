@@ -4,6 +4,7 @@ import { useAuth } from "../context/authContext";
 import { LABELS } from "./../utilities/constants";
 import AuthForm from "./../components/general/authForm";
 import { ROUTES } from "../utilities/routes";
+import Button from "../components/elements/button";
 
 const Register = () => {
   const { signInError, register, googleLogin, loggedInUser } = useAuth();
@@ -15,6 +16,9 @@ const Register = () => {
     }
   }, [loggedInUser, navigate]);
 
+  const handleRouteToLogin = () => {
+    navigate(ROUTES.LOGIN);
+  };
   return (
     <div className="h-full w-full flex flex-col items-center justify-between p-4 bg-white-50 ">
       <div>
@@ -28,9 +32,15 @@ const Register = () => {
         label={LABELS.REGISTER}
         signInError={signInError}
       />
-      <button className="mt-4" onClick={() => navigate(ROUTES.LOGIN)}>
-        {LABELS.HAVE_AN_ACCOUNT}
-      </button>
+
+      <Button
+        btnSecondary
+        id="didnt-login-btn"
+        type="button"
+        isDisabled={false}
+        label={LABELS.HAVE_AN_ACCOUNT}
+        onClickHandler={handleRouteToLogin}
+      />
     </div>
   );
 };

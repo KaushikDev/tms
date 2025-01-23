@@ -1,6 +1,7 @@
 import { useTicketsContext } from "../hooks/useTicketsContext";
 import { LABELS } from "../utilities/constants";
 import { ticketAction } from "../store/actions/actionTypes";
+import Button from "../components/elements/button";
 
 const RecentlyDeleted = () => {
   const { state, dispatch } = useTicketsContext();
@@ -67,12 +68,14 @@ const RecentlyDeleted = () => {
                       </p>
                     </div>
                     <div className="flex justify-end gap-2">
-                      <button
-                        onClick={() => handleRestoreTicket(ticket)}
-                        className="uppercase px-4 py-2 text-sm text-white bg-gray-500 rounded-md hover:bg-red-600"
-                      >
-                        {LABELS.RESTORE_THIS_TICKET}
-                      </button>
+                      <Button
+                        btnSecondary
+                        id="didnt-login-btn"
+                        type="button"
+                        isDisabled={false}
+                        label={LABELS.RESTORE_THIS_TICKET}
+                        onClickHandler={() => handleRestoreTicket(ticket)}
+                      />
                     </div>
                   </div>
                 </div>

@@ -3,6 +3,7 @@ import { useTicketsContext } from "./../hooks/useTicketsContext";
 import { ASSIGNEES, LABELS } from "./../utilities/constants";
 import Input from "../components/elements/input";
 import Select from "../components/elements/select";
+import Button from "../components/elements/button";
 
 const CreateTicket = () => {
   const { state, dispatch } = useTicketsContext();
@@ -131,13 +132,12 @@ const CreateTicket = () => {
           value={state.currentTicket.assignedTo}
           onChangeHandler={handleCurrentTicketAssignedTo}
         />
-
-        <button
-          type="submit"
-          className="uppercase w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-md hover:shadow-xl"
-        >
-          {LABELS.ADD_THIS_TICKET}
-        </button>
+        <Button
+                id="createTicket"
+                type="submit"
+                isDisabled={false}
+                label={LABELS.ADD_THIS_TICKET}
+              />
       </form>
     </div>
   );

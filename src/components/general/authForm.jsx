@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utilities/routes";
 import { useTicketsContext } from "../../hooks/useTicketsContext";
 import { ticketAction } from "../../store/actions/actionTypes";
-import Input from "./input";
+import Input from "./../elements/input";
+import Button from "../elements/button";
 
 const AuthForm = ({
   signInError,
@@ -224,20 +225,24 @@ const AuthForm = ({
         onChangeHandler={handleUserDetails}
       />
 
-      <div className="flex flex-col sm:flex-row gap-4 ">
-        <button
-          className="uppercase w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-md hover:shadow-xl"
+      <div className="flex flex-col justify-center items-center sm:flex-row gap-4 ">
+      
+        <Button
+          btnPrimary
+          id="auth-btn-regular"
           type="submit"
-          onClick={(e) => handleFormSubmission(e)}
-        >
-          {label}
-        </button>
-        <button
-          className="w-full p-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-md hover:shadow-xl"
-          onClick={handleGoogleSignIn}
-        >
-          {LABELS.GOOGLE_SIGNIN}{" "}
-        </button>
+          isDisabled={false}
+          label={label}
+          onClickHandler={handleFormSubmission}
+        />
+      
+        <Button
+          id="auth-btn-google"
+          type="button"
+          isDisabled={false}
+          label={LABELS.GOOGLE_SIGNIN}
+          onClickHandler={handleGoogleSignIn}
+        />
       </div>
     </form>
   );
