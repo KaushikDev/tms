@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { account, ID } from "../lib/appwrite";
+import { account, ID, OAuthProvider  } from "../lib/appwrite";
 
 const AuthContext = createContext();
 
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const googleLogin = async () => {
-   await account.createOAuth2Session('google', 'https://tms.kaushikdev.com').catch(err =>  setSignInError(err.message));
+   await account.createOAuth2Session(OAuthProvider.google).catch(err =>  setSignInError(err.message));
    setLoggedInUser(await account.get());
   }
 

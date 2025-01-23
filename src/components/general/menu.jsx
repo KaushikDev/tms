@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { LABELS } from "../../utilities/constants";
 import { Link, useLocation } from "react-router-dom";
 import { IoLogOut } from "react-icons/io5";
@@ -9,8 +10,17 @@ import { MdDashboard } from "react-icons/md";
 import Button from "../elements/button";
 
 // eslint-disable-next-line react/prop-types
-const Menu = ({ isMobile, action }) => {
+const Menu = ({action }) => {
   const location = useLocation();
+    const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 640);
+  
+    useEffect(() => {
+      const handleResize = () => setIsSmallScreen(window.innerWidth <= 640);
+  
+      window.addEventListener("resize", handleResize);
+  
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
   const MENU_ITEMS = [
     { name: LABELS.DASHBOARD, path: ROUTES.DASHBOARD, icon: <MdDashboard /> },
@@ -20,7 +30,7 @@ const Menu = ({ isMobile, action }) => {
   ];
 
   const menu = MENU_ITEMS.map((item, index) =>
-    !isMobile ? (
+    !isSmallScreen ? (
       <Link
         key={index}
         to={item.path}
@@ -50,7 +60,7 @@ const Menu = ({ isMobile, action }) => {
   return (
     <>
       {menu}
-      {!isMobile ? (
+      {!isSmallScreen ? (
         <Button
           btnSpecial
           id="logout-btn"
@@ -67,7 +77,7 @@ const Menu = ({ isMobile, action }) => {
           isDisabled={false}
           label={<IoLogOut />}
           onClickHandler={action}
-          isMobile
+          
         />
       )}
     </>

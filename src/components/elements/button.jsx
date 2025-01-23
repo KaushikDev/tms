@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 /* eslint-disable react/prop-types */
 const Button = ({
@@ -7,7 +7,6 @@ const Button = ({
   id,
   type,
   isDisabled,
-  isMobile = false,
   onClickHandler,
   btnPrimary = false,
   btnDanger = false,
@@ -34,9 +33,7 @@ const Button = ({
       onClick={onClickHandler ? onClickHandler : null}
       disabled={isDisabled}
       type={type}
-      className={`${
-        !isMobile ? "hidden sm:inline-block " : "text-xl sm:hidden"
-      } px-4 py-2 text-sm rounded-md ${currentStyle}`}
+      className={`text-sm px-4 py-2 text-sm rounded-md ${currentStyle}`}
     >
       {label}
     </button>
