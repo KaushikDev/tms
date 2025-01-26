@@ -9,7 +9,7 @@ Live application : [TicketManagementSystem](https://tms.kaushikdev.com)
 
 * [DONE]Error Handling - MVP
 * [DONE]Responsive Design - MVP
-* ~~Kanban?~~
+* [TBD]~~Kanban?~~
 * [DONE]Letter capitalisation utility fn
 * Code optimisation - Analyse with ChatGPT
 * [IN-PROGRESS]Code refactoring
@@ -18,19 +18,19 @@ Live application : [TicketManagementSystem](https://tms.kaushikdev.com)
 * [DONE]Footer controls and UI - MVP
 * [DONE]Move static text to constants
 * [DONE]Recently Deleted - MVP
-* Deletion Confirmation
+* [TBD]~~Deletion Confirmation~~
 * [DONE]Restore Deleted Ticket??
 * [DONE]Authentication && Authorization via AppWrite?
 * DB via AppWrite?
-* Status ??
+* Status, priority field
 * Recent activity log
 * Lazy loading on view all tickets or pagination?
 * Filters on Every Ticket List
 * [DONE]Limits on text fields
-* ~~Route after creating ticket~~
+* [TBD]~~Route after creating ticket~~
 * [DONE]Blank page or 404 issue resolve
 * [DONE]404 page
-* ~~Highlight first item in the list for a couple of seconds.~~
+* [TBD]~~Highlight first item in the list for a couple of seconds.~~
 * Toast component is called multiple times, check for other components.
 * [DONE]Error handling for login and registration forms
 * [DONE]Save logged-in state

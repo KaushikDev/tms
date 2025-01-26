@@ -6,7 +6,7 @@ import { useAuth } from "../context/authContext";
 import Button from "../components/elements/button";
 
 const Home = () => {
-  const { googleLogin, loggedInUser}  = useAuth()
+  const { loading, googleLogin, loggedInUser}  = useAuth()
   const navigate = useNavigate();
 
   const handleRegularSignIn = () => {
@@ -32,7 +32,7 @@ const Home = () => {
         <Button
           id="get-started-btn"
           type="button"
-          isDisabled={false}
+          isDisabled={loading}
           label={LABELS.GET_STARTED}
           onClickHandler={handleRegularSignIn}
         />
@@ -40,9 +40,9 @@ const Home = () => {
         <Button
           id="google-signin-btn"
           type="button"
-          isDisabled={false}
           label={LABELS.GOOGLE_SIGNIN}
           onClickHandler={handleGoogleSignIn}
+          isDisabled={loading}
         />
       </div>
     

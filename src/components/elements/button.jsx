@@ -41,7 +41,7 @@ const Button = ({
         isDisabled ? "opacity-50 cursor-not-allowed" : ""
       }`}
     >
-      {!isDisabled ? label : <Loading />}
+      {!isDisabled ? label : <Loading label={label} />}
     </button>
   );
 };
