@@ -39,5 +39,6 @@ Live application : [TicketManagementSystem](https://tms.kaushikdev.com)
 * [DONE]Fix UI
 * [DONE] Environent Variables
 * [DONE]Home Page out of protected route 
-* [DONE]create new Dashboard page .
-* [TODO]Loading animation for api calls.
+* [DONE]create new Dashboard page
+* [TODO]Loading animation for api calls
+* [TODO]Google login issue

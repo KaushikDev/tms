@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
 
   const googleLogin = async () => {
     try {
-      await account.createOAuth2Session(OAuthProvider.google);
+      await account.createOAuth2Session(OAuthProvider.Google, 'https://tms.kaushikdev.com');
       setLoggedInUser(await account.get());
     } catch (err) {
       setSignInError(err.message);

@@ -7,5 +7,5 @@ export const ROUTES = {
   CREATE: "/add-ticket",
   VIEW: "/view-all-tickets",
   DELETED: "/recently-deleted",
-  NOT_FOUND: "*",
+  NOT_FOUND: "/*",
 };
