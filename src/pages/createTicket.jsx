@@ -110,6 +110,7 @@ const CreateTicket = () => {
           placeholder={LABELS.TITLE_PLACEHOLDER}
           value={state.currentTicket.title}
           onChangeHandler={handleCurrentTicketTitle}
+          maxLength={80}
         />
         <Input
           htmlFor={"ticketDescription"}
@@ -121,6 +122,7 @@ const CreateTicket = () => {
           placeholder={LABELS.DESCRIPTION_PLACEHOLDER}
           value={state.currentTicket.description}
           onChangeHandler={handleCurrentTicketDescription}
+          maxLength={250}
         />
         <Select
           htmlFor={"ticketAssignedTo"}

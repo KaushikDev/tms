@@ -47,7 +47,7 @@ const RecentlyDeleted = () => {
                   className="card flex flex-col gap-4 p-4 mb-4 bg-gray-100 hover:shadow-md rounded-lg border border-gray-200"
                 >
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 gap-4">
-                    <div className="space-y-1">
+                    <div className="space-y-1 break-all">
                       <h2 className="text-lg font-semibold text-gray-800">
                         <span className="text-gray-400 font-small">
                           [{ticket.id}]

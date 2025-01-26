@@ -7,7 +7,7 @@ import { ROUTES } from "../utilities/routes";
 import Button from "../components/elements/button";
 
 const Login = () => {
-  const { signInError, login, googleLogin, loggedInUser } = useAuth();
+  const { loading, signInError, login, googleLogin, loggedInUser } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,6 +32,7 @@ const Login = () => {
         loginGoogle={googleLogin}
         label={LABELS.LOGIN}
         signInError={signInError}
+        loading={loading}
       />
       <Button
         btnSecondary

@@ -11,7 +11,7 @@ import { IoHome } from "react-icons/io5";
 import { FaUserPlus } from "react-icons/fa";
 
 const Header = () => {
-  const { loggedInUser, logout } = useAuth();
+  const { loading, loggedInUser, logout } = useAuth();
   const location = useLocation();
 
   return (
@@ -26,7 +26,7 @@ const Header = () => {
       <nav className="flex flex-col items-center  mt-0 text-center">
         {loggedInUser ? (
           <ul className="inline-flex space-x-6 items-center">
-            <Menu action={logout} />
+            <Menu action={logout} loading={loading} />
           </ul>
         ) : (
           <ul className="inline-flex space-x-6 items-center">

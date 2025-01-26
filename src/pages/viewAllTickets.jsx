@@ -1,15 +1,12 @@
-import { useNavigate } from "react-router-dom";
 import { useTicketsContext } from "./../hooks/useTicketsContext";
 import { ticketAction } from "./../store/actions/actionTypes";
 import { ASSIGNEES, LABELS } from "./../utilities/constants";
-import { ROUTES } from "../utilities/routes";
 import Input from "../components/elements/input";
 import Select from "../components/elements/select";
 import Button from "../components/elements/button";
 
 const ViewAllTickets = () => {
   const { state, dispatch } = useTicketsContext();
-  const navigate = useNavigate();
 
   const handleDeleteTicket = (ticket) => {
     (async () => {
@@ -26,7 +23,6 @@ const ViewAllTickets = () => {
       type: ticketAction.ADD_TO_DELETE_LIST,
       payload: ticket,
     });
-    navigate(ROUTES.DELETED);
   };
 
   const handleEditTicket = (e) => {
@@ -140,8 +136,8 @@ const ViewAllTickets = () => {
           state.ticketToUpdate.inProgress &&
           ticket.id === state.ticketToUpdate.oldValue.id
         ) ? (
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 gap-4">
-            <div className="space-y-1">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 gap-4 ">
+            <div className="space-y-1 break-all">
               <h2 className="text-lg font-semibold text-gray-800">
                 <span className="text-gray-400 font-small">[{ticket.id}]</span>{" "}
               </h2>
@@ -189,6 +185,7 @@ const ViewAllTickets = () => {
               placeholder={LABELS.TITLE_PLACEHOLDER}
               value={state.ticketToUpdate.newValue.title}
               onChangeHandler={handleChangeUpdateTicket}
+              maxLength={80}
             />
             <Input
               htmlFor={"ticketDescription"}
@@ -200,6 +197,7 @@ const ViewAllTickets = () => {
               placeholder={LABELS.DESCRIPTION_PLACEHOLDER}
               value={state.ticketToUpdate.newValue.description}
               onChangeHandler={handleChangeUpdateTicket}
+              maxLength={250}
             />
             <Select
               htmlFor={"ticketAssignedTo"}
@@ -234,7 +232,7 @@ const ViewAllTickets = () => {
     .reverse();
 
   return (
-    <div className="h-full flex flex-col items-center justify-between p-4 bg-white-50 ">
+    <div className="h-full flex flex-col items-center justify-between p-4 bg-white-50">
       {state.tickets.length ? (
         <>
           <div>

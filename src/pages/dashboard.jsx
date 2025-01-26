@@ -49,7 +49,7 @@ const Dashboard = () => {
         </h1>
         <p className="text-lg mb-6">{LABELS.SUB_HEADING_DASHBOARD}</p>
       </div>
-      <section className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-6 mb-6">
+      <section className="flex flex-col justify-center items-center gap-6 mb-6">
         <PieGraph pieGraphData={pieGraphData} />
       </section>
 

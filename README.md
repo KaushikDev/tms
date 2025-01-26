@@ -26,9 +26,9 @@ Live application : [TicketManagementSystem](https://tms.kaushikdev.com)
 * Recent activity log
 * Lazy loading on view all tickets or pagination?
 * Filters on Every Ticket List
-* Limits on text fields
+* [DONE]Limits on text fields
 * ~~Route after creating ticket~~
-* Blank page or 404 issue resolve
+* [DONE]Blank page or 404 issue resolve
 * [DONE]404 page
 * ~~Highlight first item in the list for a couple of seconds.~~
 * Toast component is called multiple times, check for other components.
@@ -40,5 +40,6 @@ Live application : [TicketManagementSystem](https://tms.kaushikdev.com)
 * [DONE] Environent Variables
 * [DONE]Home Page out of protected route 
 * [DONE]create new Dashboard page
-* [TODO]Loading animation for api calls
-* [TODO]Google login issue
+* [DONE]Loading animation for api calls
+* [DONE]Google login issue
+* [DONE]text going outside card containers

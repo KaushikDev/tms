@@ -7,50 +7,74 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [signInError, setSignInError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getCurrentSession = async () => {
-      const currentSession = await account.get();
-      if (currentSession.status) {
-        setLoggedInUser(currentSession);
+      setLoading(true)
+      try {
+        const currentSession = await account.get();
+        if (currentSession.status) {
+          setLoggedInUser(currentSession);
+        }
+      } catch (err) {
+        setSignInError(err.message);
+      } finally {
+        setLoading(false)
       }
     };
+
     getCurrentSession();
   }, []);
 
   const register = async (name, email, password) => {
+    setLoading(true);
     try {
       await account.create(ID.unique(), email, password, name);
       await login(name, email, password);
     } catch (err) {
       setSignInError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const login = async (email, password) => {
+    setLoading(true);
     try {
       await account.createEmailPasswordSession(email, password);
       setLoggedInUser(await account.get());
     } catch (err) {
       setSignInError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const googleLogin = async () => {
+    setLoading(true);
     try {
-      await account.createOAuth2Session(OAuthProvider.Google, 'https://tms.kaushikdev.com');
+      await account.createOAuth2Session(
+        OAuthProvider.Google,
+        "https://tms.kaushikdev.com"
+      );
       setLoggedInUser(await account.get());
     } catch (err) {
       setSignInError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const logout = async () => {
+    setLoading(true);
     try {
       await account.deleteSession("current");
       setLoggedInUser(null);
     } catch (err) {
       setSignInError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -59,6 +83,8 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
+        loading,
+        setLoading,
         signInError,
         loggedInUser,
         register,

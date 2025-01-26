@@ -7,7 +7,7 @@ import { ROUTES } from "../utilities/routes";
 import Button from "../components/elements/button";
 
 const Register = () => {
-  const { signInError, register, googleLogin, loggedInUser } = useAuth();
+  const { loading, signInError, register, googleLogin, loggedInUser } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,6 +31,7 @@ const Register = () => {
         loginGoogle={googleLogin}
         label={LABELS.REGISTER}
         signInError={signInError}
+        loading={loading}
       />
 
       <Button
