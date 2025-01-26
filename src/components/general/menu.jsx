@@ -10,7 +10,7 @@ import { MdDashboard } from "react-icons/md";
 import Button from "../elements/button";
 
 // eslint-disable-next-line react/prop-types
-const Menu = ({action }) => {
+const Menu = ({action, loading }) => {
   const location = useLocation();
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 640);
   
@@ -65,7 +65,7 @@ const Menu = ({action }) => {
           btnSpecial
           id="logout-btn"
           type="button"
-          isDisabled={false}
+          isDisabled={loading}
           label={LABELS.LOGOUT}
           onClickHandler={action}
         />
@@ -74,7 +74,7 @@ const Menu = ({action }) => {
           btnSpecial
           id="logout-btn-icon"
           type="button"
-          isDisabled={false}
+          isDisabled={loading}
           label={<IoLogOut />}
           onClickHandler={action}
           

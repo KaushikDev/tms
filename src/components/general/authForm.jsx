@@ -9,6 +9,7 @@ import Input from "./../elements/input";
 import Button from "../elements/button";
 
 const AuthForm = ({
+  loading,
   signInError,
   isLogin,
   loginRegular,
@@ -226,22 +227,21 @@ const AuthForm = ({
       />
 
       <div className="flex flex-col justify-center items-center sm:flex-row gap-4 ">
-      
         <Button
           btnPrimary
           id="auth-btn-regular"
           type="submit"
-          isDisabled={false}
           label={label}
           onClickHandler={handleFormSubmission}
+          isDisabled={loading}
         />
-      
+
         <Button
           id="auth-btn-google"
           type="button"
-          isDisabled={false}
           label={LABELS.GOOGLE_SIGNIN}
           onClickHandler={handleGoogleSignIn}
+          isDisabled={loading}
         />
       </div>
     </form>

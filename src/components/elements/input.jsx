@@ -9,6 +9,7 @@ const Input = ({
   placeholder,
   value,
   onChangeHandler,
+  maxLength = 60,
 }) => (
   <div>
     <label
@@ -27,6 +28,7 @@ const Input = ({
       placeholder={placeholder}
       value={value}
       onChange={onChangeHandler}
+      maxLength={maxLength}
     />
   </div>
 );
