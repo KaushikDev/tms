@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }) => {
     try {
       await account.createOAuth2Session(
         OAuthProvider.Google,
-        "https://tms.kaushikdev.com"
+        "https://tms.kaushikdev.com/dashboard"
       );
       setLoggedInUser(await account.get());
     } catch (err) {
