@@ -9,24 +9,23 @@ export const AuthProvider = ({ children }) => {
   const [signInError, setSignInError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const getCurrentUserSession = async () => {
+    try {
+      setLoggedInUser(await account.get());
+    } catch (err) {
+      setSignInError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const getCurrentSession = async () => {
-      setLoading(true)
-      try {
-        const currentSession = await account.get();
-        if (currentSession.status) {
-          setLoggedInUser(currentSession);
-        }
-      } catch (err) {
-        setSignInError(err.message);
-      } finally {
-        setLoading(false)
-      }
-    };
-
-    getCurrentSession();
+    (async () => {
+      setLoading(true);
+      await getCurrentUserSession();
+    })();
   }, []);
-
+  console.log("Logged-in user is : ", loggedInUser);
   const register = async (name, email, password) => {
     setLoading(true);
     try {
@@ -43,7 +42,7 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       await account.createEmailPasswordSession(email, password);
-      setLoggedInUser(await account.get());
+      await getCurrentUserSession();
     } catch (err) {
       setSignInError(err.message);
     } finally {
@@ -56,9 +55,9 @@ export const AuthProvider = ({ children }) => {
     try {
       await account.createOAuth2Session(
         OAuthProvider.Google,
-        "https://tms.kaushikdev.com/dashboard"
+        "https://tms.kaushikdev.com"
       );
-      setLoggedInUser(await account.get());
+      await getCurrentUserSession();
     } catch (err) {
       setSignInError(err.message);
     } finally {
@@ -84,7 +83,6 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         loading,
-        setLoading,
         signInError,
         loggedInUser,
         register,
