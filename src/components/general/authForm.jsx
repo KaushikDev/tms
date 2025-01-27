@@ -181,8 +181,8 @@ const AuthForm = ({
     }
   };
 
-  const handleGoogleSignIn = () => {
-    loginGoogle();
+  const handleGoogleSignIn = async () => {
+   await loginGoogle();
   };
 
   return (

@@ -13,8 +13,8 @@ const Home = () => {
     navigate(ROUTES.LOGIN);
   };
 
-  const handleGoogleSignIn = () => {
-    googleLogin();
+  const handleGoogleSignIn = async () => {
+    await googleLogin();
   };
   
   useEffect(()=>{
