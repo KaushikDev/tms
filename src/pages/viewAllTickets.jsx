@@ -259,7 +259,6 @@ const ViewAllTickets = () => {
 
   return (
     <div className="min-h-full w-full flex flex-col p-6 lg:p-10 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      {/* Header */}
       <div className="mb-6">
         <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">
           {LABELS.ALL_TICKETS || "All Issues"}
@@ -269,7 +268,6 @@ const ViewAllTickets = () => {
         </p>
       </div>
 
-      {/* Conditional Edit Form */}
       {state.ticketToUpdate.inProgress && (
         <div className="mb-8 bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-indigo-100 dark:border-indigo-900/50 w-full max-w-3xl">
           <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
@@ -328,10 +326,8 @@ const ViewAllTickets = () => {
         </div>
       )}
 
-      {/* Grid Container & Filter Toggles */}
       {!state.ticketToUpdate.inProgress && (
         <div className="flex flex-col flex-1 w-full">
-          {/* Custom View Toggles */}
           <div className="flex gap-2 mb-4">
             {[
               { id: "ALL", label: "All Tickets" },

@@ -138,10 +138,10 @@ const Dashboard = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
         <div>
           <h1 className="text-3xl lg:text-4xl font-extrabold tracking-tight">
-            Command Center
+            Dashboard
           </h1>
           <p className="text-gray-500 dark:text-gray-400 mt-1">
-            Lifecycle monitoring and resource allocation.
+            Tickets lifecycle monitoring and progress data.
           </p>
         </div>
         <Button
@@ -187,7 +187,6 @@ const Dashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Velocity Area Chart */}
         <div className="col-span-1 lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 min-h-[400px] flex flex-col">
           <h3 className="text-xl font-bold mb-6 border-b border-gray-100 dark:border-gray-700 pb-4">
             Velocity (Last 30 Days)
@@ -269,7 +268,6 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Status Donut Chart */}
         <div className="col-span-1 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 min-h-[400px] flex flex-col items-center relative">
           <h3 className="text-xl font-bold mb-6 border-b border-gray-100 dark:border-gray-700 pb-4 w-full text-center">
             Active Tickets Status
@@ -292,7 +290,6 @@ const Dashboard = () => {
                   ))}
                 </Pie>
 
-                {/* Native SVG Centering - Mathematically locked to the Donut */}
                 <text
                   x="50%"
                   y="50%"

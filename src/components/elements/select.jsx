@@ -25,9 +25,6 @@ const Select = ({
       value={value}
       onChange={onChangeHandler}
     >
-      {/* <option value="" disabled>
-        {LABELS.TO_BE_ASSIGNED}
-      </option> */}
       {optionsArr.map((item, index) => (
         <option key={index} value={item}>
           {item}

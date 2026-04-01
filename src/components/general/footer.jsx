@@ -7,15 +7,12 @@ import { LABELS } from "../../utilities/constants";
 const Footer = () => (
   <footer className="w-full bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400 py-6 border-t border-gray-200 dark:border-gray-800 mt-auto transition-colors duration-300">
     <div className="container mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-      {/* Copyright */}
       <div className="text-sm flex items-center">
         <span className="font-medium text-xs">
           &copy; {new Date().getFullYear()} KaushikDevStudio. All rights
           reserved.
         </span>
       </div>
-
-      {/* Social Links */}
       <div className="flex flex-row items-center space-x-6 text-xl sm:text-sm">
         <Link
           className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2"
