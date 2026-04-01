@@ -1,3 +1,5 @@
+import { useMemo, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useTicketsContext } from "./../hooks/useTicketsContext";
 import { ticketAction } from "./../store/actions/actionTypes";
 import { ASSIGNEES, LABELS } from "./../utilities/constants";
@@ -5,93 +7,67 @@ import Input from "../components/elements/input";
 import Select from "../components/elements/select";
 import Button from "../components/elements/button";
 
+// AG Grid v33 Imports & Theming
+import { AgGridReact } from "ag-grid-react";
+import {
+  ModuleRegistry,
+  AllCommunityModule,
+  themeQuartz,
+} from "ag-grid-community";
+
+ModuleRegistry.registerModules([AllCommunityModule]);
+
 const ViewAllTickets = () => {
   const { state, dispatch } = useTicketsContext();
+  const location = useLocation();
+
+  // Local state to manage the grid filter
+  const [currentFilter, setCurrentFilter] = useState("ALL");
+
+  // Catch the route state from the Dashboard cards
+  useEffect(() => {
+    if (location.state?.filter) {
+      setCurrentFilter(location.state.filter);
+    }
+  }, [location.state]);
+
+  // Import dummy data if empty
+  useEffect(() => {
+    if (!state.import?.status) {
+      dispatch({ type: ticketAction.IMPORT_DUMMY_DATA });
+    }
+  }, [state.import?.status, dispatch]);
+
+  // Dynamically slice the data based on the selected filter
+  const displayData = useMemo(() => {
+    const activePipeline = state.tickets || [];
+    const resolvedArchive = state.recentlyDeleted || [];
+
+    if (currentFilter === "ACTIVE") {
+      return activePipeline.filter((t) =>
+        ["IN PROGRESS", "DONE", "READY"].includes(t.status),
+      );
+    }
+    if (currentFilter === "UNASSIGNED") {
+      return activePipeline.filter((t) => t.status === "TODO");
+    }
+    // "ALL" combines the active pipeline and the resolved archive
+    return [...activePipeline, ...resolvedArchive];
+  }, [state.tickets, state.recentlyDeleted, currentFilter]);
 
   const handleDeleteTicket = (ticket) => {
-    (async () => {
-      await dispatch({
-        type: ticketAction.DELETE_THIS_TICKET,
-        payload: ticket.id,
-      });
-      await dispatch({
-        type: ticketAction.RAISE_TOAST,
-        payload: { show: true, message: LABELS.TICKET_DELETED },
-      });
-    })();
+    dispatch({ type: ticketAction.DELETE_THIS_TICKET, payload: ticket.id });
     dispatch({
-      type: ticketAction.ADD_TO_DELETE_LIST,
-      payload: ticket,
+      type: ticketAction.RAISE_TOAST,
+      payload: {
+        show: true,
+        message:
+          ticket.status === "RESOLVED"
+            ? "Ticket permanently deleted."
+            : "Ticket marked as resolved.",
+      },
     });
-  };
-
-  const handleEditTicket = (e) => {
-    e.preventDefault();
-    if (
-      !state.ticketToUpdate.newValue.title &&
-      !state.ticketToUpdate.newValue.description
-    ) {
-      dispatch({
-        type: ticketAction.SET_ERROR_TITLE,
-        payload: LABELS.NO_TITLE_ERROR,
-      });
-      dispatch({
-        type: ticketAction.SET_ERROR_DESCRIPTION,
-        payload: LABELS.NO_DESCRIPTION_ERROR,
-      });
-      dispatch({
-        type: ticketAction.RAISE_TOAST,
-        payload: {
-          show: true,
-          message: LABELS.CREATE_TICKET_COMBINED_ERROR,
-        },
-      });
-    } else if (!state.ticketToUpdate.newValue.title) {
-      dispatch({
-        type: ticketAction.SET_ERROR_TITLE,
-        payload: LABELS.NO_TITLE_ERROR,
-      });
-      dispatch({
-        type: ticketAction.RAISE_TOAST,
-        payload: { show: true, message: LABELS.NO_TITLE_ERROR },
-      });
-    } else if (!state.ticketToUpdate.newValue.description) {
-      dispatch({
-        type: ticketAction.SET_ERROR_DESCRIPTION,
-        payload: LABELS.NO_DESCRIPTION_ERROR,
-      });
-      dispatch({
-        type: ticketAction.RAISE_TOAST,
-        payload: { show: true, message: LABELS.NO_DESCRIPTION_ERROR },
-      });
-    } else if (
-      state.ticketToUpdate.newValue.title.trim() &&
-      state.ticketToUpdate.newValue.description.trim() &&
-      !state.error.title &&
-      !state.error.description
-    ) {
-      dispatch({
-        type: ticketAction.UPDATE_THIS_TICKET,
-      });
-      dispatch({
-        type: ticketAction.RAISE_TOAST,
-        payload: { show: true, message: LABELS.TICKET_UPDATED },
-      });
-      dispatch({ type: ticketAction.RESET_ERROR });
-    }
-  };
-
-  const handleChangeUpdateTicket = (e) => {
-    e.target.value && e.target.name === "title"
-      ? dispatch({ type: ticketAction.SET_ERROR_TITLE, payload: "" })
-      : null;
-    e.target.value && e.target.name === "description"
-      ? dispatch({ type: ticketAction.SET_ERROR_DESCRIPTION, payload: "" })
-      : null;
-    dispatch({
-      type: ticketAction.TICKET_TO_UPDATE_CHANGES,
-      payload: { field: [e.target.name], value: e.target.value },
-    });
+    dispatch({ type: ticketAction.ADD_TO_DELETE_LIST, payload: ticket });
   };
 
   const handleTicketUpdate = (ticketToBeUpdated) => {
@@ -105,76 +81,201 @@ const ViewAllTickets = () => {
     });
   };
 
+  const handleEditTicket = (e) => {
+    e.preventDefault();
+    const { title, description } = state.ticketToUpdate.newValue;
+
+    if (!title && !description) {
+      dispatch({
+        type: ticketAction.SET_ERROR_TITLE,
+        payload: LABELS.NO_TITLE_ERROR,
+      });
+      dispatch({
+        type: ticketAction.SET_ERROR_DESCRIPTION,
+        payload: LABELS.NO_DESCRIPTION_ERROR,
+      });
+      dispatch({
+        type: ticketAction.RAISE_TOAST,
+        payload: { show: true, message: LABELS.CREATE_TICKET_COMBINED_ERROR },
+      });
+      return;
+    }
+    if (!title) {
+      dispatch({
+        type: ticketAction.SET_ERROR_TITLE,
+        payload: LABELS.NO_TITLE_ERROR,
+      });
+      dispatch({
+        type: ticketAction.RAISE_TOAST,
+        payload: { show: true, message: LABELS.NO_TITLE_ERROR },
+      });
+      return;
+    }
+    if (!description) {
+      dispatch({
+        type: ticketAction.SET_ERROR_DESCRIPTION,
+        payload: LABELS.NO_DESCRIPTION_ERROR,
+      });
+      dispatch({
+        type: ticketAction.RAISE_TOAST,
+        payload: { show: true, message: LABELS.NO_DESCRIPTION_ERROR },
+      });
+      return;
+    }
+
+    dispatch({ type: ticketAction.UPDATE_THIS_TICKET });
+    dispatch({
+      type: ticketAction.RAISE_TOAST,
+      payload: { show: true, message: LABELS.TICKET_UPDATED },
+    });
+    dispatch({ type: ticketAction.RESET_ERROR });
+  };
+
+  const handleChangeUpdateTicket = (e) => {
+    if (e.target.value && e.target.name === "title")
+      dispatch({ type: ticketAction.SET_ERROR_TITLE, payload: "" });
+    if (e.target.value && e.target.name === "description")
+      dispatch({ type: ticketAction.SET_ERROR_DESCRIPTION, payload: "" });
+
+    dispatch({
+      type: ticketAction.TICKET_TO_UPDATE_CHANGES,
+      payload: { field: [e.target.name], value: e.target.value },
+    });
+  };
+
   const handleCancelUpdate = () => {
     dispatch({
       type: ticketAction.TICKET_TO_UPDATE,
       payload: {
         inProgress: false,
-        oldValue: {
-          id: "",
-          title: "",
-          description: "",
-          assignedTo: "",
-        },
-        newValue: {
-          id: "",
-          title: "",
-          description: "",
-          assignedTo: "",
-        },
+        oldValue: { id: "", title: "", description: "", assignedTo: "" },
+        newValue: { id: "", title: "", description: "", assignedTo: "" },
       },
     });
   };
 
-  const displayAllTickets = state.tickets
-    .map((ticket, index) => (
-      <div
-        key={index}
-        className="card flex flex-col gap-4 px-4 mb-4 bg-gray-100 hover:shadow-md rounded-lg border border-gray-200"
-      >
-        {!(
-          state.ticketToUpdate.inProgress &&
-          ticket.id === state.ticketToUpdate.oldValue.id
-        ) ? (
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 gap-4 ">
-            <div className="space-y-1 break-all">
-              <h2 className="text-lg font-semibold text-gray-800">
-                <span className="text-gray-400 font-small">[{ticket.id}]</span>{" "}
-              </h2>
-              <p className="text-gray-700">
-                <strong>Title:</strong> {ticket.title}
-              </p>
-              <p className="text-gray-700">
-                <strong>Description:</strong> {ticket.description}
-              </p>
-              <p className="text-gray-700">
-                <strong>Assigned To:</strong> {ticket.assignedTo}
-              </p>
-              <p className="text-gray-700">
-                <strong>Created On:</strong> {ticket.createdOn}
-              </p>
-            </div>
+  const colDefs = useMemo(
+    () => [
+      {
+        field: "id",
+        headerName: "ID",
+        width: 100,
+        valueFormatter: (params) =>
+          params.value ? String(params.value).substring(0, 8) : "N/A",
+      },
+      {
+        field: "title",
+        headerName: "Title",
+        flex: 1,
+        filter: true,
+        floatingFilter: true,
+      },
+      {
+        field: "assignedTo",
+        headerName: "Assignee",
+        width: 150,
+        filter: true,
+        floatingFilter: true,
+        valueFormatter: (params) => params.value || "Unassigned",
+      },
+      {
+        headerName: "Status",
+        field: "status",
+        width: 140,
+        cellRenderer: (params) => {
+          const s = params.value || "TODO";
+          const color =
+            s === "READY"
+              ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400"
+              : s === "DONE"
+                ? "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
+                : s === "IN PROGRESS"
+                  ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
+                  : s === "RESOLVED"
+                    ? "bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-900"
+                    : "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300";
 
-            <div className="flex justify-end gap-2">
-              <Button
-                btnDanger
-                id="deleteTicket"
-                type="button"
-                isDisabled={false}
-                label={LABELS.DELETE_THIS_TICKET}
-                onClickHandler={() => handleDeleteTicket(ticket)}
-              />
-              <Button
-                id="updateTicket"
-                type="button"
-                isDisabled={false}
-                label={LABELS.UPDATE_THIS_TICKET}
-                onClickHandler={() => handleTicketUpdate(ticket)}
-              />
+          return (
+            <div className="flex items-center h-full pt-1">
+              <span
+                className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${color}`}
+              >
+                {s}
+              </span>
             </div>
-          </div>
-        ) : (
-          <form onSubmit={handleEditTicket} className="flex flex-col gap-4 p-4">
+          );
+        },
+      },
+      {
+        field: "createdOn",
+        headerName: "Created On",
+        width: 180,
+        sortable: true,
+      },
+      {
+        headerName: "Actions",
+        width: 180,
+        sortable: false,
+        filter: false,
+        cellRenderer: (params) => {
+          const isResolved = params.data.status === "RESOLVED";
+          return (
+            <div className="flex items-center gap-2 pt-1.5">
+              {!isResolved ? (
+                <>
+                  <button
+                    onClick={() => handleTicketUpdate(params.data)}
+                    className="px-3 py-1 bg-indigo-50 text-indigo-600 rounded hover:bg-indigo-100 text-xs font-semibold transition-colors dark:bg-indigo-900/30 dark:text-indigo-400 dark:hover:bg-indigo-900/50"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDeleteTicket(params.data)}
+                    className="px-3 py-1 bg-emerald-50 text-emerald-600 rounded hover:bg-emerald-100 text-xs font-semibold transition-colors dark:bg-emerald-900/30 dark:text-emerald-400 dark:hover:bg-emerald-900/50"
+                  >
+                    Resolve
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={() => handleDeleteTicket(params.data)}
+                  className="px-3 py-1 bg-red-50 text-red-600 rounded hover:bg-red-100 text-xs font-semibold transition-colors dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50"
+                >
+                  Delete
+                </button>
+              )}
+            </div>
+          );
+        },
+      },
+    ],
+    [],
+  );
+
+  const defaultColDef = useMemo(
+    () => ({ sortable: true, resizable: true }),
+    [],
+  );
+
+  return (
+    <div className="min-h-full w-full flex flex-col p-6 lg:p-10 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+      {/* Header */}
+      <div className="mb-6">
+        <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+          {LABELS.ALL_TICKETS || "All Issues"}
+        </h1>
+        <p className="text-gray-500 mt-1">
+          Manage, filter, and resolve your system tickets.
+        </p>
+      </div>
+
+      {/* Conditional Edit Form */}
+      {state.ticketToUpdate.inProgress && (
+        <div className="mb-8 bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-indigo-100 dark:border-indigo-900/50 w-full max-w-3xl">
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
+            Edit Ticket
+          </h3>
+          <form onSubmit={handleEditTicket} className="flex flex-col gap-4">
             <Input
               htmlFor={"ticketTitle"}
               label={LABELS.TITLE}
@@ -209,44 +310,71 @@ const ViewAllTickets = () => {
               value={state.ticketToUpdate.newValue.assignedTo}
               onChangeHandler={handleChangeUpdateTicket}
             />
-            <div className="flex justify-end gap-2 p-4">
-              <Button
-                id="changeTicket"
-                type="submit"
-                isDisabled={false}
-                label={LABELS.ADD_THIS_TICKET}
-              />
-
+            <div className="flex justify-end gap-3 mt-4">
               <Button
                 id="cancelUpdateTicket"
                 type="button"
-                isDisabled={false}
+                btnSecondary
                 label={LABELS.CANCEL_CHANGES}
                 onClickHandler={handleCancelUpdate}
               />
+              <Button
+                id="changeTicket"
+                type="submit"
+                label={LABELS.UPDATE_THIS_TICKET}
+              />
             </div>
           </form>
-        )}
-      </div>
-    ))
-    .reverse();
+        </div>
+      )}
 
-  return (
-    <div className="h-full flex flex-col items-center justify-between p-4 bg-white-50">
-      {state.tickets.length ? (
-        <>
-          <div>
-            {" "}
-            <h2 className="text-4xl font-bold mb-4">{LABELS.ALL_TICKETS}</h2>
+      {/* Grid Container & Filter Toggles */}
+      {!state.ticketToUpdate.inProgress && (
+        <div className="flex flex-col flex-1 w-full">
+          {/* Custom View Toggles */}
+          <div className="flex gap-2 mb-4">
+            {[
+              { id: "ALL", label: "All Tickets" },
+              { id: "ACTIVE", label: "Active (Assigned)" },
+              { id: "UNASSIGNED", label: "Backlog (TODO)" },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setCurrentFilter(tab.id)}
+                className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${
+                  currentFilter === tab.id
+                    ? "bg-indigo-600 text-white shadow-md shadow-indigo-500/20"
+                    : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
           </div>
-          <div className="w-full flex flex-1 justify-center flex-col gap-6">
-            {displayAllTickets}
+
+          <div className="flex-1 w-full bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+            {displayData.length > 0 ? (
+              <div className="w-full h-[600px]">
+                <AgGridReact
+                  theme={themeQuartz}
+                  rowData={displayData.slice().reverse()}
+                  columnDefs={colDefs}
+                  defaultColDef={defaultColDef}
+                  pagination={true}
+                  paginationPageSize={15}
+                  rowHeight={48}
+                  headerHeight={48}
+                  suppressCellFocus={true}
+                />
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center h-64 text-gray-500">
+                <p className="text-lg font-medium">
+                  No tickets found for this filter.
+                </p>
+              </div>
+            )}
           </div>
-        </>
-      ) : (
-        <div>
-          {" "}
-          <h2 className="text-4xl font-bold mb-4">{LABELS.NO_TICKETS_ADDED}</h2>
         </div>
       )}
     </div>
