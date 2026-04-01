@@ -1,151 +1,63 @@
+const firstNames = ["Alice", "Bob", "Claire", "David", "Eve", "Frank", "Grace", "Hank", "Ivy", "Jack", "Kaushik", "Liam", "Mia", "Noah", "Olivia", "Piyush", "Quinn", "Rahul", "Sophia", "Tara", "Uma", "Victor", "Wendy", "Xander", "Yara", "Zane"];
+const lastNames = ["Johnson", "Smith", "Wilson", "Lee", "Taylor", "White", "Hall", "Miller", "Lopez", "Brown", "Sharma", "Patel", "Singh", "Kumar", "Gupta"];
+
+const actions = ["Fix", "Update", "Implement", "Refactor", "Optimize", "Review", "Test", "Deploy", "Design", "Document", "Audit", "Scale"];
+const features = [
+  "login bug", "dark mode CSS", "API documentation", "database queries", 
+  "email notifications", "user analytics", "UI guidance tool", "game spritesheets", 
+  "payment gateway", "dashboard metrics", "AG Grid performance", "session storage caching", 
+  "mobile responsiveness", "OAuth integration", "landing page conversion", "level design assets",
+  "ancient Indian theme models", "NodeJS server memory leak", "Micro-SaaS billing logic"
+];
+
+const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+const generateId = () => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+};
+
+const generateDate = (start, end) => {
+  const date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
+  return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+};
+
+const generateTickets = (count, isDeleted = false) => {
+  return Array.from({ length: count }).map(() => {
+    const action = getRandomItem(actions);
+    const feature = getRandomItem(features);
+    const createdDate = generateDate(new Date(2024, 0, 1), new Date());
+    
+    const ticket = {
+      id: generateId(),
+      title: `${action} ${feature}`,
+      description: `Need to look into the ${feature} and ensure it meets deployment standards. Assignee must ${action.toLowerCase()} this before the next sprint review.`,
+      assignedTo: `${getRandomItem(firstNames)} ${getRandomItem(lastNames)}`,
+      createdOn: createdDate,
+    };
+
+    if (isDeleted) {
+      // Ensure deletion date is after creation date
+      const [datePart] = createdDate.split(', ');
+      const [day, month, year] = datePart.split('/');
+      const createdObj = new Date(year, month - 1, day);
+      ticket.deletedOn = generateDate(createdObj, new Date());
+    }
+
+    return ticket;
+  });
+};
+
+// Generates 420 active tickets and 80 deleted tickets instantly
 export const dummyData = {
-  tickets: [
-    {
-      title: "Fix login bug",
-      description: "Users are unable to log in with valid credentials.",
-      assignedTo: "Alice Johnson",
-      id: "8b9a9e23-c7a8-4d3c-bb1c-487dc717f5e1",
-      createdOn: "15/08/2024, 10:45:30",
-    },
-    {
-      title: "Add dark mode",
-      description: "Implement dark mode in the settings.",
-      assignedTo: "Bob Smith",
-      id: "3d092a3d-d2b8-4f6c-b6ed-7d8e6d5c98b1",
-      createdOn: "19/10/2024, 14:20:15",
-    },
-    {
-      title: "Update API documentation",
-      description: "Ensure API docs are up to date with recent changes.",
-      assignedTo: "Claire Wilson",
-      id: "45d72fa3-5dc8-4f3d-aed5-33f1a8395df5",
-      createdOn: "12/12/2024, 09:15:45",
-    },
-    {
-      title: "Optimize database queries",
-      description: "Improve the performance of critical queries.",
-      assignedTo: "David Lee",
-      id: "98f7131b-8f3a-4b91-8b02-fbfed7ed6e7f",
-      createdOn: "28/03/2024, 16:25:50",
-    },
-    {
-      title: "Fix email notifications",
-      description: "Emails are being sent multiple times to users.",
-      assignedTo: "Eve Taylor",
-      id: "7a3b4169-6a81-401e-9df5-9be938b99a61",
-      createdOn: "02/01/2025, 11:30:00",
-    },
-    {
-      title: "Add user analytics feature",
-      description: "Provide detailed analytics for user activity.",
-      assignedTo: "Frank White",
-      id: "16f77c4d-caf2-4a75-8d47-0eae519c86ed",
-      createdOn: "07/09/2024, 13:10:25",
-    },
-    {
-      title: "Fix file upload issue",
-      description: "Large files are failing to upload.",
-      assignedTo: "Grace Hall",
-      id: "c19b2ed3-9185-41c6-8a95-c2eec25267d7",
-      createdOn: "21/11/2024, 08:50:15",
-    },
-    {
-      title: "Enhance search functionality",
-      description: "Add filters to improve search precision.",
-      assignedTo: "Hank Miller",
-      id: "5a9d3286-6cb8-44b8-a5c4-b634f84a3309",
-      createdOn: "04/07/2024, 10:05:30",
-    },
-    {
-      title: "Refactor authentication module",
-      description: "Update authentication logic for better security.",
-      assignedTo: "Ivy Lopez",
-      id: "a84d432e-6d5e-4fdc-bd99-423d44587bb3",
-      createdOn: "18/11/2024, 19:35:10",
-    },
-    {
-      title: "Fix dropdown alignment",
-      description: "Dropdowns are misaligned in the mobile view.",
-      assignedTo: "Jack Brown",
-      id: "b73f2e9d-dac4-4f58-8393-2dca92801c8f",
-      createdOn: "03/04/2024, 12:00:45",
-    },
-    {
-      title: "Implement user tagging",
-      description: "Allow users to tag others in posts.",
-      assignedTo: "Karen Green",
-      id: "09d52a3f-7cf1-4dbb-837e-11cfa32867b9",
-      createdOn: "19/01/2025, 09:40:55",
-    },
-    {
-      title: "Fix timezone issues",
-      description: "Resolve inconsistencies in displayed times.",
-      assignedTo: "Larry King",
-      id: "79c3f7e5-bf2f-47d9-bc7f-721efb23232f",
-      createdOn: "01/06/2024, 14:25:50",
-    },
-    {
-      title: "Add multi-language support",
-      description: "Translate the app into multiple languages.",
-      assignedTo: "Maria Scott",
-      id: "0c823ac5-8d24-4554-9026-389acd7d509f",
-      createdOn: "22/10/2024, 18:40:30",
-    },
-    {
-      title: "Fix broken links",
-      description: "Resolve 404 errors on key pages.",
-      assignedTo: "Nina Young",
-      id: "9b7f9c3e-cc33-44b7-9d70-b1c9a3433b42",
-      createdOn: "12/05/2024, 08:15:10",
-    },
-    {
-      title: "Improve error handling",
-      description: "Add detailed error messages for debugging.",
-      assignedTo: "Oscar Adams",
-      id: "d1a9ebd5-df13-4459-8ba2-83aef645c772",
-      createdOn: "09/12/2024, 22:05:35",
-    },
-  ],
-  recentlyDeleted: [
-    {
-      title: "Remove deprecated APIs",
-      description: "Eliminate APIs no longer in use.",
-      assignedTo: "Paul Rogers",
-      id: "1a93bc5e-8354-4c8a-9c5e-c357f5b50e0f",
-      createdOn: "05/04/2024, 17:50:10",
-      deletedOn: "15/01/2025, 13:45:30",
-    },
-    {
-      title: "Fix CSS conflicts",
-      description: "Resolve stylesheet conflicts affecting layout.",
-      assignedTo: "Quinn Martinez",
-      id: "5b3e4f86-9e51-4e95-a49b-6e926d1ed321",
-      createdOn: "08/09/2024, 11:15:25",
-      deletedOn: "12/01/2025, 09:20:50",
-    },
-    {
-      title: "Update icons library",
-      description: "Replace old icons with the latest library version.",
-      assignedTo: "Rebecca Evans",
-      id: "7b94e324-546a-4b4d-9456-731d0bfb8e57",
-      createdOn: "25/07/2024, 15:00:00",
-      deletedOn: "10/01/2025, 16:10:20",
-    },
-    {
-      title: "Optimize image loading",
-      description: "Improve page load speed by optimizing images.",
-      assignedTo: "Sam Morgan",
-      id: "d1c43eab-7538-40df-bc0e-e3f85cd8e25f",
-      createdOn: "19/11/2024, 09:30:10",
-      deletedOn: "18/01/2025, 14:05:35",
-    },
-    {
-      title: "Fix pagination issue",
-      description: "Pagination isn't working correctly on the blog.",
-      assignedTo: "Tina Carter",
-      id: "ae5d8e4c-cf03-45b1-a725-6f13c329649d",
-      createdOn: "10/10/2024, 13:45:50",
-      deletedOn: "17/01/2025, 20:50:55",
-    },
-  ],
+  tickets: generateTickets(420, false),
+  recentlyDeleted: generateTickets(80, true),
 };

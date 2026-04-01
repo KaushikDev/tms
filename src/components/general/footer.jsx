@@ -2,81 +2,44 @@ import { Link } from "react-router-dom";
 import { AiFillLinkedin } from "react-icons/ai";
 import { MdEmail } from "react-icons/md";
 import { FaGithub } from "react-icons/fa";
-import logo from "../../assets/KaushikDev.svg";
 import { LABELS } from "../../utilities/constants";
 
-
 const Footer = () => (
-  <footer className=" fixed bottom-0 left-0 w-full bg-gray-900 text-white py-4">
-    <div className=" mx-auto px-4 grid grid-cols-2 sm:grid-cols-2 gap-8 sm:flex-row">
-      {/* Logo and Copyright Column */}
-   
-      <div className="text-sm flex flex-col sm:flex-row sm:items-start">
-  <Link
-    className="text-white inline-block flex items-center"
-    target="_blank"
-    to="https://kaushikdev.com"
-  >
-    &copy; {new Date().getFullYear()}<br></br>
-    <img
-      className="h-5 sm:mx-0"
-      src={logo}
-      alt="KaushikDev Logo"
-    />
-  </Link>
-  
-</div>
+  <footer className="w-full bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400 py-6 border-t border-gray-200 dark:border-gray-800 mt-auto transition-colors duration-300">
+    <div className="container mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+      {/* Copyright */}
+      <div className="text-sm flex items-center">
+        <span className="font-medium text-xs">
+          &copy; {new Date().getFullYear()} KaushikDevStudio. All rights
+          reserved.
+        </span>
+      </div>
 
-
-      {/* Links Column */}
-      <div className="flex flex-row items-center justify-end">
-        {/* Icons for smaller screens */}
-        <div className="flex space-x-4 text-xl sm:hidden">
-          <Link
-            className="text-gray-100 transition"
-            target="_blank"
-            to="https://github.com/KaushikDev"
-          >
-            <FaGithub />
-          </Link>
-          <Link
-            className="text-gray-100 transition"
-            target="_blank"
-            to="https://www.linkedin.com/in/piyush-kaushik-039169321/"
-          >
-            <AiFillLinkedin />
-          </Link>
-          <Link
-            className="text-gray-100 transition"
-            to="mailto:piyush.kaushik02@gmail.com?subject=Saw%20your%20portfolio...&body=Hi%20Piyush%20(kaushikDev),"
-          >
-            <MdEmail />
-          </Link>
-        </div>
-
-        {/* Links with text for larger screens */}
-        <div className="hidden sm:flex flex-row space-x-4 text-sm">
-          <Link
-            className=" text-gray-100 transition"
-            target="_blank"
-            to="https://github.com/KaushikDev"
-          >
-            {LABELS.GITHUB}
-          </Link>
-          <Link
-            className=" text-gray-100 transition"
-            target="_blank"
-            to="https://www.linkedin.com/in/piyush-kaushik-039169321/"
-          >
-            {LABELS.LINKEDIN}
-          </Link>
-          <Link
-            className=" text-gray-100 transition"
-            to="mailto:piyush.kaushik02@gmail.com?subject=TicketManagementSystem&body=Hi%20Piyush%20(kaushikDev),"
-          >
-            {LABELS.EMAIL}
-          </Link>
-        </div>
+      {/* Social Links */}
+      <div className="flex flex-row items-center space-x-6 text-xl sm:text-sm">
+        <Link
+          className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2"
+          target="_blank"
+          to="https://github.com/KaushikDev"
+        >
+          <FaGithub className="text-xl" />
+          <span className="hidden sm:inline-block">{LABELS.GITHUB}</span>
+        </Link>
+        <Link
+          className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2"
+          target="_blank"
+          to="https://www.linkedin.com/in/piyush-kaushik-039169321/"
+        >
+          <AiFillLinkedin className="text-xl" />
+          <span className="hidden sm:inline-block">{LABELS.LINKEDIN}</span>
+        </Link>
+        <Link
+          className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2"
+          to="mailto:piyush.kaushik02@gmail.com?subject=Saw%20your%20portfolio..."
+        >
+          <MdEmail className="text-xl" />
+          <span className="hidden sm:inline-block">{LABELS.EMAIL}</span>
+        </Link>
       </div>
     </div>
   </footer>
