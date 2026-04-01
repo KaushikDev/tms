@@ -8,7 +8,6 @@ import Menu from "./menu";
 import { MdLogin } from "react-icons/md";
 
 import { IoHome } from "react-icons/io5";
-import { FaUserPlus } from "react-icons/fa";
 
 const Header = () => {
   const { loading, loggedInUser, logout } = useAuth();
@@ -41,16 +40,6 @@ const Header = () => {
               {LABELS.HOME}
             </Link>
             <Link
-              to={ROUTES.REGISTER}
-              className={`hidden sm:inline-block hover:text-gray-100 text-gray-100 transition ${
-                location.pathname === ROUTES.REGISTER
-                  ? "underline underline-offset-4 "
-                  : null
-              } hover:underline hover:underline-offset-4`}
-            >
-              {LABELS.REGISTER}
-            </Link>
-            <Link
               to={ROUTES.LOGIN}
               className={`hidden sm:inline-block hover:text-gray-100 text-gray-100 transition ${
                 location.pathname === ROUTES.LOGIN
@@ -70,16 +59,7 @@ const Header = () => {
             >
               <IoHome />
             </Link>
-            <Link
-              to={ROUTES.REGISTER}
-              className={`text-xl sm:hidden inline-block p-1 text-gray-100 hover:text-gray-100 ${
-                location.pathname === ROUTES.REGISTER
-                  ? "border border-gray-100 rounded-md"
-                  : null
-              } hover:border  hover:border-gray-100 hover:rounded-md hover:p-1  transition`}
-            >
-              <FaUserPlus />
-            </Link>
+  
             <Link
               to={ROUTES.LOGIN}
               className={`text-xl sm:hidden inline-block p-1 text-gray-100 hover:text-gray-100 ${

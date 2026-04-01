@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { account, ID, OAuthProvider } from "../lib/appwrite";
 
 const AuthContext = createContext();
 
@@ -7,77 +6,61 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [signInError, setSignInError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const getCurrentUserSession = async () => {
-    try {
-      setLoggedInUser(await account.get());
-    } catch (err) {
-      setSignInError(err.message);
-    } finally {
-      setLoading(false);
-    }
+  // A hardcoded dummy user to simulate an active session
+  const DUMMY_USER = {
+    $id: "user-90",
+    name: "Kaushik",
+    email: "admin@studio.com",
+    role: "admin",
   };
 
   useEffect(() => {
-    (async () => {
-      setLoading(true);
-      await getCurrentUserSession();
-    })();
-  }, []);
-  console.log("Logged-in user is : ", loggedInUser);
-  const register = async (name, email, password) => {
-    setLoading(true);
-    try {
-      await account.create(ID.unique(), email, password, name);
-      await login(name, email, password);
-    } catch (err) {
-      setSignInError(err.message);
-    } finally {
-      setLoading(false);
+    // Check local storage on initial load to see if they "logged in" previously
+    const storedSession = localStorage.getItem("tms_dummy_session");
+    if (storedSession) {
+      setLoggedInUser(JSON.parse(storedSession));
     }
+    setLoading(false);
+  }, []);
+
+  // Simulate a network delay for realism, then log them in
+  const simulateLogin = async () => {
+    setLoading(true);
+    setSignInError("");
+
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        setLoggedInUser(DUMMY_USER);
+        localStorage.setItem("tms_dummy_session", JSON.stringify(DUMMY_USER));
+        setLoading(false);
+        resolve();
+      }, 800); // 800ms fake delay
+    });
   };
 
-  const login = async (email, password) => {
-    setLoading(true);
-    try {
-      await account.createEmailPasswordSession(email, password);
-      await getCurrentUserSession();
-    } catch (err) {
-      setSignInError(err.message);
-    } finally {
-      setLoading(false);
+  const login = async (email) => {
+    // You can add fake validation here if you want it to reject wrong passwords
+    if (email === "wrong@test.com") {
+      setSignInError("Invalid credentials.");
+      return;
     }
+    await simulateLogin();
   };
 
   const googleLogin = async () => {
-    setLoading(true);
-    try {
-      await account.createOAuth2Session(
-        OAuthProvider.Google,
-        "https://tms.kaushikdev.com"
-      );
-      await getCurrentUserSession();
-    } catch (err) {
-      setSignInError(err.message);
-    } finally {
-      setLoading(false);
-    }
+    await simulateLogin();
   };
 
   const logout = async () => {
     setLoading(true);
-    try {
-      await account.deleteSession("current");
+    setTimeout(() => {
       setLoggedInUser(null);
-    } catch (err) {
-      setSignInError(err.message);
-    } finally {
+      localStorage.removeItem("tms_dummy_session");
       setLoading(false);
-    }
+    }, 500);
   };
-
-  console.log(signInError);
 
   return (
     <AuthContext.Provider
@@ -85,7 +68,6 @@ export const AuthProvider = ({ children }) => {
         loading,
         signInError,
         loggedInUser,
-        register,
         login,
         logout,
         googleLogin,
