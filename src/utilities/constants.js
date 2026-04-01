@@ -10,7 +10,7 @@ export const ASSIGNEES = [
 export const LABELS = {
   MAIN_HEADING_HOME: "Ticketing Management System",
   SUB_HEADING_HOME:
-    "Manage your tickets seamlessly. Click below to get started.",
+    "Manage your tickets seamlessly. Login now to get started.",
     MAIN_HEADING_DASHBOARD: "Dashboard",
     SUB_HEADING_DASHBOARD:
       "Displaying the most up to date information regarding all tickets and activities.",
@@ -55,13 +55,10 @@ export const LABELS = {
   NAME: "Name",
   NAME_PLACEHOLDER: "Enter your name",
 
-  GET_STARTED: "Get Started with username/password",
-  GOOGLE_SIGNIN: "Or SignIn with Google",
+  GET_STARTED: "LOGIN",
   LOGIN: "Login",
-  REGISTER: "Register",
   LOGOUT: "Logout",
 
-  NOT_REGISTERED_YET: "Didn't signup yet? Create an account now.",
   HAVE_AN_ACCOUNT: "Already got an account? Login now.",
 
   PAGE_NOT_FOUND: " Oops! The page you're looking for doesn't exist.",

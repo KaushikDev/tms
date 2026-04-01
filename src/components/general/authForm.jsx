@@ -13,7 +13,6 @@ const AuthForm = ({
   signInError,
   isLogin,
   loginRegular,
-  loginGoogle,
   label,
 }) => {
   const { state, dispatch } = useTicketsContext();
@@ -181,9 +180,6 @@ const AuthForm = ({
     }
   };
 
-  const handleGoogleSignIn = async () => {
-   await loginGoogle();
-  };
 
   return (
     <form
@@ -233,14 +229,6 @@ const AuthForm = ({
           type="submit"
           label={label}
           onClickHandler={handleFormSubmission}
-          isDisabled={loading}
-        />
-
-        <Button
-          id="auth-btn-google"
-          type="button"
-          label={LABELS.GOOGLE_SIGNIN}
-          onClickHandler={handleGoogleSignIn}
           isDisabled={loading}
         />
       </div>

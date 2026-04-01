@@ -3,7 +3,6 @@ export const ROUTES = {
   HOME: "/",
   DASHBOARD: "/dashboard",
   LOGIN: "/login",
-  REGISTER: "/register",
   CREATE: "/add-ticket",
   VIEW: "/view-all-tickets",
   DELETED: "/recently-deleted",
