@@ -7,7 +7,12 @@ export const TicketsContext = createContext();
 const TicketsProvider = ({ children }) => {
   const [state, dispatch] = useReducer(ticketsReducer, {
     tickets: [],
-    currentTicket: { title: "", description: "", assignedTo: "" },
+    currentTicket: {
+      title: "",
+      description: "",
+      assignedTo: "",
+      status: "TODO",
+    },
     ticketToUpdate: {
       inProgress: false,
       oldValue: { title: "", description: "", assignedTo: "" },
@@ -17,7 +22,7 @@ const TicketsProvider = ({ children }) => {
       show: false,
       message: "",
     },
-    recentlyDeleted: [],
+    archive: [],
     error: {
       title: "",
       description: "",
@@ -27,7 +32,7 @@ const TicketsProvider = ({ children }) => {
     },
     import: {
       status: false,
-    }
+    },
   });
 
   return (

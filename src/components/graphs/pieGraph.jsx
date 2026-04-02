@@ -5,28 +5,34 @@ import { LABELS } from "../../utilities/constants";
 const COLORS = ["#0088FE", "#FF8042"];
 
 const PieGraph = ({ pieGraphData }) => {
- 
   return (
     <>
       <h1 className="text-xl font-bold mb-4 w-full max-w-md mx-auto">
-        {LABELS.ACTIVE_VS_DELETED}
+        {LABELS.ACTIVE_VS_ARCHIVED}
       </h1>
-     {pieGraphData[0].value && pieGraphData[1].value ? <PieChart width={200} height={200}>
-        <Pie
-          data={pieGraphData}
-          dataKey="value"
-          cx="50%"
-          cy="50%"
-          outerRadius={100}
-          fill="#8884d8"
-          label
-        >
-          {pieGraphData.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip />
-      </PieChart> : LABELS.NO_DATA_FOR_GRAPH}
+      {pieGraphData[0].value && pieGraphData[1].value ? (
+        <PieChart width={200} height={200}>
+          <Pie
+            data={pieGraphData}
+            dataKey="value"
+            cx="50%"
+            cy="50%"
+            outerRadius={100}
+            fill="#8884d8"
+            label
+          >
+            {pieGraphData.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+              />
+            ))}
+          </Pie>
+          <Tooltip />
+        </PieChart>
+      ) : (
+        LABELS.NO_DATA_FOR_GRAPH
+      )}
     </>
   );
 };

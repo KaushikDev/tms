@@ -17,9 +17,9 @@ Live application : [TicketManagementSystem](https://tms.kaushikdev.com)
 * [DONE]Header controls and UI - MVP
 * [DONE]Footer controls and UI - MVP
 * [DONE]Move static text to constants
-* [DONE]Recently Deleted - MVP
+* [DONE]Recently Archived - MVP
 * [TBD]~~Deletion Confirmation~~
-* [DONE]Restore Deleted Ticket??
+* [DONE]Restore Archived Ticket??
 * [DONE]Authentication && Authorization via AppWrite?
 * DB via AppWrite?
 * Status, priority field
