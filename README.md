@@ -1,45 +1,39 @@
-# Ticket Management System.
-### Author : Piyush Kaushik a.k.a kaushikDev. 
+# Ticket Management Dashboard
 
-This application is made in React with specific showcase for context and reducer api's for CRUD operations. For Auth, I've used, appwrite and for styling, Tailwind was the first choice.
+A modern, high-performance React application designed for project managers and development teams to track, route, and resolve system issues. This project focuses on strict data validation, enterprise-grade UX, and real-time metric visualization.
 
-Live application : [TicketManagementSystem](https://tms.kaushikdev.com)
+## Features
 
-## Features/Issues/Bugs/Enhancements/Ideas
+* **Intelligent Dashboard:**
+  * Real-time KPI monitoring (Total Pool, Backlog, Active, Resolved).
+  * 30-Day Velocity Area Chart tracking opened vs. resolved ticket trends.
+  * Active Distribution Pie Chart and Developer Workload Bar Chart.
+  * Live feed of recent arrivals.
+* **Smart Ticket Creation:**
+  * **Auto-Save:** Drafts are continuously saved to `sessionStorage` to prevent data loss on accidental refreshes.
+  * **Pipeline Routing:** Instantly route tickets to the "Backlog" (Unassigned) or the "Active Cycle" (In Progress/Done/Ready).
+  * **Strict Validation Gates:** Enforces business logic (e.g., Active tickets *must* have an assignee).
+* **Enterprise Issue Grid (AG Grid):**
+  * High-performance data grid with custom cell renderers and status badges.
+  * Quick-filter tabs for All Tickets, Active (Assigned), and Backlog (TODO).
+  * Inline editing and dynamic status updating.
+* **System Archive:**
+  * Dedicated cold-storage screen for `RESOLVED` and `DELETED` tickets to keep the active board clutter-free.
+  * One-click restore functionality to send tickets back to the active backlog.
 
-* [DONE]Error Handling - MVP
-* [DONE]Responsive Design - MVP
-* [TBD]~~Kanban?~~
-* [DONE]Letter capitalisation utility fn
-* Code optimisation - Analyse with ChatGPT
-* [IN-PROGRESS]Code refactoring
-* [DONE]Home Page(Basic) - MVP
-* [DONE]Header controls and UI - MVP
-* [DONE]Footer controls and UI - MVP
-* [DONE]Move static text to constants
-* [DONE]Recently Archived - MVP
-* [TBD]~~Deletion Confirmation~~
-* [DONE]Restore Archived Ticket??
-* [DONE]Authentication && Authorization via AppWrite?
-* DB via AppWrite?
-* Status, priority field
-* Recent activity log
-* Lazy loading on view all tickets or pagination?
-* Filters on Every Ticket List
-* [DONE]Limits on text fields
-* [TBD]~~Route after creating ticket~~
-* [DONE]Blank page or 404 issue resolve
-* [DONE]404 page
-* [TBD]~~Highlight first item in the list for a couple of seconds.~~
-* Toast component is called multiple times, check for other components.
-* [DONE]Error handling for login and registration forms
-* [DONE]Save logged-in state
-* [DONE]If logged in, should redirect to home("/") if url is changed to "/login" or "/register"
-* [DONE]Highlight selected menu item
-* [DONE]Fix UI
-* [DONE] Environent Variables
-* [DONE]Home Page out of protected route 
-* [DONE]create new Dashboard page
-* [DONE]Loading animation for api calls
-* [DONE]Google login issue
-* [DONE]text going outside card containers
+## Tech Stack
+
+* **Framework:** [React 18+](https://react.dev/)
+* **Routing:** [React Router v6](https://reactrouter.com/)
+* **State Management:** React Context API + `useReducer`
+* **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+* **Data Grid:** [AG Grid Community](https://www.ag-grid.com/react-data-grid/)
+* **Data Visualization:** [Recharts](https://recharts.org/)
+* **Icons:** [React Icons](https://react-icons.github.io/react-icons/) (Lucide/Feather sets)
+
+## Core Architectural Decisions
+
+1. **Strict UI Validation over Complex UI Toggles:** Instead of using convoluted UI states to manage ticket creation, the application relies on strict, unbreakable validation gates inside the submit handlers. A ticket cannot be saved to an Active state without an Assignee, preventing database pollution.
+2. **Separation of Active vs. Archive Data:** Resolved and Deleted tickets are visually and programmatically separated from the active pipeline to reduce cognitive load on the user and simulate enterprise database querying optimization.
+3. **Optimized Renders:** Heavy data manipulations (like calculating Recharts metrics or filtering AG Grid rows) are wrapped in `useMemo` to ensure lightning-fast performance even with hundreds of simulated tickets.
+4. **Frictionless UI Showcase (No Authentication):** This application is currently architected as a frontend prototype demonstrating advanced state management and UI/UX design. It intentionally omits an authentication layer and backend database to ensure reviewers, developers, and users can instantly interact with the dashboard without encountering a login wall. The modular React Context setup allows for easy integration with backend services (like Firebase, Supabase, or Node.js) when preparing for production.
