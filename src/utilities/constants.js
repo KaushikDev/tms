@@ -22,12 +22,12 @@ export const LABELS = {
   DASHBOARD: "Dashboard",
   CREATE: "Create Ticket",
   VIEW: "View Tickets",
-  DELETED: "Recently Deleted",
+  ARCHIVED: "Recently Archived",
 
   IMPORT_DUMMY_DATA: "Import dummy data",
 
   ADD_THIS_TICKET: "Save",
-  DELETE_THIS_TICKET: "Delete",
+  ARCHIVE_THIS_TICKET: "Archive",
   RESTORE_THIS_TICKET: "Restore",
 
   UPDATE_THIS_TICKET: "Update",
@@ -37,11 +37,11 @@ export const LABELS = {
   ALL_TICKETS: "Tickets list",
   TICKET_SAVED: "Ticket is saved!",
   TICKET_UPDATED: "Ticket is updated!",
-  TICKET_DELETED: "Ticket is deleted!",
+  TICKET_ARCHIVED: "Ticket is archived!",
   TICKET_RESTORED: "Ticket is restored!",
   NO_TICKETS_ADDED: "No tickets added yet !",
-  RECENTLY_DELETED_TICKETS: "Recently deleted tickets",
-  NO_DELETED_TICKETS: "No tickets deleted yet !",
+  RECENTLY_ARCHIVED_TICKETS: "Recently archived tickets",
+  NO_ARCHIVED_TICKETS: "No tickets archived yet !",
 
   EMAIL: "Email",
   EMAIL_PLACEHOLDER: "Enter your email",
@@ -65,7 +65,7 @@ export const LABELS = {
   GITHUB: "Github",
 
   NO_DATA_FOR_GRAPH: "No data to show graph. Add tickets or import dummy data!",
-  ACTIVE_VS_DELETED: "Active vs Deleted tickets",
+  ACTIVE_VS_ARCHIVED: "Active vs Archived tickets",
 
   NO_TITLE_ERROR: "Title cannot be empty!",
   NO_DESCRIPTION_ERROR: "Description cannot be empty!",

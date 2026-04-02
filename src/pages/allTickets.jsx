@@ -7,67 +7,82 @@ import Input from "../components/elements/input";
 import Select from "../components/elements/select";
 import Button from "../components/elements/button";
 
-// AG Grid v33 Imports & Theming
 import { AgGridReact } from "ag-grid-react";
 import {
   ModuleRegistry,
   AllCommunityModule,
   themeQuartz,
 } from "ag-grid-community";
-
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-const ViewAllTickets = () => {
+const STATUS_OPTIONS = ["TODO", "IN PROGRESS", "DONE", "READY"];
+
+const AllTickets = () => {
   const { state, dispatch } = useTicketsContext();
   const location = useLocation();
-
-  // Local state to manage the grid filter
   const [currentFilter, setCurrentFilter] = useState("ALL");
 
-  // Catch the route state from the Dashboard cards
+  const editStatus = state.ticketToUpdate.newValue.status || "TODO";
+  const isEditBacklog = editStatus === "TODO";
+
   useEffect(() => {
     if (location.state?.filter) {
       setCurrentFilter(location.state.filter);
     }
   }, [location.state]);
 
-  // Import dummy data if empty
   useEffect(() => {
     if (!state.import?.status) {
       dispatch({ type: ticketAction.IMPORT_DUMMY_DATA });
     }
   }, [state.import?.status, dispatch]);
 
-  // Dynamically slice the data based on the selected filter
-  const displayData = useMemo(() => {
-    const activePipeline = state.tickets || [];
-    const resolvedArchive = state.recentlyDeleted || [];
+  const activePipeline = state.tickets || [];
+  const resolvedArchive = state.archive || [];
 
-    if (currentFilter === "ACTIVE") {
+  const filterCounts = useMemo(() => {
+    const activeCount = activePipeline.filter((t) =>
+      ["IN PROGRESS", "DONE", "READY"].includes(t.status),
+    ).length;
+    const unassignedCount = activePipeline.filter(
+      (t) => t.status === "TODO",
+    ).length;
+    const allCount = activePipeline.length + resolvedArchive.length;
+    return { ALL: allCount, ACTIVE: activeCount, UNASSIGNED: unassignedCount };
+  }, [activePipeline, resolvedArchive]);
+
+  const displayData = useMemo(() => {
+    if (currentFilter === "ACTIVE")
       return activePipeline.filter((t) =>
         ["IN PROGRESS", "DONE", "READY"].includes(t.status),
       );
-    }
-    if (currentFilter === "UNASSIGNED") {
+    if (currentFilter === "UNASSIGNED")
       return activePipeline.filter((t) => t.status === "TODO");
-    }
-    // "ALL" combines the active pipeline and the resolved archive
     return [...activePipeline, ...resolvedArchive];
-  }, [state.tickets, state.recentlyDeleted, currentFilter]);
+  }, [activePipeline, resolvedArchive, currentFilter]);
 
-  const handleDeleteTicket = (ticket) => {
-    dispatch({ type: ticketAction.DELETE_THIS_TICKET, payload: ticket.id });
+  const handleArchiveTicket = (ticket) => {
+    const isAlreadyArchived =
+      ticket.status === "RESOLVED" || ticket.status === "DELETED";
+    const updatedTicket = {
+      ...ticket,
+      status: isAlreadyArchived ? "DELETED" : "RESOLVED",
+    };
+
+    dispatch({ type: ticketAction.ARCHIVE_THIS_TICKET, payload: ticket.id });
     dispatch({
       type: ticketAction.RAISE_TOAST,
       payload: {
         show: true,
-        message:
-          ticket.status === "RESOLVED"
-            ? "Ticket permanently deleted."
-            : "Ticket marked as resolved.",
+        message: isAlreadyArchived
+          ? "Ticket permanently archived."
+          : "Ticket marked as resolved.",
       },
     });
-    dispatch({ type: ticketAction.ADD_TO_DELETE_LIST, payload: ticket });
+    dispatch({
+      type: ticketAction.ADD_TO_ARCHIVE_LIST,
+      payload: updatedTicket,
+    });
   };
 
   const handleTicketUpdate = (ticketToBeUpdated) => {
@@ -83,7 +98,7 @@ const ViewAllTickets = () => {
 
   const handleEditTicket = (e) => {
     e.preventDefault();
-    const { title, description } = state.ticketToUpdate.newValue;
+    const { title, description, assignedTo } = state.ticketToUpdate.newValue;
 
     if (!title && !description) {
       dispatch({
@@ -123,6 +138,13 @@ const ViewAllTickets = () => {
       return;
     }
 
+    if (assignedTo === "Unassigned") {
+      dispatch({
+        type: ticketAction.TICKET_TO_UPDATE_CHANGES,
+        payload: { field: "assignedTo", value: "" },
+      });
+    }
+
     dispatch({ type: ticketAction.UPDATE_THIS_TICKET });
     dispatch({
       type: ticketAction.RAISE_TOAST,
@@ -132,15 +154,29 @@ const ViewAllTickets = () => {
   };
 
   const handleChangeUpdateTicket = (e) => {
-    if (e.target.value && e.target.name === "title")
+    const { name, value } = e.target;
+
+    if (value && name === "title")
       dispatch({ type: ticketAction.SET_ERROR_TITLE, payload: "" });
-    if (e.target.value && e.target.name === "description")
+    if (value && name === "description")
       dispatch({ type: ticketAction.SET_ERROR_DESCRIPTION, payload: "" });
 
     dispatch({
       type: ticketAction.TICKET_TO_UPDATE_CHANGES,
-      payload: { field: [e.target.name], value: e.target.value },
+      payload: { field: name, value: value },
     });
+
+    if (
+      name === "status" &&
+      value !== "TODO" &&
+      (!state.ticketToUpdate.newValue.assignedTo ||
+        state.ticketToUpdate.newValue.assignedTo === "Unassigned")
+    ) {
+      dispatch({
+        type: ticketAction.TICKET_TO_UPDATE_CHANGES,
+        payload: { field: "assignedTo", value: ASSIGNEES[0] },
+      });
+    }
   };
 
   const handleCancelUpdate = () => {
@@ -148,8 +184,20 @@ const ViewAllTickets = () => {
       type: ticketAction.TICKET_TO_UPDATE,
       payload: {
         inProgress: false,
-        oldValue: { id: "", title: "", description: "", assignedTo: "" },
-        newValue: { id: "", title: "", description: "", assignedTo: "" },
+        oldValue: {
+          id: "",
+          title: "",
+          description: "",
+          assignedTo: "",
+          status: "",
+        },
+        newValue: {
+          id: "",
+          title: "",
+          description: "",
+          assignedTo: "",
+          status: "",
+        },
       },
     });
   };
@@ -182,6 +230,8 @@ const ViewAllTickets = () => {
         headerName: "Status",
         field: "status",
         width: 140,
+        filter: true,
+        floatingFilter: true,
         cellRenderer: (params) => {
           const s = params.value || "TODO";
           const color =
@@ -192,8 +242,10 @@ const ViewAllTickets = () => {
                 : s === "IN PROGRESS"
                   ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
                   : s === "RESOLVED"
-                    ? "bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-900"
-                    : "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300";
+                    ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400"
+                    : s === "DELETED"
+                      ? "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
+                      : "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300";
 
           return (
             <div className="flex items-center h-full pt-1">
@@ -218,10 +270,12 @@ const ViewAllTickets = () => {
         sortable: false,
         filter: false,
         cellRenderer: (params) => {
-          const isResolved = params.data.status === "RESOLVED";
+          const isArchived =
+            params.data.status === "RESOLVED" ||
+            params.data.status === "DELETED";
           return (
             <div className="flex items-center gap-2 pt-1.5">
-              {!isResolved ? (
+              {!isArchived ? (
                 <>
                   <button
                     onClick={() => handleTicketUpdate(params.data)}
@@ -230,7 +284,7 @@ const ViewAllTickets = () => {
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDeleteTicket(params.data)}
+                    onClick={() => handleArchiveTicket(params.data)}
                     className="px-3 py-1 bg-emerald-50 text-emerald-600 rounded hover:bg-emerald-100 text-xs font-semibold transition-colors dark:bg-emerald-900/30 dark:text-emerald-400 dark:hover:bg-emerald-900/50"
                   >
                     Resolve
@@ -238,10 +292,10 @@ const ViewAllTickets = () => {
                 </>
               ) : (
                 <button
-                  onClick={() => handleDeleteTicket(params.data)}
+                  onClick={() => handleArchiveTicket(params.data)}
                   className="px-3 py-1 bg-red-50 text-red-600 rounded hover:bg-red-100 text-xs font-semibold transition-colors dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50"
                 >
-                  Delete
+                  Archive
                 </button>
               )}
             </div>
@@ -261,7 +315,7 @@ const ViewAllTickets = () => {
     <div className="min-h-full w-full flex flex-col p-6 lg:p-10 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       <div className="mb-6">
         <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">
-          {LABELS.ALL_TICKETS || "All Issues"}
+          {LABELS.ALL_TICKETS || "All Tickets"}
         </h1>
         <p className="text-gray-500 mt-1">
           Manage, filter, and resolve your system tickets.
@@ -298,16 +352,32 @@ const ViewAllTickets = () => {
               onChangeHandler={handleChangeUpdateTicket}
               maxLength={250}
             />
-            <Select
-              htmlFor={"ticketAssignedTo"}
-              label={LABELS.ASSIGNED_TO}
-              id={"ticketAssignedTo"}
-              error={false}
-              name={"assignedTo"}
-              optionsArr={ASSIGNEES}
-              value={state.ticketToUpdate.newValue.assignedTo}
-              onChangeHandler={handleChangeUpdateTicket}
-            />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Select
+                htmlFor={"ticketStatus"}
+                label={"Status"}
+                id={"ticketStatus"}
+                error={false}
+                name={"status"}
+                optionsArr={STATUS_OPTIONS}
+                value={editStatus}
+                onChangeHandler={handleChangeUpdateTicket}
+              />
+              <Select
+                htmlFor={"ticketAssignedTo"}
+                label={LABELS.ASSIGNED_TO}
+                id={"ticketAssignedTo"}
+                error={false}
+                name={"assignedTo"}
+                optionsArr={
+                  isEditBacklog ? ["Unassigned", ...ASSIGNEES] : ASSIGNEES
+                }
+                value={state.ticketToUpdate.newValue.assignedTo || "Unassigned"}
+                onChangeHandler={handleChangeUpdateTicket}
+              />
+            </div>
+
             <div className="flex justify-end gap-3 mt-4">
               <Button
                 id="cancelUpdateTicket"
@@ -330,20 +400,33 @@ const ViewAllTickets = () => {
         <div className="flex flex-col flex-1 w-full">
           <div className="flex gap-2 mb-4">
             {[
-              { id: "ALL", label: "All Tickets" },
-              { id: "ACTIVE", label: "Active (Assigned)" },
-              { id: "UNASSIGNED", label: "Backlog (TODO)" },
+              { id: "ALL", label: "All Tickets", count: filterCounts.ALL },
+              {
+                id: "ACTIVE",
+                label: "Active (Assigned)",
+                count: filterCounts.ACTIVE,
+              },
+              {
+                id: "UNASSIGNED",
+                label: "Backlog (TODO)",
+                count: filterCounts.UNASSIGNED,
+              },
             ].map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setCurrentFilter(tab.id)}
-                className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all ${
                   currentFilter === tab.id
                     ? "bg-indigo-600 text-white shadow-md shadow-indigo-500/20"
                     : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700"
                 }`}
               >
                 {tab.label}
+                <span
+                  className={`px-2 py-0.5 rounded-full text-xs ${currentFilter === tab.id ? "bg-indigo-500 text-white" : "bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"}`}
+                >
+                  {tab.count}
+                </span>
               </button>
             ))}
           </div>
@@ -377,4 +460,4 @@ const ViewAllTickets = () => {
   );
 };
 
-export default ViewAllTickets;
+export default AllTickets;

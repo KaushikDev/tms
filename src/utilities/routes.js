@@ -3,6 +3,6 @@ export const ROUTES = {
   DASHBOARD: "/",
   CREATE: "/add-ticket",
   VIEW: "/view-all-tickets",
-  DELETED: "/recently-deleted",
+  ARCHIVED: "/archive",
   NOT_FOUND: "/*",
 };

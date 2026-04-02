@@ -28,6 +28,11 @@ export const ticketsReducer = (state, action) => {
         ...state,
         currentTicket: { ...state.currentTicket, assignedTo: action.payload },
       };
+    case ticketAction.CURRENT_TICKET_STATUS:
+      return {
+        ...state,
+        currentTicket: { ...state.currentTicket, status: action.payload },
+      };
 
     case ticketAction.ADD_NEW_TICKET:
       if (!action.payload) {
@@ -41,13 +46,20 @@ export const ticketsReducer = (state, action) => {
               createdOn: currentDateAndTime(),
             },
           ],
-          currentTicket: { title: "", description: "", assignedTo: "" },
+
+          currentTicket: {
+            title: "",
+            description: "",
+            assignedTo: "",
+            status: "TODO",
+          },
         };
-      } else
+      } else {
         return {
           ...state,
           tickets: [...state.tickets, { ...action.payload }],
         };
+      }
 
     case ticketAction.TICKET_TO_UPDATE:
       return {
@@ -74,9 +86,8 @@ export const ticketsReducer = (state, action) => {
       };
 
     case ticketAction.UPDATE_THIS_TICKET:
-      // eslint-disable-next-line no-case-declarations
       const updatedTickets = [...state.tickets].filter(
-        (item) => item !== state.ticketToUpdate.oldValue
+        (item) => item !== state.ticketToUpdate.oldValue,
       );
 
       return {
@@ -89,32 +100,30 @@ export const ticketsReducer = (state, action) => {
         },
       };
 
-    case ticketAction.DELETE_THIS_TICKET:
-      // eslint-disable-next-line no-case-declarations
+    case ticketAction.ARCHIVE_THIS_TICKET:
       const filteredArr = [...state.tickets].filter(
-        (item) => item.id !== action.payload
+        (item) => item.id !== action.payload,
       );
       return {
         ...state,
         tickets: filteredArr,
       };
 
-    case ticketAction.REMOVE_FROM_DELETED_LIST:
-      // eslint-disable-next-line no-case-declarations
-      const updatedDeletedList = [...state.recentlyDeleted].filter(
-        (item) => item.id !== action.payload
+    case ticketAction.REMOVE_FROM_ARCHIVED_LIST:
+      const updatedArchivedList = [...state.archive].filter(
+        (item) => item.id !== action.payload,
       );
       return {
         ...state,
-        recentlyDeleted: updatedDeletedList,
+        archive: updatedArchivedList,
       };
 
-    case ticketAction.ADD_TO_DELETE_LIST:
+    case ticketAction.ADD_TO_ARCHIVE_LIST:
       return {
         ...state,
-        recentlyDeleted: [
-          ...state.recentlyDeleted,
-          { ...action.payload, deletedOn: currentDateAndTime() },
+        archive: [
+          ...state.archive,
+          { ...action.payload, archivedOn: currentDateAndTime() },
         ],
       };
 
@@ -163,7 +172,7 @@ export const ticketsReducer = (state, action) => {
           name: "",
           email: "",
           password: "",
-          signin: ""
+          signin: "",
         },
       };
 

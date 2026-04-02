@@ -77,26 +77,32 @@ const generateTicket = (overrides = {}) => ({
   ...overrides,
 });
 
-// 1. RESOLVED TICKETS (Exactly 80)
-const resolvedTickets = Array.from({ length: 80 }).map(() => {
-  const t = generateTicket({ status: "RESOLVED" });
+const archivedTickets = Array.from({ length: 80 }).map(() => {
+  const isDeleted = Math.random() > 0.8;
+  const status = isDeleted ? "DELETED" : "RESOLVED";
+
+  const t = generateTicket({ status });
   const [datePart] = t.createdOn.split(", ");
   const [day, month, year] = datePart.split("/");
-  t.resolvedOn = generateDate(new Date(year, month - 1, day), new Date());
+  const actionDate = generateDate(new Date(year, month - 1, day), new Date());
+
+  if (isDeleted) {
+    t.archivedOn = actionDate;
+  } else {
+    t.resolvedOn = actionDate;
+  }
   return t;
 });
 
-// 2. BACKLOG TICKETS (Exactly 108, Unassigned, TODO)
 const backlogTickets = Array.from({ length: 108 }).map(() =>
   generateTicket({ assignedTo: "", status: "TODO" }),
 );
 
-// 3. ACTIVE TICKETS (Exactly 312, Assigned, In Cycle)
 const activeTickets = Array.from({ length: 312 }).map(() =>
   generateTicket({ status: getRandomItem(["IN PROGRESS", "DONE", "READY"]) }),
 );
 
 export const dummyData = {
-  tickets: [...backlogTickets, ...activeTickets], // 420 Total Unresolved Pipeline
-  recentlyDeleted: resolvedTickets, // 80 Resolved
+  tickets: [...backlogTickets, ...activeTickets],
+  archive: archivedTickets,
 };

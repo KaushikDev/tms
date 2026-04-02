@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom"; // Outlet is where the nested route content will be rendered
+import { Outlet } from "react-router-dom";
 import Header from "./components/general/header";
 import Footer from "./components/general/footer";
 import Toast from "./components/general/toast";

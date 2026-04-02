@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ROUTES } from "../../utilities/routes";
-import { FaList } from "react-icons/fa";
-import { IoIosAddCircle } from "react-icons/io";
-import { MdDeleteForever } from "react-icons/md";
-import { MdDashboard } from "react-icons/md";
+import {
+  LuLayoutDashboard,
+  LuFilePlus,
+  LuLayers,
+  LuArchive,
+} from "react-icons/lu";
 
 const Menu = () => {
   const location = useLocation();
@@ -17,10 +19,26 @@ const Menu = () => {
   }, []);
 
   const MENU_ITEMS = [
-    { name: "Dashboard", path: ROUTES.DASHBOARD, icon: <MdDashboard /> },
-    { name: "New Issue", path: ROUTES.CREATE, icon: <IoIosAddCircle /> },
-    { name: "All Issues", path: ROUTES.VIEW, icon: <FaList /> },
-    { name: "Archive", path: ROUTES.DELETED, icon: <MdDeleteForever /> },
+    {
+      name: "Dashboard",
+      path: ROUTES.DASHBOARD,
+      icon: <LuLayoutDashboard />,
+    },
+    {
+      name: "New Ticket",
+      path: ROUTES.CREATE,
+      icon: <LuFilePlus />,
+    },
+    {
+      name: "All Tickets",
+      path: ROUTES.VIEW,
+      icon: <LuLayers />,
+    },
+    {
+      name: "System Archive",
+      path: ROUTES.ARCHIVED,
+      icon: <LuArchive />,
+    },
   ];
 
   const menu = MENU_ITEMS.map((item, index) =>
